@@ -1,0 +1,23 @@
+baseurl = "https://www.example.org/"
+title = "Artificial Intelligence and Mathematics"
+copyright = "Copyright &copy; 2018 - Siddhartha Gadgil"
+canonifyurls = true
+theme = "kiera"
+
+paginate = 3
+
+summaryLength = 30
+enableEmoji = true
+pygmentsCodeFences = true
+
+[author]
+    name = "Siddhartha Gadgil"
+    github = "siddhartha-gadgil"
+    gitlab = ""
+    linkedin = ""
+    facebook = ""
+    twitter = "SidGadgil"
+    instagram = ""
+
+[params]
+    tagline = "towards Automating Mathematics"
