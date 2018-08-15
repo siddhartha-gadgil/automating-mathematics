@@ -62,9 +62,8 @@ Computers have long been capable of solving many such problems very well. It is 
 ### Tacit knowledge
 
 As [wikipedia](https://en.wikipedia.org/wiki/Tacit_knowledge) defines it:
-
->Tacit knowledge (as opposed to formal, codified or explicit knowledge) is the kind of knowledge that is difficult to transfer to another person by means of writing
-> it down or verbalizing it.
+tacit knowledge (as opposed to formal, codified or explicit knowledge) is the kind of knowledge that is difficult to transfer to another person by means of writing
+it down or verbalizing it.
 
 This is encapsulated in the assertion "we can know more than we can tell" of Michael Polanyi. A typical example of such tacit knowledge is the ability to ride a bicycle. A top chess player has tacit knowledge of the strength of white in a game that is far better than the explicit rules that can be written down.
 
@@ -78,10 +77,26 @@ We often instead make choices that are not logical. Often these are in fact _ill
 
 In this sense, systems based on _deep learning_ do show _intuition_. The choices are based on a function that is some complicated that we cannot describe it in understandable terms. Further, if we simplify it to be easily describable, it does not work well.
 
+### Judgement and Taste
+
+Besides immediate applications, the value of a mathematical, or scientific, discovery lies in it leading to more (good) mathematics, and possibly future applications. A subtle skill, but essential at a high level, is to have the judgement or taste to recognise value before the consequences are evident. This is even more subtle than making choices based on intuition.
+
+The systems _AlphaGo_ and _AlphaZero_ have shown refined judgement in evaluating positions in board games, with evaluation better than human champions.
+
 ### Organized knowledge
+
+Our knowledge is organized based on meaning and use. For instance we perceive two words as similar based on their meanings more than their sounds. Further, a visual scene is perceived as composing of distinct objects, not as an array of pixels.
+
+Using _representation learning_, computers can organize knowledge by meaning too. For instance, the `Word2Vec` system maps words to vectors in a high-dimensional space, by training using an artificial problem. We can see that this captures many properties of words, not just similarity but analogies.
 
 ### Analogical reasoning
 
-### Judgement and Taste
+Much of our reasoning is based on analogy, which comes more naturally to us than formal abstraction. Indeed ancient Babylonian and Indian mathematics was explained purely through analogy.
+
+As we mentioned, systems based on representation learning capture analogy automatically. It seems likely that extensions of these that seek analogies will do even better.
 
 ### Efficient learning
+
+In the first wave of machine learning, systems performed very well but needed a large amount of labelled data. This limited the tasks that could be learnt, and made training expensive. To overcome this, the idea of _reinforcement learning_ was introduced, where a system refined its learning through a large amount of simulation - not unlike a child learning through play.
+
+A striking example of this is the best _Go_ player today, _AplhaGo Zero_ (the chinese game of _Go_ is the hardest board game for computers). This is a system that learnt entirely by playing against itself, starting with just the rules of the game, i.e., with zero data.
