@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Artificial Intelligence and Mathematics</title>
-    <link>https://siddhartha.gadgil.gitlab.io/automating-mathematics/posts/</link>
+    <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</link>
     <description>Recent content in Posts on Artificial Intelligence and Mathematics</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
@@ -10,15 +10,15 @@
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
     <lastBuildDate>Thu, 03 Oct 2019 21:14:02 +0530</lastBuildDate>
     
-	<atom:link href="https://siddhartha.gadgil.gitlab.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Computer Assisted Proofs</title>
-      <link>https://siddhartha.gadgil.gitlab.io/automating-mathematics/posts/computer-assisted-proofs/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</link>
       <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate>
       <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>https://siddhartha.gadgil.gitlab.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
       <description>A rapidly growing area is Computer Assisted Proofs of claims that are expressed in precise mathematical terms. These can include ordinary mathematical theorems,as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
     </item>
     
