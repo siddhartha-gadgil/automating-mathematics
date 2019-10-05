@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   <link rel="stylesheet" type="text/css" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/styles.css" />
-</head>
+  <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg"></head>
 
 <body>
   <div id="container">
@@ -63,12 +63,43 @@
 
         
 
-        <li>1 min read</li>
+        <li>3 min read</li>
     </ul>
 </aside>
     
 
-    <p>A rapidly growing area is <em>Computer Assisted Proofs</em> of claims that are expressed in precise mathematical terms. These can include ordinary mathematical theorems,as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computer assistance here means both assistance in <em>discovery</em> of proofs as well as <em>checking correctness</em>. Indeed the two aspects are generally integrated in <em>interactive proof systems</em>, with computers filling in the details of proof outlines.</p>
+    
+
+<p><em>Formal verification</em> is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  <em>discovery</em> of proofs as well as <em>checking correctness</em>. Indeed computer assisted finding of proofs (so called <em>Automated Theorem Proving</em>) is crucial for formal verification of any complicated result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.</p>
+
+<p>Formal verification offers an assurance of correctness far beyond and other form of testing. However, it is not easy to develop such proofs, so we have a trade-off between safety and productivity. In recent times, our <em>ability</em> to develop such proofs has greatly increased (thus lowering the cost in terms of productivity), and the importance of the greater safety from proofs, especially in some domains, has greatly increased, leading to the increasing adoption of these.</p>
+
+<h3 id="who-guards-the-guards">Who guards the guards?</h3>
+
+<p>If the system that checked our proofs is wrong, then we naturally cannot be sure of the correctness of the proofs. This issue is addressed by following the so called <em>trusted kernel</em> principle - the correctness of the proof is separated into a <em>kernel</em> which should not be too long, and this is verified independently by several people. An excellent implementation of this principle is with the <em>Lean theorem prover</em> - the proofs are exported to an easy to read format, and there are three independent programs, written in three programming languages, that check proofs. Further all these checkers are open sourced and not very long.</p>
+
+<h2 id="the-necessity-and-value-of-proofs">The necessity and value of proofs</h2>
+
+<p>Traditionally systems undergo various kinds of tests that ensure that they fail only very rarely. However, there are circumstances where even such rare failures are not acceptable.</p>
+
+<ul>
+<li>In safety critical systems, such as trains and hospital equipment, even an occasional failure is not acceptable. One example of the use of formal systems is in the driverless Paris metro trains.</li>
+<li>In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip all systems with the chip installed have to be recalled. After one such instance (the Pentium floating point bug), <strong>Intel</strong> has increasingly adopted formal verification in chip design.</li>
+<li>An error in software at the system level is a <em>vulnerability</em> - even if a user is unlikely to ever come across this error, malware can deliberately target this to control a system or network.</li>
+<li>Mathematical results form vast edifices, and an error in a basic result means that all results using it, within mathematics or in applications of mathematics, could be wrong.</li>
+</ul>
+
+<p>As systems become increasingly complex, and the mathematical and scientific literature grows, traditional ways of checking such as statistical testing and reviews by other people (including of human mathematical proofs or protocols of experiment) become increasingly inadequate in ensuring correctness.</p>
+
+<p>Further, proofs not only establish correctness of results, but illuminate them. Specifically, the act of formally proving a result makes clear what assumptions go into this result, both clarifying its scope and potentially leading to further advances in knowledge.</p>
+
+<h2 id="how-to-prove-it">How to prove it</h2>
+
+<p>Many advances have come together to make formal verification feasible, with the additional effort of formally verifying a system not unreasonable.</p>
+
+<ul>
+<li>Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the <em>foundations</em> of mathematics and computation.</li>
+</ul>
 
 
 </article>
