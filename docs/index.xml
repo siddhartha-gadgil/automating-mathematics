@@ -22,14 +22,5 @@
       <description>Formal verification, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
     </item>
     
-    <item>
-      <title>Levels of Thought</title>
-      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/levels-of-thought/</link>
-      <pubDate>Mon, 06 Aug 2018 15:55:56 +0530</pubDate>
-      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/levels-of-thought/</guid>
-      <description>Computers excel at routine tasks and are capable of performing these with great precision and speed. Indeed one can even argue that the more routine a task is, the more the comparative advantage of a computer in performing this task, and so people have a comparative advantage in more sophisticated tasks.</description>
-    </item>
-    
   </channel>
 </rss>

@@ -70,51 +70,53 @@
 
     
 
-<p><em>Formal verification</em>, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  <em>discovery</em> of proofs as well as <em>checking correctness</em>. Indeed computer assisted finding of proofs (so called <em>Automated Theorem Proving</em>) is crucial for formal verification of any complex result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.</p>
+<p><em>Formal verification</em>, a rapidly growing young field, is the <em>computer assisted proving</em> of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both in the  <em>discovery</em> of proofs as well as <em>checking correctness</em>. Indeed computer assisted finding of proofs (so called <em>Automated Theorem Proving</em>) is crucial for formal verification of any complex result or system, as manually supplying all details of complex proofs can be hard and tedious.</p>
 
-<p>Formal verification offers an assurance of correctness far beyond other forms of testing. However, it is not easy to develop such proofs, so we have a trade-off between safety and productivity. In recent times, our <em>ability</em> to develop such proofs has greatly increased (thus lowering the cost in terms of productivity), and the importance of the greater safety from proofs, especially in some domains, has greatly increased, leading to the increasing adoption of these.</p>
+<p>Formal verification offers an assurance of correctness far beyond other forms of testing. However, it is not easy to develop such proofs, so we have to weigh the benefits of safety against the cost of the extra effort (and the consequent loss of productivity). In recent times, our <em>ability</em> to develop such proofs has greatly increased (thus lowering the cost), and the importance of the greater safety from proofs, especially in some domains, has greatly increased. Together these make a compelling case for increasing use of formal verification.</p>
 
 <h3 id="who-guards-the-guards">Who guards the guards?</h3>
 
-<p>If the system that checked our proofs is wrong, then we naturally cannot be sure of the correctness of the proofs. This issue is addressed by following the so called <em>trusted kernel</em> principle - the correctness of the proof is separated into a <em>kernel</em> which should not be too long, and this is verified independently by several people. An excellent implementation of this principle is with the <em>Lean theorem prover</em> - the proofs are exported to an easy to read format, and there are three independent programs, written in three programming languages, that check proofs. Further all these checkers are open sourced and not very long.</p>
+<p>If the system that checked our proofs is wrong, then we naturally cannot be sure of the correctness of the proofs, so on the face of it we are left with human verification of a piece of software (the formal proof system) instead of proofs. This issue is mitigated by following <em>trusted kernel</em> principle - the <em>kernel</em> is a separate program that checks the correctness of proofs. The kernel can be of moderate size (since it only needs to check, not find, proofs), and can be rigorously reviewed and tested. An excellent implementation of this principle is with the <em>Lean theorem prover</em> - the proofs are exported to an easy to read format, and there are three independent programs, written in three different programming languages, that check proofs. Further all these proof-checkers are open sourced and of moderate size.</p>
 
 <h2 id="the-necessity-and-value-of-proofs">The necessity and value of proofs</h2>
 
 <p>Traditionally systems undergo various kinds of tests that ensure that they fail only very rarely. However, there are circumstances where even such rare failures are not acceptable.</p>
 
 <ul>
-<li>In safety critical systems, such as trains and hospital equipment, even an occasional failure is not acceptable. One example of the use of formal systems is in the driverless Paris metro trains.</li>
-<li>In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip all systems with the chip installed have to be recalled. After one such instance (the Pentium floating point bug), <em>Intel</em> has increasingly adopted formal verification in chip design.</li>
-<li>An error in software at the system level is a <em>vulnerability</em> - even if a user is unlikely to ever come across this error, malware can deliberately target this to control a system or network.</li>
-<li>Mathematical results form vast edifices, and an error in a basic result means that all results using it, within mathematics or in applications of mathematics, could be wrong.</li>
+<li>In safety critical systems, such as trains and hospital equipment, even an occasional failure is not acceptable. Thus, one example of the use of formal systems is in the driverless Paris metro trains.</li>
+<li>In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip a large number of systems have to be recalled. After one such instance (the Pentium floating point bug), <em>Intel</em> has increasingly adopted formal verification in chip design.</li>
+<li>An error in software at the system level is a <em>vulnerability</em> - even if a user is unlikely to ever come across this error, <em>malware</em> can deliberately target this to attack and control a system or network.</li>
+<li>Mathematical results form vast edifices, and an error in a basic result means that all results using it (within mathematics or in applications of mathematics) could be wrong.</li>
 </ul>
 
-<p>As systems become increasingly complex, and the mathematical and scientific literature grows, traditional ways of checking such as statistical testing and reviews by other people (including of human mathematical proofs or protocols of experiment) become increasingly inadequate in ensuring correctness.</p>
+<p>As systems become increasingly complex, and the mathematical and scientific literature grows, traditional ways of checking such as statistical testing and reviews by other people (including of human mathematical proofs) become increasingly inadequate in ensuring correctness.</p>
 
 <p>Further, proofs not only establish correctness of results, but illuminate them. Specifically, the act of formally proving a result makes clear what assumptions go into this result, both clarifying its scope and potentially leading to further advances in knowledge.</p>
 
 <h2 id="how-to-prove-it">How to prove it</h2>
 
-<p>Many advances have come together to make formal verification feasible, with the additional effort of formally verifying a system not unreasonable.</p>
+<p>Many advances have come together to make formal verification feasible.</p>
 
 <ul>
-<li>Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the <em>foundations</em> of mathematics and computation. So called <em>Dependent Type Theory</em> unifies foundations of mathematics and computation, and formal proofs in such foundations are much closer to the usual informal proofs of working mathematics.</li>
-<li>Tools to <em>find</em> proofs have become much more powerful. This is partly due to conceptual and technical advances in automated theorem proving, but also because the hardware on which we run these has become much more powerful, as have the pieces of software (such as satisfiability solvers) that are used in automated theorem proving.</li>
-<li>The <em>libraries</em> of formalized proofs have grown much larger - which makes proving new results much easier as there are more results to use.</li>
+<li>Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the <em>foundations</em> of mathematics and computation. <em>Dependent Type Theory</em> unifies foundations of mathematics and computation, and formal proofs in such foundations are much closer to the usual informal proofs of working mathematics.</li>
+<li><em>Automated Theorem Provers</em>  have become much more powerful. This is partly due to conceptual and technical advances in automated theorem proving, but also because the hardware on which we run these has become much more powerful, as has software (such as satisfiability solvers) that is used by automated theorem provers.</li>
+<li>The <em>libraries</em> of formalized proofs have grown much larger - these can be used while proving new results.</li>
 </ul>
 
 <p>These advances work together - better provers make it easier to add to the libraries, which in turn strengthen provers. Further as each component grows stronger, it increases the value of the other components, and hence the resources invested in it.</p>
 
 <h2 id="the-road-ahead">The road ahead</h2>
 
-<p>As with advances in the past, many future advances will come from conceptual and technical advances in foundations, provers and growth in libraries. There are also approaches with great potential that have not yet been incorporated in a significant way.</p>
+<p>Many future advances will come from conceptual and technical advances in foundations and provers and growing libraries of formalized results. There are also approaches with great potential that have not yet been incorporated in a significant way.</p>
 
 <ul>
-<li>A major advance in foundations of mathematics came with the discovery of deep connections of Type Theory with Algebraic Topology, leading to the field of <em>Homotopy Type Theory</em>.</li>
-<li>There have been many remarkable advances in Artificial Intelligence - deep learning, reinforcement learning, natural language understanding etc. These have so far played a peripheral role in formal verification.</li>
+<li>A major advance in foundations of mathematics is based on the discovery of deep connections of Type Theory with Algebraic Topology, leading to the field of <em>Homotopy Type Theory</em>. While this has many conceptual advantages over older forms of type theory, so far its practical use in formal verification is limited.</li>
+<li>There have been many remarkable advances in Artificial Intelligence - deep learning, reinforcement learning, natural language understanding etc. These have so far played a peripheral role in formal verification and automated theorem proving.</li>
 </ul>
 
-<p>As formal verification grows in power, one can hope to expand its scope to many other areas. For instance, people are working on formal verification of cryptographic protocols. Yet, this is a young field with not too many groups working in it, so there is great potential for making significant contributions to this.</p>
+<p>As formal verification grows in power, one can hope to use this in many other areas and to a much greater extent. For instance, people are working on formal verification of cryptographic protocols. There are also efforts to make formal verification practically useful in some areas of mathematics.</p>
+
+<p>Yet, this is a young field with a small community working in it, so the potential for making significant contributions at this stage is high. And one can hope that the value of these contributions grows as automated theorem proving and formal verification become more widespread.</p>
 
 
 </article>
@@ -122,10 +124,6 @@
 
 <section class="post-nav">
     <ul>
-        
-        <li>
-            <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/levels-of-thought/"><i class="fa fa-chevron-circle-left"></i> Levels of Thought</a>
-        </li>
         
         
     </ul>

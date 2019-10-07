@@ -1,7 +1,7 @@
 +++
 title = "Levels of Thought"
 date = 2018-08-06T15:55:56+05:30
-draft = false
+draft = true
 tags = []
 categories = []
 +++
