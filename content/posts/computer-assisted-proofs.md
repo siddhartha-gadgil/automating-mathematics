@@ -31,4 +31,17 @@ Further, proofs not only establish correctness of results, but illuminate them. 
 
 Many advances have come together to make formal verification feasible, with the additional effort of formally verifying a system not unreasonable.
 
-* Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the _foundations_ of mathematics and computation.
+* Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the _foundations_ of mathematics and computation. So called _Dependent Type Theory_ unifies foundations of mathematics and computation, and formal proofs in such foundations are much closer to the usual informal proofs of working mathematics.
+* Tools to _find_ proofs have become much more powerful. This is partly due to conceptual and technical advances in automated theorem proving, but also because the hardware on which we run these has become much more powerful, as have the pieces of software (such as satisfiability solvers) that are used in automated theorem proving.
+* The _libraries_ of formalized proofs have grown much larger - which makes proving new results much easier as there are more results to use.
+
+These advances work together - better provers make it easier to add to the libraries, which in turn strengthen provers. Further as each component grows stronger, it increases the value of the other components, and hence the resources invested in it.
+
+## The road ahead
+
+As with advances in the past, many future advances will come from conceptual and technical advances in foundations, provers and growth in libraries. There are also approaches with great potential that have not yet been incorporated in a significant way.
+
+* A major advance in foundations of mathematics came with the discovery of deep connections of Type Theory with Algebraic Topology, leading to the field of _Homotopy Type Theory_.
+* There have been many remarkable advances in Artificial Intelligence - deep learning, reinforcement learning, natural language understanding etc. These have so far played a peripheral role in formal verification.
+
+As formal verification grows in power, one can hope to expand its scope to many other areas. For instance, people are working on formal verification of cryptographic protocols. Yet, this is a young field with not too many groups working in it, so there is great potential for making significant contributions to this.
