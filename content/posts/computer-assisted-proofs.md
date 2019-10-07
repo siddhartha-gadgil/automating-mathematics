@@ -6,9 +6,9 @@ tags = []
 categories = []
 +++ 
 
-_Formal verification_, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  _discovery_ of proofs as well as _checking correctness_. Indeed computer assisted finding of proofs (so called _Automated Theorem Proving_) is crucial for formal verification of any complicated result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.
+_Formal verification_, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  _discovery_ of proofs as well as _checking correctness_. Indeed computer assisted finding of proofs (so called _Automated Theorem Proving_) is crucial for formal verification of any complex result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.
 
-Formal verification offers an assurance of correctness far beyond and other form of testing. However, it is not easy to develop such proofs, so we have a trade-off between safety and productivity. In recent times, our _ability_ to develop such proofs has greatly increased (thus lowering the cost in terms of productivity), and the importance of the greater safety from proofs, especially in some domains, has greatly increased, leading to the increasing adoption of these.
+Formal verification offers an assurance of correctness far beyond other forms of testing. However, it is not easy to develop such proofs, so we have a trade-off between safety and productivity. In recent times, our _ability_ to develop such proofs has greatly increased (thus lowering the cost in terms of productivity), and the importance of the greater safety from proofs, especially in some domains, has greatly increased, leading to the increasing adoption of these.
 
 ### Who guards the guards?
 
@@ -19,7 +19,7 @@ If the system that checked our proofs is wrong, then we naturally cannot be sure
 Traditionally systems undergo various kinds of tests that ensure that they fail only very rarely. However, there are circumstances where even such rare failures are not acceptable.
 
 * In safety critical systems, such as trains and hospital equipment, even an occasional failure is not acceptable. One example of the use of formal systems is in the driverless Paris metro trains.
-* In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip all systems with the chip installed have to be recalled. After one such instance (the Pentium floating point bug), __Intel__ has increasingly adopted formal verification in chip design.
+* In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip all systems with the chip installed have to be recalled. After one such instance (the Pentium floating point bug), _Intel_ has increasingly adopted formal verification in chip design.
 * An error in software at the system level is a _vulnerability_ - even if a user is unlikely to ever come across this error, malware can deliberately target this to control a system or network.
 * Mathematical results form vast edifices, and an error in a basic result means that all results using it, within mathematics or in applications of mathematics, could be wrong.
 
