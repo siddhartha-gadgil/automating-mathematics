@@ -6,7 +6,7 @@ tags = []
 categories = []
 +++ 
 
-_Formal verification_ is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  _discovery_ of proofs as well as _checking correctness_. Indeed computer assisted finding of proofs (so called _Automated Theorem Proving_) is crucial for formal verification of any complicated result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.
+_Formal verification_, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both assistance in the  _discovery_ of proofs as well as _checking correctness_. Indeed computer assisted finding of proofs (so called _Automated Theorem Proving_) is crucial for formal verification of any complicated result or system, as supplying all details of the proof in such situations is unreasonably hard and/or tedious.
 
 Formal verification offers an assurance of correctness far beyond and other form of testing. However, it is not easy to develop such proofs, so we have a trade-off between safety and productivity. In recent times, our _ability_ to develop such proofs has greatly increased (thus lowering the cost in terms of productivity), and the importance of the greater safety from proofs, especially in some domains, has greatly increased, leading to the increasing adoption of these.
 
