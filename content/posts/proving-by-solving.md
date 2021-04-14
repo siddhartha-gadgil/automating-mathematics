@@ -20,4 +20,4 @@ Unfortunately, at least in the way I used them neither __Z3__ nor __CVC4__ (anot
 
 Cook
 
-## Pappus hexagon theorem: An attempt at a geometry theorem
+## Pappus hexagon theorem: attempting geometry
