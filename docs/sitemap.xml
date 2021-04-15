@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/</loc>
     <lastmod>2021-04-14T12:24:23+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</loc>
     <lastmod>2021-04-14T12:24:23+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</loc>
     <lastmod>2021-04-14T12:24:23+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</loc>
     <lastmod>2019-10-03T21:14:02+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://siddhartha-gadgil.github.io/automating-mathematics/tags/</loc>
   </url>
-  
 </urlset>

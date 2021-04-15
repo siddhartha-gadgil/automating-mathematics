@@ -1,16 +1,29 @@
-<!doctype html>
-
-<html lang="en">
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Artificial Intelligence and Mathematics</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The HTML5 Herald" />
-  <meta name="author" content="Siddhartha Gadgil" /><meta name="generator" content="Hugo 0.68.3" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
-  <link rel="stylesheet" type="text/css" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/styles.css" />
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Knot so easy: Mathematical Proofs from High-performance Solvers? &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
   <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
   <script type="text/javascript" async
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
@@ -42,64 +55,35 @@
       font-size: inherit;
       background-color: inherit !important;
     }
-    </style></head>
+    </style>
+</head>
 
-<body>
-  <div id="container">
-    <header>
-      <h1>
-                <a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Artificial Intelligence and Mathematics</a>
-            </h1>
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       Thoughts and experiments towards automating mathematics. 
+      </p>
+    </div>
 
-      <ul id="social-media">
-        
-        
-        
-        <li><a href="https://twitter.com/SidGadgil"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-          
-        <li><a href="https://github.com/siddhartha-gadgil"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a></li>
-         
-        <li><a href="https://gitlab.com/siddhartha.gadgil"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i></a></li>
-          
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil </a></li>
       </ul>
-      
-      <p><em>towards Automating Mathematics</em></p>
-      
-    </header>
+    </nav>
 
-    
-<nav>
-    <ul>
-        
-    </ul>
-</nav>
-
-    <main>
-
-
-
-
-<article>
-
-    <h1>Knot so easy: Mathematical Proofs from High-performance Solvers?</h1>
-
-    
-        <aside>
-    <ul>
-        <li>
-            <time class="post-date" datetime="2021-04-14T12:24:23&#43;05:30">Apr 14, 2021</time>
-        </li>
-        
-
-        
-
-        <li>6 minutes read</li>
-    </ul>
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
 </aside>
 
-    
-
-    <p>While computers are able to handle an increasing range of tasks, there are some known, and other conjectures, fundamental limitations. The first class of these follow from the results of Gödel, Turing, Church and others. These show that, for instance, there is no computer program that given a mathematical statement as input, either gives a proof or (correctly) says that the statement is false. The second (conjectured) limitation is from the P/NP problem, which we turn too in the next section.</p>
+    <main class="content container">
+    <div class="post">
+  <h1>Knot so easy: Mathematical Proofs from High-performance Solvers?</h1>
+  <time datetime=2021-04-14T12:24:23&#43;0530 class="post-date">Wed, Apr 14, 2021</time>
+  <p>While computers are able to handle an increasing range of tasks, there are some known, and other conjectures, fundamental limitations. The first class of these follow from the results of Gödel, Turing, Church and others. These show that, for instance, there is no computer program that given a mathematical statement as input, either gives a proof or (correctly) says that the statement is false. The second (conjectured) limitation is from the P/NP problem, which we turn too in the next section.</p>
 <p>Indeed, limits of algorithms apply even for a seemingly simple class of problems: deciding whether a so called <a href="https://en.wikipedia.org/wiki/Diophantine_equation">Diophantine Equation</a>, has a solution. A Diophantine equation is a polynomial equation with integer coefficients, such as <code>$3n^2 + 7m^2 = r^3$</code>, and we say this has a solution if there are <em>integers</em> corresponding to the variables ($n$, $m$ and $r$ in the example) which satisfy the equation. As a result of combined work of Martin Davis, Yuri Matiyasevich, Hilary Putnam and Julia Robinson, there is no algorithm (i.e., computer program) to which we can input the coefficients of a Diophantine equation and which will tell us (correctly) whether the equation has integral solutions.</p>
 <p>Yet, the above results should not be over-interpreted to say that proofs cannot be found by programs. Indeed if we turn from numbers to the other classical source of mathematics - Euclidean geometry, the situation is different. Roughly at the same time that the unsolvability of Diophantine equations were shown, Tarski proved that whether similar equations have solutions that are real numbers <strong>is</strong> decidable. Using coordinate geometry, statements in Euclidean geometry can be translated to such problems, and so are algorithmically decidable. Tarski&rsquo;s algorithm has been greatly improved, and algorithms of a more algebraic nature have also been developed, improved and implemented. Yet they remain slow.</p>
 <p>This post is about by my experiments to use (as an amateur) state-of-the-art solvers to try in practice to prove such results and other related stuff. I started these experiments prompted by a lecture to undergraduate students, for which I again used <strong>Z3</strong>, a high-performance solver from Microsoft, to solve a Sudoku problem (a standard demo for this technology), which was duly solved instantly (you can see this <a href="https://rise4fun.com/Z3/Cs7p">online</a>, but the online version is slow). I looked around for examples of geometric theorems proved using <strong>Z3</strong> or its friends, but found none. So I decided to try my hands at proving this. Some years ago I had experimented with using <strong>Z3</strong> for an for recognizing <em>knotting</em>, which follows essentially immediately from a result of Kronheimer-Morwka, and I redid similar experiments.</p>
@@ -116,36 +100,28 @@
 <p>In principle SMT solvers can be used to solve problems in Euclidean geometry. I attempted to prove the <em>Pappus hexagon theorem</em>, which I next describe. In addition to being a typical geometry result, this has a deeper mathematical meaning (corresponding to commutativity for affine geometries over division rings).</p>
 <p>Suppose we are given two lines, with points $a$, $b$ and $c$ on the first and $A$, $B$ and $C$ on the second as in the figure below. We consider the general case, where no pair of lines involving these points are parallel. Let $P$ be the intersection of the lines $Ab$ and $aB$, $Q$ the intersection of $Ac$ and $aC$, and $R$ the intersection of $Bc$ and $bC$. The Pappus hexagon theorem is the result that $P$, $Q$ and $R$ are <em>collinear</em>, i.e., contained in the same line.</p>
 <p><img src="https://siddhartha-gadgil.github.io/automating-mathematics/Pappus.png" alt="Pappus Theorem"></p>
+<h3 id="equations-for-collinearity">Equations for collinearity</h3>
+<p>We shall translate this into a problem of deciding whether a collection of polynomial equalities and inequalities over reals has a solution, which as Tarski showed is decidable. First, we recall that collinearity can be expressed as a polynomial equality. Namely,
+points with coordinates <code>$(x_1, y_1)$</code>, <code>$(x_2, y_2)$</code> and <code>$(x_3, y_3)$</code>, which we assume to be distinct, are collinear if and only if
+<code>$$\frac{y_2 - y_1}{x_2 - x_1} = \frac{y_3 - y_1}{x_3 - x_1}$$</code>
+which is equivalent to <code>$$(y_2 - y_1)(x_3 - x_1) = (y_3 - y_1)(x_2 - x_1)$$.</code></p>
+<h3 id="a-simple-problem">A simple problem</h3>
+<p>As a warmup and sanity check, I set up the problem of showing that for an arbitrary point $P = (x, y)$, the three points $P=(x, y)$, $O=(0, 0)$ and $-P(-x, -y)$ are collinear. We prove results using SAT/SMT solvers by contradiction. In this case, we take $x$ and $y$ to be collinear, and impose the condition that the points $P$, $O$ and $-P$ are <em>not</em> collinear. If the solver shows that this cannot be satisfied, then it follows that the points are always collinear. Observe that the condition of not being collinear just means that equality in the above equation is replaced by inequality.</p>
+<p>Indeed the solvers <strong>Z3</strong> and <strong>cvc4</strong> prove this result instantly.</p>
+<h3 id="choosing-coordinates">Choosing coordinates</h3>
+<p>While one can (and I initially did) take arbitrary coordinates for the $6$ points $a$, $b$, $c$, $A$, $B$ and $C$ and add equations for their being collinear, we consider a simpler variant where we choose coordinates and parametrize the points. Namely, we can take $a$, $b$ and $c$ on the x-axis with $a = (1, 0)$. Then we have $b = (1 + u, 0)$ and $c = (1 + u + v, 0)$ with $u&gt;0$ and $v&gt;0$. Similarly, if we let <code>$A = (x_A, y_A)$</code>, then we can assume that <code>$B = (x_A(1+ U), y_A(1 + U))$</code> for some $U &gt; 0$ and <code>$C = (x_A(1+ U + V), y_A(1 + U + V))$</code> for some $V &gt; 0$. Further, we can assume that $y_A &gt; 0$.</p>
+<p>We take the points <code>$P= (x_P, y_p)$</code>, <code>$Q = (x_Q, y_Q)$</code> and <code>$R= (x_R, y_R)$</code> to have arbitrary coordinates. We then add equations corresponding to their being intersection points as we see below. Thus, we have $12$ variables in all, $6$ of them the parameters $u$, $v$, $x_A$, $y_A$, $U$ and $V$ for the problem and $6$ more coordinates of the intersection points. Further, we have inequalities $u &gt;0$, $v &gt;0$, <code>$y_A &gt;0$</code>, $U &gt; 0$ and $V &gt;0$.</p>
+<h3 id="formulating-using-polynomial-equations-and-inequations">Formulating using polynomial equations and inequations</h3>
+<p>We reformulate the Pappus hexagon theorem. Observe that $P$ being the intersection point of $Ab$ and $aC$ is equivalent to both the triples of points $(A, P, b)$ and $(a, P, B)$ being collinear. We have similar conditions for $Q$ and $R$. Thus, the hypothesis can be formulated in terms of collinearity (and distinctness) of various triples of points.</p>
+<p>Finally, the conclusion is that $P$, $Q$ and $R$ are collinear. We seek to prove this by contradiction, namely we add the condition that they are not collinear, and show that the resulting system cannot be satisfied. Again, the condition that the points are not collinear gives an inequality.</p>
 
-
-</article>
-
-
-<section class="post-nav">
-    <ul>
-        
-        <li>
-            <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/"><i class="fa fa-chevron-circle-left"></i> Computer Assisted Proofs</a>
-        </li>
-        
-        
-    </ul>
-</section>
-    
-
-
-
-
-
-</main>
-    <footer>
-        <h6>Copyright © 2018 - Siddhartha Gadgil |
-            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
-            <a href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml">Subscribe</a></h6>
-    </footer>
 </div>
-<script src="https://siddhartha-gadgil.github.io/automating-mathematics/js/scripts.js"></script>
 
-</body>
 
+    </main>
+
+    
+      
+    
+  </body>
 </html>

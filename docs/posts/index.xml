@@ -1,82 +1,31 @@
-
-   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-     <channel>
-       <title>Posts on Artificial Intelligence and Mathematics</title>
-       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</link>
-       <description>Recent content in Posts on Artificial Intelligence and Mathematics</description>
-       <generator>Hugo -- gohugo.io</generator>
-       <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
-       <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
-       <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-       <lastBuildDate>Wed, 14 Apr 2021 12:24:23 +0530</lastBuildDate>
-       
-           <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
-       
-       
-       <item>
-         <title>Knot so easy: Mathematical Proofs from High-performance Solvers?</title>
-         <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</link>
-         <pubDate>Wed, 14 Apr 2021 12:24:23 +0530</pubDate>
-         <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-         <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</guid>
-         <description>&lt;p&gt;While computers are able to handle an increasing range of tasks, there are some known, and other conjectures, fundamental limitations. The first class of these follow from the results of Gödel, Turing, Church and others. These show that, for instance, there is no computer program that given a mathematical statement as input, either gives a proof or (correctly) says that the statement is false. The second (conjectured) limitation is from the P/NP problem, which we turn too in the next section.&lt;/p&gt;
-&lt;p&gt;Indeed, limits of algorithms apply even for a seemingly simple class of problems: deciding whether a so called &lt;a href=&#34;https://en.wikipedia.org/wiki/Diophantine_equation&#34;&gt;Diophantine Equation&lt;/a&gt;, has a solution. A Diophantine equation is a polynomial equation with integer coefficients, such as &lt;code&gt;$3n^2 + 7m^2 = r^3$&lt;/code&gt;, and we say this has a solution if there are &lt;em&gt;integers&lt;/em&gt; corresponding to the variables ($n$, $m$ and $r$ in the example) which satisfy the equation. As a result of combined work of Martin Davis, Yuri Matiyasevich, Hilary Putnam and Julia Robinson, there is no algorithm (i.e., computer program) to which we can input the coefficients of a Diophantine equation and which will tell us (correctly) whether the equation has integral solutions.&lt;/p&gt;
-&lt;p&gt;Yet, the above results should not be over-interpreted to say that proofs cannot be found by programs. Indeed if we turn from numbers to the other classical source of mathematics - Euclidean geometry, the situation is different. Roughly at the same time that the unsolvability of Diophantine equations were shown, Tarski proved that whether similar equations have solutions that are real numbers &lt;strong&gt;is&lt;/strong&gt; decidable. Using coordinate geometry, statements in Euclidean geometry can be translated to such problems, and so are algorithmically decidable. Tarski&amp;rsquo;s algorithm has been greatly improved, and algorithms of a more algebraic nature have also been developed, improved and implemented. Yet they remain slow.&lt;/p&gt;
-&lt;p&gt;This post is about by my experiments to use (as an amateur) state-of-the-art solvers to try in practice to prove such results and other related stuff. I started these experiments prompted by a lecture to undergraduate students, for which I again used &lt;strong&gt;Z3&lt;/strong&gt;, a high-performance solver from Microsoft, to solve a Sudoku problem (a standard demo for this technology), which was duly solved instantly (you can see this &lt;a href=&#34;https://rise4fun.com/Z3/Cs7p&#34;&gt;online&lt;/a&gt;, but the online version is slow). I looked around for examples of geometric theorems proved using &lt;strong&gt;Z3&lt;/strong&gt; or its friends, but found none. So I decided to try my hands at proving this. Some years ago I had experimented with using &lt;strong&gt;Z3&lt;/strong&gt; for an for recognizing &lt;em&gt;knotting&lt;/em&gt;, which follows essentially immediately from a result of Kronheimer-Morwka, and I redid similar experiments.&lt;/p&gt;
-&lt;p&gt;Unfortunately, at least in the way I used them neither &lt;strong&gt;Z3&lt;/strong&gt; nor &lt;strong&gt;CVC4&lt;/strong&gt; (another similar system) failed to prove the geometric result I sought. Yet, especially as these systems are vastly improving, it seems worthwhile to write about how such systems can be used at least in principle, especially since this does not seem to be widely known.&lt;/p&gt;
-&lt;h2 id=&#34;p-versus-np-and-satsmt-solvers&#34;&gt;P versus NP and SAT/SMT solvers&lt;/h2&gt;
-&lt;p&gt;Some problems, such as solving a system of linear equations, are not difficult at least once one knows a method to solve them. The thumb rule used is that if we can solve a problem with the number of steps being at most a polynomial in the size of the problem (for instance, the total number of digits in the coefficients of equations), then we consider the problem to be easy enough. The class of these problems is called &lt;strong&gt;P&lt;/strong&gt; (i.e., Polynomial time).&lt;/p&gt;
-&lt;p&gt;A more interesting class of problems is once for which we can &lt;em&gt;check&lt;/em&gt; that a solution is correct reasonably easily, but it is not clear how to find a solution in an easy manner. This is typically the case with puzzles like Jigsaws and Sudoku — indeed the appeal of puzzles perhaps lies in this feature. Such problems are called &lt;strong&gt;NP&lt;/strong&gt; problems (or problems in the class &lt;strong&gt;NP&lt;/strong&gt;). While it appears that many such problems do not have easy (i.e., polynomial time) solutions, there is no proof of this. Whether every problem whose solution is easy to check has a solution that is easy to find is the &lt;strong&gt;P&lt;/strong&gt; versus &lt;strong&gt;NP&lt;/strong&gt; problem.&lt;/p&gt;
-&lt;p&gt;What makes this problem specially interesting and fruitful is the Cook-Levine theorem from the early 1970s. This says that if one specific problem in NP, called the &lt;em&gt;Boolean satisfiability problem&lt;/em&gt; (called SAT) has a polynomial time solution, then &lt;em&gt;every&lt;/em&gt; problem that is in &lt;strong&gt;NP&lt;/strong&gt; can be solved in polynomial time. It follows that there are many other problems with the same property. Such problems are called &lt;strong&gt;NP&lt;/strong&gt;-complete.&lt;/p&gt;
-&lt;p&gt;While the theoretical &lt;strong&gt;P&lt;/strong&gt; vs &lt;strong&gt;NP&lt;/strong&gt; problem remains mysterious, the Cook-Levine theorem has had some remarkable practical uses. Since so many classes of problems can be reduced to solving one class of problems, namely &lt;strong&gt;SAT&lt;/strong&gt;, a powerful approach has been to develop various clever ways and powerful programs incorporating them, called &lt;em&gt;SAT solvers&lt;/em&gt;, to solve &lt;strong&gt;SAT&lt;/strong&gt; problems better, and then using these to solve other problems. An extension of SAT solvers are programs called SMT-solvers (for &lt;em&gt;Satisfiability Modulo Theories&lt;/em&gt;).&lt;/p&gt;
-&lt;p&gt;The Boolean satisfiability problem (SAT) asks whether a set of equations involving variables that are either &lt;code&gt;true&lt;/code&gt; ro &lt;code&gt;false&lt;/code&gt;, so called &lt;em&gt;Boolean&lt;/em&gt; variables, has a solution. More precisely, we have finitely many variables &lt;code&gt;P&lt;/code&gt;, &lt;code&gt;Q&lt;/code&gt;, &amp;hellip; each of which can be either true or false. From these we build statements using the logical operations &lt;em&gt;and&lt;/em&gt;, &lt;em&gt;or&lt;/em&gt; and &lt;em&gt;not&lt;/em&gt;. For example, we may require than &lt;code&gt;P&lt;/code&gt; is &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;Q&lt;/code&gt; is false (i.e., not &lt;code&gt;Q&lt;/code&gt; is true). Given a finite list of such conditions, we may or may not have a solution — for example &lt;code&gt;P&lt;/code&gt; being true and &lt;code&gt;P&lt;/code&gt; being false cannot both be satisfied. Determining whether there is a solution is the problem SAT. Clearly given a solution it is easy to check that it is correct, so SAT is in &lt;strong&gt;NP&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;While it appears that no program can solve all SAT problems reasonably fast (i.e., in polynomial time), high-performance SAT solvers try to solve SAT problems as quickly as possible in practice. Indeed in many cases SAT problems are not that hard — for example if there are either so many solutions that one can readily find one or so many constraints that one can readily show that there are none.&lt;/p&gt;
-&lt;p&gt;SMT solvers extend these ideas to handle problems that involve not just Booleans, but also integers and real numbers, with problems built up using also equality, less than, greater than and arithmetic operations. Again many instances of these problems are hard, and now include even ones with no algorithmic solution. Nevertheless the approach taken is to solve as large a class of problems as efficiently as possible.&lt;/p&gt;
-&lt;h2 id=&#34;pappus-hexagon-theorem-attempting-geometry&#34;&gt;Pappus hexagon theorem: attempting geometry&lt;/h2&gt;
-&lt;p&gt;In principle SMT solvers can be used to solve problems in Euclidean geometry. I attempted to prove the &lt;em&gt;Pappus hexagon theorem&lt;/em&gt;, which I next describe. In addition to being a typical geometry result, this has a deeper mathematical meaning (corresponding to commutativity for affine geometries over division rings).&lt;/p&gt;
-&lt;p&gt;Suppose we are given two lines, with points $a$, $b$ and $c$ on the first and $A$, $B$ and $C$ on the second as in the figure below. We consider the general case, where no pair of lines involving these points are parallel. Let $P$ be the intersection of the lines $Ab$ and $aB$, $Q$ the intersection of $Ac$ and $aC$, and $R$ the intersection of $Bc$ and $bC$. The Pappus hexagon theorem is the result that $P$, $Q$ and $R$ are &lt;em&gt;collinear&lt;/em&gt;, i.e., contained in the same line.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://siddhartha-gadgil.github.io/automating-mathematics/Pappus.png&#34; alt=&#34;Pappus Theorem&#34;&gt;&lt;/p&gt;
-</description>
-       </item>
-       
-       <item>
-         <title>Computer Assisted Proofs</title>
-         <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</link>
-         <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate>
-         <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-         <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
-         <description>&lt;p&gt;&lt;em&gt;Formal verification&lt;/em&gt;, a rapidly growing young field, is the &lt;em&gt;computer assisted proving&lt;/em&gt; of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications. Computers can assist both in the  &lt;em&gt;discovery&lt;/em&gt; of proofs as well as &lt;em&gt;checking correctness&lt;/em&gt;. Indeed computer assisted finding of proofs (so called &lt;em&gt;Automated Theorem Proving&lt;/em&gt;) is crucial for formal verification of any complex result or system, as manually supplying all details of complex proofs can be hard and tedious.&lt;/p&gt;
-&lt;p&gt;Formal verification offers an assurance of correctness far beyond other forms of testing. However, it is not easy to develop such proofs, so we have to weigh the benefits of safety against the cost of the extra effort (and the consequent loss of productivity). In recent times, our &lt;em&gt;ability&lt;/em&gt; to develop such proofs has greatly increased (thus lowering the cost), and the importance of the greater safety from proofs, especially in some domains, has greatly increased. Together these make a compelling case for increasing use of formal verification.&lt;/p&gt;
-&lt;h3 id=&#34;who-guards-the-guards&#34;&gt;Who guards the guards?&lt;/h3&gt;
-&lt;p&gt;If the system that checked our proofs is wrong, then we naturally cannot be sure of the correctness of the proofs, so on the face of it we are left with human verification of a piece of software (the formal proof system) instead of proofs. This issue is mitigated by following &lt;em&gt;trusted kernel&lt;/em&gt; principle - the &lt;em&gt;kernel&lt;/em&gt; is a separate program that checks the correctness of proofs. The kernel can be of moderate size (since it only needs to check, not find, proofs), and can be rigorously reviewed and tested. An excellent implementation of this principle is with the &lt;em&gt;Lean theorem prover&lt;/em&gt; - the proofs are exported to an easy to read format, and there are three independent programs, written in three different programming languages, that check proofs. Further all these proof-checkers are open sourced and of moderate size.&lt;/p&gt;
-&lt;h2 id=&#34;the-necessity-and-value-of-proofs&#34;&gt;The necessity and value of proofs&lt;/h2&gt;
-&lt;p&gt;Traditionally systems undergo various kinds of tests that ensure that they fail only very rarely. However, there are circumstances where even such rare failures are not acceptable.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In safety critical systems, such as trains and hospital equipment, even an occasional failure is not acceptable. Thus, one example of the use of formal systems is in the driverless Paris metro trains.&lt;/li&gt;
-&lt;li&gt;In hardware, even a small error is expensive and difficult to correct - for instance to correct a mistake in the design of a chip a large number of systems have to be recalled. After one such instance (the Pentium floating point bug), &lt;em&gt;Intel&lt;/em&gt; has increasingly adopted formal verification in chip design.&lt;/li&gt;
-&lt;li&gt;An error in software at the system level is a &lt;em&gt;vulnerability&lt;/em&gt; - even if a user is unlikely to ever come across this error, &lt;em&gt;malware&lt;/em&gt; can deliberately target this to attack and control a system or network.&lt;/li&gt;
-&lt;li&gt;Mathematical results form vast edifices, and an error in a basic result means that all results using it (within mathematics or in applications of mathematics) could be wrong.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As systems become increasingly complex, and the mathematical and scientific literature grows, traditional ways of checking such as statistical testing and reviews by other people (including of human mathematical proofs) become increasingly inadequate in ensuring correctness.&lt;/p&gt;
-&lt;p&gt;Further, proofs not only establish correctness of results, but illuminate them. Specifically, the act of formally proving a result makes clear what assumptions go into this result, both clarifying its scope and potentially leading to further advances in knowledge.&lt;/p&gt;
-&lt;h2 id=&#34;how-to-prove-it&#34;&gt;How to prove it&lt;/h2&gt;
-&lt;p&gt;Many advances have come together to make formal verification feasible.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Starting with the pioneering work of Church and Turing, there have been many conceptual advances in the &lt;em&gt;foundations&lt;/em&gt; of mathematics and computation. &lt;em&gt;Dependent Type Theory&lt;/em&gt; unifies foundations of mathematics and computation, and formal proofs in such foundations are much closer to the usual informal proofs of working mathematics.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Automated Theorem Provers&lt;/em&gt;  have become much more powerful. This is partly due to conceptual and technical advances in automated theorem proving, but also because the hardware on which we run these has become much more powerful, as has software (such as satisfiability solvers) that is used by automated theorem provers.&lt;/li&gt;
-&lt;li&gt;The &lt;em&gt;libraries&lt;/em&gt; of formalized proofs have grown much larger - these can be used while proving new results.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;These advances work together - better provers make it easier to add to the libraries, which in turn strengthen provers. Further as each component grows stronger, it increases the value of the other components, and hence the resources invested in it.&lt;/p&gt;
-&lt;h2 id=&#34;the-road-ahead&#34;&gt;The road ahead&lt;/h2&gt;
-&lt;p&gt;Many future advances will come from conceptual and technical advances in foundations and provers and growing libraries of formalized results. There are also approaches with great potential that have not yet been incorporated in a significant way.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;A major advance in foundations of mathematics is based on the discovery of deep connections of Type Theory with Algebraic Topology, leading to the field of &lt;em&gt;Homotopy Type Theory&lt;/em&gt;. While this has many conceptual advantages over older forms of type theory, so far its practical use in formal verification is limited.&lt;/li&gt;
-&lt;li&gt;There have been many remarkable advances in Artificial Intelligence - deep learning, reinforcement learning, natural language understanding etc. These have so far played a peripheral role in formal verification and automated theorem proving.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As formal verification grows in power, one can hope to use this in many other areas and to a much greater extent. For instance, people are working on formal verification of cryptographic protocols. There are also efforts to make formal verification practically useful in some areas of mathematics.&lt;/p&gt;
-&lt;p&gt;Yet, this is a young field with a small community working in it, so the potential for making significant contributions at this stage is high. And one can hope that the value of these contributions grows as automated theorem proving and formal verification become more widespread.&lt;/p&gt;
-</description>
-       </item>
-       
-     </channel>
-   </rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Artificial Intelligence and Mathematics</title>
+    <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</link>
+    <description>Recent content in Posts on Artificial Intelligence and Mathematics</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
+    <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
+    <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
+    <lastBuildDate>Wed, 14 Apr 2021 12:24:23 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Knot so easy: Mathematical Proofs from High-performance Solvers?</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</link>
+      <pubDate>Wed, 14 Apr 2021 12:24:23 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</guid>
+      <description>While computers are able to handle an increasing range of tasks, there are some known, and other conjectures, fundamental limitations. The first class of these follow from the results of Gödel, Turing, Church and others.</description>
+    </item>
+    
+    <item>
+      <title>Computer Assisted Proofs</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</link>
+      <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
+      <description>Formal verification, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
+    </item>
+    
+  </channel>
+</rss>

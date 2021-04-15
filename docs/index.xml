@@ -1,26 +1,31 @@
-
-   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-     <channel>
-       <title>Artificial Intelligence and Mathematics</title>
-       <link>https://siddhartha-gadgil.github.io/automating-mathematics/</link>
-       <description>Recent content on Artificial Intelligence and Mathematics</description>
-       <generator>Hugo -- gohugo.io</generator>
-       <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
-       <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
-       <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-       <lastBuildDate>Wed, 14 Apr 2021 12:24:23 +0530</lastBuildDate>
-       
-           <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
-       
-       
-       <item>
-         <title>Posts</title>
-         <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</link>
-         <pubDate>Wed, 14 Apr 2021 12:24:23 +0530</pubDate>
-         <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-         <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</guid>
-         <description></description>
-       </item>
-       
-     </channel>
-   </rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Artificial Intelligence and Mathematics</title>
+    <link>https://siddhartha-gadgil.github.io/automating-mathematics/</link>
+    <description>Recent content on Artificial Intelligence and Mathematics</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
+    <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
+    <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
+    <lastBuildDate>Wed, 14 Apr 2021 12:24:23 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Knot so easy: Mathematical Proofs from High-performance Solvers?</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</link>
+      <pubDate>Wed, 14 Apr 2021 12:24:23 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</guid>
+      <description>While computers are able to handle an increasing range of tasks, there are some known, and other conjectures, fundamental limitations. The first class of these follow from the results of Gödel, Turing, Church and others.</description>
+    </item>
+    
+    <item>
+      <title>Computer Assisted Proofs</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</link>
+      <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
+      <description>Formal verification, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
+    </item>
+    
+  </channel>
+</rss>
