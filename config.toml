@@ -27,6 +27,7 @@ publishDir = "docs"
     description="Some thoughts and experiments towards automating mathematics."
 [Menus]
   main = [
-      {Name = "Siddhartha Gadgil", URL = "http://math.iisc.ac.in/~gadgil"},
-      {Name = "ProvingGround", URL = "https://github.com/siddhartha-gadgil/ProvingGround/"}
+      {Name = "Siddhartha Gadgil's homepage", URL = "http://math.iisc.ac.in/~gadgil"},
+      {Name = "ProvingGround", URL = "https://github.com/siddhartha-gadgil/ProvingGround/"},
+      {Name = "Superficial", URL = "https://github.com/siddhartha-gadgil/Superficial/"}
   ]
