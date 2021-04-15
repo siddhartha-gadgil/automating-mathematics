@@ -26,7 +26,7 @@ What makes this problem specially interesting and fruitful is the Cook-Levine th
 
 While the theoretical __P__ vs __NP__ problem remains mysterious, the Cook-Levine theorem has had some remarkable practical uses. Since so many classes of problems can be reduced to solving one class of problems, namely __SAT__, a powerful approach has been to develop various clever ways and powerful programs incorporating them, called _SAT solvers_, to solve __SAT__ problems better, and then using these to solve other problems. An extension of SAT solvers are programs called SMT-solvers (for _Satisfiability Modulo Theories_).
 
-The Boolean satisfiability problem (SAT) asks whether a set of equations involving variables that are either `true` ro `false`, so called _Boolean_ variables, has a solution. More precisely, we have finitely many variables `P`, `Q`, ... each of which can be either true or false. From these we build statements using the logical operations _and_, _or_ and _not_. For example, we may require than `P` is `true` and `Q` is false (i.e., not `Q` is true). Given a finite list of such conditions, we may or may not have a solution &mdash; for example `P` being true and `P` being false cannot both be satisfied. Determining whether there is a solution is the problem SAT. Clearly given a solution it is easy to check that it is correct, so SAT is in __NP__.
+The Boolean satisfiability problem (SAT) asks whether a set of equations involving variables that are either `true` or `false`, so called _Boolean_ variables, has a solution. More precisely, we have finitely many variables `P`, `Q`, ... each of which can be either true or false. From these we build statements using the logical operations _and_, _or_ and _not_. For example, we may require than `P` is `true` and `Q` is false (i.e., not `Q` is true). Given a finite list of such conditions, we may or may not have a solution &mdash; for example `P` being true and `P` being false cannot both be satisfied. Determining whether there is a solution is the problem SAT. Clearly given a solution it is easy to check that it is correct, so SAT is in __NP__.
 
 While it appears that no program can solve all SAT problems reasonably fast (i.e., in polynomial time), high-performance SAT solvers try to solve SAT problems as quickly as possible in practice. Indeed in many cases SAT problems are not that hard &mdash; for example if there are either so many solutions that one can readily find one or so many constraints that one can readily show that there are none.
 
@@ -42,14 +42,14 @@ Suppose we are given two lines, with points $a$, $b$ and $c$ on the first and $A
 
 ### Equations for collinearity
 
-We shall translate this into a problem of deciding whether a collection of polynomial equalities and inequalities over reals has a solution, which as Tarski showed is decidable. First, we recall that collinearity can be expressed as a polynomial equality. Namely,
+We shall translate this into a problem of deciding whether a collection of polynomial equation and inequations over reals has a solution, which as Tarski showed is decidable. First, we recall that collinearity can be expressed as a polynomial equality. Namely,
 points with coordinates `$(x_1, y_1)$`, `$(x_2, y_2)$` and `$(x_3, y_3)$`, which we assume to be distinct, are collinear if and only if
 `$$\frac{y_2 - y_1}{x_2 - x_1} = \frac{y_3 - y_1}{x_3 - x_1}$$`
 which is equivalent to `$$(y_2 - y_1)(x_3 - x_1) = (y_3 - y_1)(x_2 - x_1)$$.`
 
 ### A simple problem
 
-As a warmup and sanity check, I set up the problem of showing that for an arbitrary point $P = (x, y)$, the three points $P=(x, y)$, $O=(0, 0)$ and $-P(-x, -y)$ are collinear. We prove results using SAT/SMT solvers by contradiction. In this case, we take $x$ and $y$ to be collinear, and impose the condition that the points $P$, $O$ and $-P$ are _not_ collinear. If the solver shows that this cannot be satisfied, then it follows that the points are always collinear. Observe that the condition of not being collinear just means that equality in the above equation is replaced by inequality.
+As a warmup and sanity check, I set up the problem of showing that for an arbitrary point $P = (x, y)$, the three points $P=(x, y)$, $O=(0, 0)$ and $-P(-x, -y)$ are collinear. We prove results using SAT/SMT solvers by contradiction. In this case, we take $x$ and $y$ to be collinear, and impose the condition that the points $P$, $O$ and $-P$ are _not_ collinear. If the solver shows that this cannot be satisfied, then it follows that the points are always collinear. Observe that the condition of not being collinear just means that equation in the above equation is replaced by the inequation `$(y_2 - y_1)(x_3 - x_1) \neq (y_3 - y_1)(x_2 - x_1)$`.
 
 Indeed the solvers __Z3__ and __cvc4__ prove this result instantly.
 
@@ -64,3 +64,5 @@ We take the points `$P= (x_P, y_p)$`, `$Q = (x_Q, y_Q)$` and `$R= (x_R, y_R)$` t
 We reformulate the Pappus hexagon theorem. Observe that $P$ being the intersection point of $Ab$ and $aC$ is equivalent to both the triples of points $(A, P, b)$ and $(a, P, B)$ being collinear. We have similar conditions for $Q$ and $R$. Thus, the hypothesis can be formulated in terms of collinearity (and distinctness) of various triples of points.
 
 Finally, the conclusion is that $P$, $Q$ and $R$ are collinear. We seek to prove this by contradiction, namely we add the condition that they are not collinear, and show that the resulting system cannot be satisfied. Again, the condition that the points are not collinear gives an inequality.
+
+In summary, we have a problem asking whether a set of algebraic equations and inequations has a solution over reals. This system has `$12$` variables, with `$6$` equations corresponding to collinearity, `$5$` inequations stating that variables are positive and an inequation (to contradict) stating that three points are not collinear.
