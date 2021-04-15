@@ -2,13 +2,14 @@ baseurl = "https://siddhartha-gadgil.github.io/automating-mathematics/"
 title = "Artificial Intelligence and Mathematics"
 copyright = "Copyright &copy; 2018 - Siddhartha Gadgil"
 canonifyurls = true
-theme = "kiera"
+theme = "hyde"
 
 paginate = 3
 
 summaryLength = 30
 enableEmoji = true
 pygmentsCodeFences = true
+publishDir = "docs"
 
 [author]
     name = "Siddhartha Gadgil"

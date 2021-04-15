@@ -40,3 +40,27 @@ Suppose we are given two lines, with points $a$, $b$ and $c$ on the first and $A
 
 ![Pappus Theorem](/Pappus.png)
 
+### Equations for collinearity
+
+We shall translate this into a problem of deciding whether a collection of polynomial equalities and inequalities over reals has a solution, which as Tarski showed is decidable. First, we recall that collinearity can be expressed as a polynomial equality. Namely,
+points with coordinates `$(x_1, y_1)$`, `$(x_2, y_2)$` and `$(x_3, y_3)$`, which we assume to be distinct, are collinear if and only if
+`$$\frac{y_2 - y_1}{x_2 - x_1} = \frac{y_3 - y_1}{x_3 - x_1}$$`
+which is equivalent to `$$(y_2 - y_1)(x_3 - x_1) = (y_3 - y_1)(x_2 - x_1)$$.`
+
+### A simple problem
+
+As a warmup and sanity check, I set up the problem of showing that for an arbitrary point $P = (x, y)$, the three points $P=(x, y)$, $O=(0, 0)$ and $-P(-x, -y)$ are collinear. We prove results using SAT/SMT solvers by contradiction. In this case, we take $x$ and $y$ to be collinear, and impose the condition that the points $P$, $O$ and $-P$ are _not_ collinear. If the solver shows that this cannot be satisfied, then it follows that the points are always collinear. Observe that the condition of not being collinear just means that equality in the above equation is replaced by inequality.
+
+Indeed the solvers __Z3__ and __cvc4__ prove this result instantly.
+
+### Choosing coordinates
+
+While one can (and I initially did) take arbitrary coordinates for the $6$ points $a$, $b$, $c$, $A$, $B$ and $C$ and add equations for their being collinear, we consider a simpler variant where we choose coordinates and parametrize the points. Namely, we can take $a$, $b$ and $c$ on the x-axis with $a = (1, 0)$. Then we have $b = (1 + u, 0)$ and $c = (1 + u + v, 0)$ with $u>0$ and $v>0$. Similarly, if we let `$A = (x_A, y_A)$`, then we can assume that `$B = (x_A(1+ U), y_A(1 + U))$` for some $U > 0$ and `$C = (x_A(1+ U + V), y_A(1 + U + V))$` for some $V > 0$. Further, we can assume that $y_A > 0$.
+
+We take the points `$P= (x_P, y_p)$`, `$Q = (x_Q, y_Q)$` and `$R= (x_R, y_R)$` to have arbitrary coordinates. We then add equations corresponding to their being intersection points as we see below. Thus, we have $12$ variables in all, $6$ of them the parameters $u$, $v$, $x_A$, $y_A$, $U$ and $V$ for the problem and $6$ more coordinates of the intersection points. Further, we have inequalities $u >0$, $v >0$, `$y_A >0$`, $U > 0$ and $V >0$.
+
+### Formulating using polynomial equations and inequations
+
+We reformulate the Pappus hexagon theorem. Observe that $P$ being the intersection point of $Ab$ and $aC$ is equivalent to both the triples of points $(A, P, b)$ and $(a, P, B)$ being collinear. We have similar conditions for $Q$ and $R$. Thus, the hypothesis can be formulated in terms of collinearity (and distinctness) of various triples of points.
+
+Finally, the conclusion is that $P$, $Q$ and $R$ are collinear. We seek to prove this by contradiction, namely we add the condition that they are not collinear, and show that the resulting system cannot be satisfied. Again, the condition that the points are not collinear gives an inequality.
