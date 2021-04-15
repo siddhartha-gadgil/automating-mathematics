@@ -24,7 +24,7 @@ publishDir = "docs"
 
 [params]
     tagline = "towards Automating Mathematics"
-    description="Some thoughts and experiments towards automating mathematics."
+    description="My experiments in automating mathematics."
 [Menus]
   main = [
       {Name = "Siddhartha Gadgil's homepage", URL = "http://math.iisc.ac.in/~gadgil"},
