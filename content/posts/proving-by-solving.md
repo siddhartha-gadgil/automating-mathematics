@@ -80,7 +80,7 @@ As mentioned in the introduction, neither of the SMT solvers was able to prove t
 
 To try to assess how far they were from proving the theorem, I attempted a simpler variant. Instead of having all six of $u$, $v$, $x_A$, $y_A$, $U$ and $V$ as variables (so proving the result for all values of these), I added additional equations fixing some of them. Since all but $x_A$ were known to be positive, for convenience, conditions could only be added by choosing random positive numbers corresponding to some of the five variables $u$, $v$, $y_A$, $U$ and $V$ and adding corresponding equations &mdash; for example, we could pick `$c > 0$` at random and add the equation $u = c$.
 
-When all $5$ of the variables were fixed (leaving only $x_A$ to vary), `$Z3$` solved the problem instantly. When $4$ of the $5$ were fixed, the theorem was proved in about 6 seconds. However, when only $3$ were fixed I could not get either solver to prover the result, in spite of changing parameters.
+When all $5$ of the variables were fixed (leaving only $x_A$ to vary), `$Z3$` solved the problem instantly. When $4$ of the $5$ were fixed, the theorem was proved in about 6 seconds. However, when only $3$ were fixed I could not get either solver to prove the result, in spite of changing parameters.
 
 ## Knot so easy
 
