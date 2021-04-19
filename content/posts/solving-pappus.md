@@ -1,30 +1,31 @@
 +++
 title = "Solving (but not proving?) Pappus"
 date = 2021-04-19T06:53:09+05:30
-draft = true
+draft = false
 tags = []
 categories = []
 +++
 
-Thanks to some nice work done by Anand Tadipatri after he read the [previous post]({{< ref "/posts/proving-by-solving.md" >}}) on proving theorems using SMT solvers, we find that in a sense the theorem of Pappus can be _solved_ (but (so far) in some sense not _proved_) by __Z3__  &mdash; a happier conclusion than last time. I make this precise below, assuming the reader is familiar with the [previous post]({{< ref "/posts/proving-by-solving.md" >}}).
+Thanks to some very nice work done by Anand Tadipatri after he read the [previous post]({{< ref "/posts/proving-by-solving.md" >}}) on proving theorems using SMT solvers, we find that in a sense the theorem of Pappus can be __solved__ (but, so far at least, in some sense not __proved__) by __Z3__  &mdash; a happier conclusion than last time. I make this precise below, assuming the reader is familiar with the [previous post]({{< ref "/posts/proving-by-solving.md" >}}).
+<!--more-->
 
-Anand Tadipatri formulated [Menelaus's Theorem](https://en.wikipedia.org/wiki/Menelaus%27s_theorem), a basic Euclidean geometry result, in Z3, which almost instantly proved the result. He shared his code, which I checked ran instantly, and I am sure is correct.
+Anand Tadipatri formulated in Z3 [Menelaus's Theorem](https://en.wikipedia.org/wiki/Menelaus%27s_theorem), a basic Euclidean geometry result. When run Z3 instantly proved the result. He shared his code, which I checked ran instantly, and I am confident is correct.
 
 But there was a twist to the tale. When I used the same setup in my code, Z3 failed to prove this (when running for about 10 minutes). Some experimentation revealed the crucial difference between the two programs &mdash; I was asking for a proof.
 
 ## Speed versus certainty
 
-High-performance solvers use a huge collection of algorithms, which they choose and mix using complex heuristics to decide whether a collection of constraints is satisfiable. In addition, they can be asked for a _proof_ in case a problem is not satisfiable (of the claim that it is not satisfiable) or a _model_ &mdash; values for variables that satisfy the constraint &mdash; in case the problem is satisfiable.
+High-performance solvers use a huge collection of algorithms, which they choose and mix using complex heuristics to decide whether a collection of constraints is satisfiable. In addition, they can be asked for a _proof_ in case a problem is not satisfiable (i.e., a proof that the problem has no solution) or a _model_ &mdash; values for variables that satisfy the constraint &mdash; in case the problem is satisfiable.
 
 Experiments showed that when asked for a proof, the choice of algorithms was different, either taking much longer (effectively not terminating), or explicitly giving up &mdash; in addition to `sat` (satisfiable) and `unsat` (not satisfiable), SMT solvers can give the outcome `unknown` (due to failure or timeout of the available algorithms).
 
-Indeed, when the code for Menelaus's theorem was modified to ask for a proof, Z3 ran for a few seconds and returned `unknown` &mdash; presumably the system was forced to use an algorithm that returned a proof when the problem was not satisfiable, and this found the problem too hard.
+Indeed, when the code for Menelaus's theorem was modified to ask for a proof, Z3 ran for a few seconds and returned `unknown` &mdash; presumably the system was forced to use an algorithm that returned a proof when the problem was not satisfiable, and this algorithm found the problem too hard.
 
 ## Pappus revisited
 
 Based on the above, it was natural to try to ask Z3 whether the constraints corresponding to the Pappus theorem were satisfiable, without asking for a proof. Another change made, again based on the above experiments, was to not specify the _logic_ to be used.
 
-When run in this way, Z3 solved the problem instantly (in 0.02 seconds). Thus, to the extent that Z3 can be trusted, we can readily check if problems of this complexity from Euclidean geometry, and presumably many other areas, are correct. Even without getting a proof this is valuable, at the least stopping time and effort being spent on what is true, and identifying related statements that are true.
+When run in this way, Z3 solved the problem instantly (in 0.02 seconds). Thus, to the extent that Z3 can be trusted, we can readily check if problems of this complexity from Euclidean geometry, and presumably many other areas, are correct. Even without getting a proof this is valuable &mdash; at the least avoiding time and effort being spent on what is not true, and identifying related statements that are true.
 
 ## Still knot easy 
 
@@ -32,12 +33,14 @@ The unknotting problem, however, remained intractable. The translation of this p
 
 ## Formulating problems in SMT
 
-SMT solvers such as Z3 can be run from many languages (in case of Z3 we can use Python, C++, Java and other JVM languages such as Scala). But one nice way to run these, and more to examine the problems being solved, is to use a standard format called __SMT2__ which all SMT solvers support (this can be run interactively or as a file from the command line). 
+SMT solvers such as Z3 can be run from many languages (in case of Z3 we can use Python, C++, Java and other JVM languages such as Scala). But one nice way to run these, and especially to examine the problems being solved, is to use a standard format called __SMT2__ which all SMT solvers support (this can be run interactively or as a file from the command line).
 
-We give below the SMT2 code for the Pappus problem. This is a language, following LISP/Scheme, that is easy for both machines and people to read.
-In such languages, each statement is a so called __S-expression__ (symbolic expression), which is a list enclosed in parenthesis consisting of integers, reals, strings, operators, functions and other S-expressions. The operators and functions come in the beginning, so we write `(+ 2 3)` for $2 + 3$ and `(= (+ 2 3) (+ 3 2))` for `$2 + 3 = 3 + 2$`.
+We give below the SMT2 code for the Pappus problem. This is a language with syntax (following LISP/Scheme) that is easy for both machines and people to read.
+Each statement is a so called __S-expression__ (symbolic expression), which is a list enclosed in parenthesis. Operators and functions come in the beginning, so we write, for example, `(+ 2 3)` for $2 + 3$ and `(= (+ 2 3) (+ 3 2))` for `$2 + 3 = 3 + 2$`. In general, an S-expression is a list, enclosed in parenthesis with entries either other S-expression or __atoms__, with atoms being integers, reals, strings, functions, operators etc.
 
 Specifically, most of our statements are of one of two forms &mdash; declaring a variable using `declare-fun` (which can more generally be used to declare functions), or asserting conditions using a statement `(assert <expression>)` for a Boolean expression.
+
+Here is the code for contradicting the Pappus theorem.
 
 ``` scheme
 (declare-fun u() Real)
@@ -67,4 +70,6 @@ Specifically, most of our statements are of one of two forms &mdash; declaring a
 (check-sat)
 ```
 
-Incidentally, I have run Z3 in a few ways &mdash; using Python, using Scala via the Java API and using Scala to generate code in the SMT@ language (like the above code) and using the Z3 command line either programmatically or in a terminal.
+Incidentally, I have run Z3 in a few ways &mdash; using Python, using Scala via the Java API and using Scala to generate code in the SMT2 language (like the above code) and using the Z3 command line either programmatically or in a terminal.
+
+__Final note:__ So far I have e-mailed posts unsolicited. In the future, if you want to be alerted, please join the [google group]({{< ref "/automating-mathematics-india.md" >}}) I have created for this and related stuff.
