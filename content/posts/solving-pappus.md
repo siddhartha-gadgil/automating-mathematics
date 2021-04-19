@@ -9,9 +9,9 @@ categories = []
 Thanks to some very nice work done by Anand Tadipatri after he read the [previous post]({{< ref "/posts/proving-by-solving.md" >}}) on proving theorems using SMT solvers, we find that in a sense the theorem of Pappus can be __solved__ (but, so far at least, in some sense not __proved__) by __Z3__  &mdash; a happier conclusion than last time. I make this precise below, assuming the reader is familiar with the [previous post]({{< ref "/posts/proving-by-solving.md" >}}).
 <!--more-->
 
-Anand Tadipatri formulated in Z3 [Menelaus's Theorem](https://en.wikipedia.org/wiki/Menelaus%27s_theorem), a basic Euclidean geometry result. When run Z3 instantly proved the result. He shared his code, which I checked ran instantly, and I am confident is correct.
+Anand Tadipatri formulated in Z3 [Menelaus's Theorem](https://en.wikipedia.org/wiki/Menelaus%27s_theorem), a basic Euclidean geometry result. As usual, this was formulated as a _satisfiability problem_ contradicting the statement, so `unsat` (not satisfiable) as the answer means the result is true. When run Z3 instantly solved the satisfiability problem with `unsat` as the answer. He shared his code, which I checked ran instantly, and I am confident is correct.
 
-But there was a twist to the tale. When I used the same setup in my code, Z3 failed to prove this (when running for about 10 minutes). Some experimentation revealed the crucial difference between the two programs &mdash; I was asking for a proof.
+But there was a twist to the tale. When I used the same setup in my code, Z3 failed to solve the problem (when running for about 10 minutes). Some experimentation revealed the crucial difference between the two programs &mdash; I was asking for a proof, rather than just an answer.
 
 ## Speed versus certainty
 
@@ -70,6 +70,15 @@ Here is the code for contradicting the Pappus theorem.
 (check-sat)
 ```
 
-Incidentally, I have run Z3 in a few ways &mdash; using Python, using Scala via the Java API and using Scala to generate code in the SMT2 language (like the above code) and using the Z3 command line either programmatically or in a terminal.
+Incidentally, I have run Z3 in a few ways &mdash; using Python, using Scala via the Java API and using Scala to generate code in the SMT2 language (like the above code) and using the Z3 command line either programmatically or in a terminal. The interfaces in high-level languages are also pleasant and human readable. For instance, an extract from the Python code is below.
+
+```python
+def are_collinear(p, q, r):
+    return ((q[1]-p[1])*(r[0]-p[0])==(r[1]-p[1])*(q[0]-p[0]))
+
+menelaus_theorem = Implies( And( Not(are_collinear(A, B, C)), 
+   are_collinear(D, E, F) ), 
+   d(A, D) * d(B, E) * d(C, F) == d(D, B) * d(E, C) * d(F, A) )
+```
 
 __Final note:__ So far I have e-mailed posts unsolicited. In the future, if you want to be alerted, please join the [google group]({{< ref "/automating-mathematics-india.md" >}}) I have created for this and related stuff.
