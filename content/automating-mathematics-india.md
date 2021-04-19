@@ -1,7 +1,7 @@
 +++
 title = "Automating Mathematics India"
 date = 2021-04-19T10:32:15+05:30
-draft = true
+draft = false
 tags = []
 categories = []
 +++
