@@ -29,5 +29,6 @@ publishDir = "docs"
   main = [
       {Name = "Siddhartha Gadgil's homepage", URL = "http://math.iisc.ac.in/~gadgil"},
       {Name = "ProvingGround", URL = "https://github.com/siddhartha-gadgil/ProvingGround/"},
-      {Name = "Superficial", URL = "https://github.com/siddhartha-gadgil/Superficial/"}
+      {Name = "Superficial", URL = "https://github.com/siddhartha-gadgil/Superficial/"},
+      {Name = "Automating Mathematics group", URL="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"}
   ]

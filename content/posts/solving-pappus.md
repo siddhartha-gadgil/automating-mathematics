@@ -32,9 +32,14 @@ The unknotting problem, however, remained intractable. The translation of this p
 
 ## Formulating problems in SMT
 
-Here is the code
+SMT solvers such as Z3 can be run from many languages (in case of Z3 we can use Python, C++, Java and other JVM languages such as Scala). But one nice way to run these, and more to examine the problems being solved, is to use a standard format called __SMT2__ which all SMT solvers support (this can be run interactively or as a file from the command line). 
 
-```scheme
+We give below the SMT2 code for the Pappus problem. This is a language, following LISP/Scheme, that is easy for both machines and people to read.
+In such languages, each statement is a so called __S-expression__ (symbolic expression), which is a list enclosed in parenthesis consisting of integers, reals, strings, operators, functions and other S-expressions. The operators and functions come in the beginning, so we write `(+ 2 3)` for $2 + 3$ and `(= (+ 2 3) (+ 3 2))` for `$2 + 3 = 3 + 2$`.
+
+Specifically, most of our statements are of one of two forms &mdash; declaring a variable using `declare-fun` (which can more generally be used to declare functions), or asserting conditions using a statement `(assert <expression>)` for a Boolean expression.
+
+``` scheme
 (declare-fun u() Real)
 (declare-fun v() Real)
 (declare-fun Ax() Real)
@@ -61,3 +66,5 @@ Here is the code
 (assert (not (= (* (- Qy Py) (- Rx Px)) (* (- Ry Py) (- Qx Px)))))
 (check-sat)
 ```
+
+Incidentally, I have run Z3 in a few ways &mdash; using Python, using Scala via the Java API and using Scala to generate code in the SMT@ language (like the above code) and using the Z3 command line either programmatically or in a terminal.
