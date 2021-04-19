@@ -27,7 +27,7 @@ A more interesting class of problems is ones for which we can _check_ that a sol
 
 What makes this problem specially interesting and fruitful is the Cook-Levine theorem from the early 1970s. This says that if one specific problem in NP, called the _Boolean satisfiability problem_ (or `$SAT$`), has a polynomial time solution, then _every_ problem that is in `$NP$` can be solved in polynomial time. It can be deduced that there are many other problems with the same property. Such problems are called `$NP$`-complete.
 
-### `$SAT$` solvers
+### SAT solvers
 
 While the theoretical `$P$` vs `$NP$` problem remains mysterious, the Cook-Levine theorem has had some remarkable practical uses. Since so many classes of problems can be reduced to solving one class of problems, namely `$SAT$`, a powerful approach has been to develop various clever ways, and powerful programs incorporating them, to solve `$SAT$` problems better, and then using these to solve other problems. Such programs are called _`$SAT$` solvers_ . 
 
@@ -80,7 +80,7 @@ As mentioned in the introduction, neither of the SMT solvers was able to prove t
 
 To try to assess how far they were from proving the theorem, I attempted a simpler variant. Instead of having all six of $u$, $v$, $x_A$, $y_A$, $U$ and $V$ as variables (so proving the result for all values of these), I added additional equations fixing some of them. Since all but $x_A$ were known to be positive, for convenience, conditions could only be added by choosing random positive numbers corresponding to some of the five variables $u$, $v$, $y_A$, $U$ and $V$ and adding corresponding equations &mdash; for example, we could pick `$c > 0$` at random and add the equation $u = c$.
 
-When all $5$ of the variables were fixed (leaving only $x_A$ to vary), `$Z3$` solved the problem instantly. When $4$ of the $5$ were fixed, the theorem was proved in about 6 seconds. However, when only $3$ were fixed I could not get either solver to prove the result, in spite of changing parameters.
+When all $5$ of the variables were fixed (leaving only $x_A$ to vary), Z3 solved the problem instantly. When $4$ of the $5$ were fixed, the theorem was proved in about 6 seconds. However, when only $3$ were fixed I could not get either solver to prove the result, in spite of changing parameters.
 
 ## Knot so easy
 
