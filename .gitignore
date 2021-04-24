@@ -1,1 +1,8 @@
 /public
+*.synctex.gz
+*.aux
+*latexmk
+*.pdf
+*.fls
+*.log
+*.out
