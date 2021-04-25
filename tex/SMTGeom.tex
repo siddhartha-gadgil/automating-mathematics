@@ -62,14 +62,14 @@
 \date{\today}
 \author{Siddhartha Gadgil}
 
-\address{Department of Mathematics,\\
-	Indian Institute of Science,\\
-	Bangalore}
+\address{Department of Mathematics\\
+	Indian Institute of Science\\
+	Bangalore.}
 \email{gadgil@iisc.ac.in}
 
 \author{Anand Tadipatri}
-\address{Indian Institute of Science Education and Research,\\
-	Pune}
+\address{Indian Institute of Science Education and Research\\
+	Pune.}
 
 \maketitle
 
@@ -82,18 +82,17 @@ program that, given a mathematical statement as input, either gives a
 proof or (correctly) says that the statement is false.
 
 Indeed, we cannot algorithmically solve even a seemingly simple class of
-problems: deciding whether a system of so called
-\href{https://en.wikipedia.org/wiki/Diophantine_equation}{Diophantine
-	Equation}, has a solution. A Diophantine equation is a polynomial
+problems: deciding whether (systems of) so called
+\emph{Diophantine Equations} have solutions. A Diophantine equation is a polynomial
 equation with integer coefficients, such as $n^2 + m^2 = 3$ or \(3n^2 + 7m^2 = r^3\).
 A solution of such equations is an assignment of \textbf{integers} to the variables so that
 the equation (or system of equations) is satisfied.
 We say that a Diophantine equation (or a system of Diophantine equations) is \emph{satisfiable}
 if it has (integral) solutions
 For
-instance, we the Diophantine equation \(n^2 + m^2 = 3\) is not satisfiable,
+instance, we can see that the Diophantine equation \(n^2 + m^2 = 3\) is not satisfiable,
 since there are no integers $n$ and $m$ with \(n^2 + m^2 = 3\), even though there
-are many pairs of real numbers -- indeed forming a circle (renaming the variables
+are many pairs of real numbers that satisfy this -- these indeed form a circle (renaming the variables
 to $x$ and $y$ gives the familiar equation $x^2+ y^2 =3$ of a circle with radius $\sqrt{3}$).
 
 As a result of combined work of Martin Davis, Yuri Matiyasevich, Hilary
@@ -106,10 +105,12 @@ Yet, the above results should not be over-interpreted to say that proofs
 cannot be found by programs. Indeed if we turn from numbers to the other
 classical source of mathematics -- Euclidean geometry, the situation is
 different. Using coordinate geometry, geometric figures can be described by equations,
-and geometric problems can be translated (as we illustrate later in the article) into
-\emph{satisfiability} problems for systems of \textbf{real} equations and inequations, i.e.,
-equations and inequations with real coefficients, with satisfiability meaning that we can
-assign real values to the variables so the equations and inequations are satisfied.
+and geometric problems can be translated (as we illustrate in this article) into
+\emph{satisfiability} problems for systems of \textbf{real} equations and inequations. Thus, we 
+associate to a geometric problem equations and inequations with real coefficients, 
+with satisfiability meaning that we can
+assign real values to the variables so the equations and inequations are satisfied. 
+A geometric statement is true is the corresponding equations and inequations are \emph{unsatisfiable}.
 
 In the 1950s, Tarski proved that whether a (finite)
 collection of polynomial equations and inequations has solutions that
@@ -120,18 +121,18 @@ improved and implemented. Yet they remain slow.
 This article is about our experiments to use
 state-of-the-art solvers to try in practice to prove such results.
 These experiments were prompted by a lecture
-to undergraduate students, during which Z3, a high-performance
+to undergraduate students, during which \texttt{Z3}, a high-performance
 solver from Microsoft, was used to solve a Sudoku problem (a standard demo for
 this technology). The puzzle was duly solved instantly. You can see such
 a demo \href{https://rise4fun.com/Z3/Cs7p}{online}, but the online
 version is slow.
 
-We looked around for examples of geometric theorems proved using Z3 or
-its friends, but found none. So we decided to try my hands at proving
-some results in this way, specifically the \emph{Pappus hexagon theorem}
+Since we could not find examples of geometric theorems proved using \texttt{Z3} or
+its friends, we decided to try proving
+some results in this way. Specifically we attempted the \emph{Pappus hexagon theorem}
 (which has deeper connections to modern mathematics) and Menelaus's theorem.
 
-Our results were mixed -- with Z3 able to answer the satisfiability problem,
+Our results were mixed -- with \texttt{Z3} able to answer the satisfiability problem,
 but not when it was asked to give a solution with proof.
 Especially as these systems are vastly improving, it seems worthwhile to
 write about how such systems can be used at least in principle,
@@ -147,26 +148,26 @@ rule used is that if we can solve a problem with the number of steps
 being at most a polynomial in the size of the problem (for instance, the
 total number of digits in the coefficients of equations), then we
 consider the problem to be easy enough. The class of these problems is
-called \(P\) (i.e., Polynomial time).
+called \texttt{P} (i.e., Polynomial time).
 
 A more interesting class of problems is ones for which we can
 \emph{check} that a solution is correct reasonably easily, though it may
 not be clear how to \emph{find} a solution in an easy manner. This is
 typically the case with puzzles like jigsaws or Sudoku -- indeed the
 appeal of puzzles perhaps lies in this feature. Such problems are called
-\(NP\) problems (or problems in the class \(NP\)). While it appears that
+\texttt{NP} problems (or problems in the class \texttt{NP}). While it appears that
 many such problems do not have easy (i.e., polynomial time) solutions,
 there is no proof of this. Whether every problem whose solution is easy
-to check has a solution that is easy to find is the \(P\) versus \(NP\)
+to check has a solution that is easy to find is the \texttt{P} versus \texttt{NP}
 problem.
 
 What makes this problem specially interesting and fruitful is the
 Cook-Levine theorem from the early 1970s. This says that if one specific
 problem in NP, called the \emph{Boolean satisfiability problem} (or
 \(\texttt{SAT}\)), has a polynomial time solution, then \emph{every} problem that
-is in \(NP\) can be solved in polynomial time. It can be deduced that
+is in \texttt{NP} can be solved in polynomial time. It can be deduced that
 there are many other problems with the same property. Such problems are
-called \(NP\)-complete.
+called \texttt{NP}-complete.
 
 \subsection{Boolean satisfiability (\texttt{SAT})}
 
@@ -186,7 +187,7 @@ the \texttt{SAT} problem.
 \hypertarget{sat-solvers}{%
 	\subsection{\texttt{SAT} solvers}\label{sat-solvers}}
 
-While the theoretical \(P\) vs \(NP\) problem remains mysterious, the
+While the theoretical \texttt{P} vs \texttt{NP} problem remains mysterious, the
 Cook-Levine theorem has had some remarkable practical uses. Since so
 many classes of problems can be reduced to solving one class of
 problems, namely \(\texttt{SAT}\), a powerful approach has been to develop
@@ -231,10 +232,10 @@ affine geometries over division rings), as you can read in the beautiful book~\c
 Suppose we are given two lines, with points \(a\), \(b\) and \(c\) on
 the first line and \(A\), \(B\) and \(C\) on the second line as in
 Figure~\ref{F:pappus}. We consider the general case, where no pair of lines
-involving these points are parallel. Let \(P\) be the intersection of
+involving these points are parallel. Let \texttt{P} be the intersection of
 the lines \(Ab\) and \(aB\), \(Q\) the intersection of \(Ac\) and
 \(aC\), and \(R\) the intersection of \(Bc\) and \(bC\). The Pappus
-hexagon theorem is the result that \(P\), \(Q\) and \(R\) are
+hexagon theorem is the result that \texttt{P}, \(Q\) and \(R\) are
 \emph{collinear}, i.e., there is a line containing all three of these
 points, for all choices of \(a\), \(b\), \(c\), \(A\), \(B\), and \(C\)
 of the above form.
@@ -272,8 +273,8 @@ always collinear. Observe that the condition of not being collinear just
 means that equation in the above equation is replaced by the inequation
 \((y_2 - y_1)(x_3 - x_1) \neq (y_3 - y_1)(x_2 - x_1)\).
 
-Indeed the solvers Z3 and CVC4 prove this result instantly -- more
-precisely, Z3 took \(0.012\) seconds and CVC4 took \(0.094\) seconds.
+Indeed the solvers \texttt{Z3} and \texttt{CVC4} prove this result instantly -- more
+precisely, \texttt{Z3} took \(0.012\) seconds and \texttt{CVC4} took \(0.094\) seconds.
 
 \subsection{Formulating Pappus theorem using polynomial (in)equations}
 
@@ -302,13 +303,13 @@ these equations and inequations from the statement of the theorem.
 \subsubsection{Equations and inequations}
 
 We reformulate the Pappus hexagon theorem in terms of collinearity.
-Observe that \(P\) being the intersection point of \(Ab\) and \(aC\) is
+Observe that \texttt{P} being the intersection point of \(Ab\) and \(aC\) is
 equivalent to both the triples of points \((A, P, b)\) and \((a, P, B)\)
 being collinear. We have similar conditions for \(Q\) and \(R\). Thus,
-the conditions on \(P\), \(Q\) and \(R\) can be formulated in terms of
+the conditions on \texttt{P}, \(Q\) and \(R\) can be formulated in terms of
 collinearity of \(6\) triples of points.
 
-Finally, the conclusion is that \(P\), \(Q\) and \(R\) are collinear. We
+Finally, the conclusion is that \texttt{P}, \(Q\) and \(R\) are collinear. We
 seek to prove this by contradiction, namely we add the condition that
 they are not collinear, and show that the resulting system cannot be
 satisfied. Again, the condition that the points are not collinear gives
@@ -327,7 +328,7 @@ equations and inequations has a solution over reals. This system has
 
 \section{Running \texttt{SMT} solvers}\label{running-smt-solvers}
 
-High-performance \texttt{SMT} solvers such as Z3 use a huge collection of algorithms, which they
+High-performance \texttt{SMT} solvers such as \texttt{Z3} use a huge collection of algorithms, which they
 choose and mix using complex heuristics to decide whether a collection
 of constraints is satisfiable. When asked to check satisfiability, one of three possible
 results is returned -- \texttt{sat}, \texttt{unsat} and \texttt{unknown}, corresponding to 
@@ -358,20 +359,20 @@ and \(V\) and adding corresponding equations -- for example, we could
 pick \(c > 0\) at random and add the equation \(u = c\).
 
 When all \(5\) of the variables were fixed (leaving only \(x_A\) to
-vary), Z3 solved the problem instantly. When \(4\) of the \(5\) were
+vary), \texttt{Z3} solved the problem instantly. When \(4\) of the \(5\) were
 fixed, the theorem was proved in about 6 seconds. However, when only
 \(3\) were fixed we could not get either solver to prove the result, in
 spite of changing parameters.
 
 \subsection{Next attempt: solving, proving Menelaus's theorem}
 
-Our next attempt (using a different program to interface with Z3) was Menelaus's theorem, 
+Our next attempt (using a different program to interface with \texttt{Z3}) was Menelaus's theorem, 
 formulated as a satisfiability problem contradicting the
-statement, as sketched above. When run Z3 instantly solved the satisfiability problem
+statement, as sketched above. When run \texttt{Z3} instantly solved the satisfiability problem
 with \texttt{unsat} as the answer. 
 
 But there was a twist to the tale. When we used the same setup as that for the Pappus theorem, 
-Z3 failed to solve the problem (when running for about 10
+\texttt{Z3} failed to solve the problem (when running for about 10
 minutes). Some experimentation revealed the crucial difference between
 the two programs -- we were asking for a proof, rather than just an
 answer.
@@ -384,34 +385,34 @@ problem too hard.
 
 \subsection{Pappus revisited}
 
-Based on the above, it was natural to try to ask Z3 whether the
+Based on the above, it was natural to try to ask \texttt{Z3} whether the
 constraints corresponding to the Pappus theorem were satisfiable,
 without asking for a proof. Another change made, again based on the
 above experiments, was to not specify the \emph{logic} to be used.
 
-When run in this way, Z3 solved the problem instantly (in 0.02 seconds).
+When run in this way, \texttt{Z3} solved the problem instantly (in 0.02 seconds).
 
 
 
 \section{Conclusion: solved but not proved?}
 
-The above experiments showed that when asked for a proof, the choice of algorithms by Z3
+The above experiments showed that when asked for a proof, the choice of algorithms by \texttt{Z3}
 was different, either taking much longer (effectively not terminating),
 or explicitly giving up -- in addition to \texttt{sat} (satisfiable) and
 \texttt{unsat} (not satisfiable), \texttt{SMT} solvers can give the outcome
 \texttt{unknown} (due to failure or timeout of the available
 algorithms).
 
-As we have seen, when asked only for a solution, Z3 could quickly and correctly solve the 
+As we have seen, when asked only for a solution, \texttt{Z3} could quickly and correctly solve the 
 satisfiability problems corresponding to the two theorems.
-Thus, to the extent that Z3 can be trusted, we can readily check if
+Thus, to the extent that \texttt{Z3} can be trusted, we can readily check if
 problems of this complexity from Euclidean geometry, and presumably many
 other areas, are correct. Even without getting a proof this is valuable
 -- at the least avoiding time and effort being spent on what is not
 true, and identifying related statements that are true.
 
 The failure to solve with proofs suggests that at least show that, at present, we cannot hope to
-prove non-trivial Euclidean geometry theorems (without simply trusting Z3) by simply translating
+prove non-trivial Euclidean geometry theorems (without simply trusting \texttt{Z3}) by simply translating
 them and using \texttt{SMT} solvers. However, with the underlying solvers rapidly
 improving, the solutions in principle may become solutions in practice.
 This is especially the case if the algorithms are successfully
@@ -425,12 +426,12 @@ particular, while it is known that in the worst case any algorithm must
 be slow, perhaps there are special features in cases of interest that
 allow speeding up.
 
-\section{Appendix: running Z3 and the \texttt{SMT} format}
+\section{Appendix: running \texttt{Z3} and the \texttt{SMT} format}
 
-\texttt{SMT} solvers such as Z3 can be run from many languages (in case of Z3 we
+\texttt{SMT} solvers such as \texttt{Z3} can be run from many languages (in case of \texttt{Z3} we
 can use Python, C++, Java and other JVM languages such as Scala). But
 one nice way to run these, and especially to examine the problems being
-solved, is to use a standard format called \textbf{\texttt{SMT}2} which all \texttt{SMT}
+solved, is to use a standard format called \textbf{\texttt{SMT2}} which all \texttt{SMT}
 solvers support (this can be run interactively or as a file from the
 command line).
 
@@ -475,7 +476,7 @@ command line).
 \caption{SMT format for Pappus theorem}\label{smt-pappus}
 \end{figure}
 
-We give below the \texttt{SMT}2 code for the Pappus problem. This is a language
+As an example, we give the \texttt{SMT2} code for the Pappus problem. This is a language
 with syntax (following LISP/Scheme) that is easy for both machines and
 people to read. Each statement is a so called \textbf{S-expression}
 (symbolic expression), which is a list enclosed in parenthesis.
@@ -488,7 +489,7 @@ with atoms being integers, reals, strings, functions, operators etc.
 Specifically, most of our statements are of one of two forms --
 declaring a variable using \texttt{declare-fun} (which can more
 generally be used to declare functions), or asserting conditions using a
-statement \texttt{(assert\ \textless{}expression\textgreater{})} for a
+statement \texttt{(assert\ <expression>)} for a
 Boolean expression.
 
 The code for contradicting the Pappus theorem is in Figure~\ref{smt-pappus}.
@@ -506,12 +507,12 @@ menelaus_theorem = Implies(And(Not(are_collinear(A, B, C)),
 \end{figure}
 }
 
-Incidentally, we have run Z3 in a few ways -- using Python, using Scala
-via the Java API and using Scala to generate code in the \texttt{SMT}2 language
-(like the above code) and using the Z3 command line either
+Incidentally, we have run \texttt{Z3} in a few ways -- using Python, using Scala
+via the Java API and using Scala to generate code in the \texttt{SMT2} language
+(like the above code) and using the \texttt{Z3} command line either
 programmatically or in a terminal. The interfaces in high-level
 languages are also pleasant and human readable. For instance, an extract
-from the Python code is in figure~\ref{python-menelaus}
+from the Python code for Menelaus theorem is in figure~\ref{python-menelaus}
 
 
 
