@@ -74,9 +74,9 @@
 \maketitle
 
 Computers are able to solve an increasing range of problems, many of
-which were believed not long ago to require human intelligence. Yet
+which were believed not long ago to require human intelligence and creativity. Yet
 there are fundamental limitations to what problems can be solved
-algorithmically, some known and other conjectured. In particular, by
+algorithmically. In particular, by
 results of G\"odel, Turing, Church and others, there is no computer
 program that, given a mathematical statement as input, either gives a
 proof or (correctly) says that the statement is false.
@@ -85,8 +85,8 @@ Indeed, we cannot algorithmically solve even a seemingly simple class of
 problems: deciding whether (systems of) so called
 \emph{Diophantine Equations} have solutions. A Diophantine equation is a polynomial
 equation with integer coefficients, such as $n^2 + m^2 = 3$ or \(3n^2 + 7m^2 = r^3\).
-A solution of such equations is an assignment of \textbf{integers} to the variables so that
-the equation (or system of equations) is satisfied.
+Solutions of such equations are assignments of \textbf{integers} to the variables so that
+the equations (or systems of equations) are satisfied.
 We say that a Diophantine equation (or a system of Diophantine equations) is \emph{satisfiable}
 if it has (integral) solutions
 For
@@ -106,11 +106,11 @@ cannot be found by programs. Indeed if we turn from numbers to the other
 classical source of mathematics -- Euclidean geometry, the situation is
 different. Using coordinate geometry, geometric figures can be described by equations,
 and geometric problems can be translated (as we illustrate in this article) into
-\emph{satisfiability} problems for systems of \textbf{real} equations and inequations. Thus, we 
-associate to a geometric problem equations and inequations with real coefficients, 
+\emph{satisfiability} problems for systems of \textbf{real} equations and inequations. Thus, we
+associate to a geometric problem equations and inequations with real coefficients,
 with satisfiability meaning that we can
-assign real values to the variables so the equations and inequations are satisfied. 
-A geometric statement is true is the corresponding equations and inequations are \emph{unsatisfiable}.
+assign real values to the variables so the equations and inequations are satisfied.
+A geometric statement is true if and only if the corresponding equations and inequations are \emph{unsatisfiable}.
 
 In the 1950s, Tarski proved that whether a (finite)
 collection of polynomial equations and inequations has solutions that
@@ -130,7 +130,7 @@ version is slow.
 Since we could not find examples of geometric theorems proved using \texttt{Z3} or
 its friends, we decided to try proving
 some results in this way. Specifically we attempted the \emph{Pappus hexagon theorem}
-(which has deeper connections to modern mathematics) and Menelaus's theorem.
+(which has deep connections to modern mathematics) and \emph{Menelaus's theorem}.
 
 Our results were mixed -- with \texttt{Z3} able to answer the satisfiability problem,
 but not when it was asked to give a solution with proof.
@@ -163,7 +163,7 @@ problem.
 
 What makes this problem specially interesting and fruitful is the
 Cook-Levine theorem from the early 1970s. This says that if one specific
-problem in NP, called the \emph{Boolean satisfiability problem} (or
+problem (which is in NP), called the \emph{Boolean satisfiability problem} (or
 \(\texttt{SAT}\)), has a polynomial time solution, then \emph{every} problem that
 is in \texttt{NP} can be solved in polynomial time. It can be deduced that
 there are many other problems with the same property. Such problems are
@@ -177,11 +177,12 @@ This means that the variables take values \emph{true} and \emph{false} -- we
 can think of variables $P$, $Q$, ... representing whether some statements are
 true or false. These can be combined using the logical operations \emph{and}
 (denoted $P\wedge Q$), \emph{or} (denoted $P\vee Q$) and \emph{not} (denoted $\neg P$).
-Combinations of the variables built using give a collection of clauses, for example we
+Combinations of the variables built using these give a collection of clauses, for example we
 may have two variables $P$ and $Q$ and consider the clauses $P\wedge(\neg Q)$ and $(\neg Q)\vee P$.
 The (finite) collection of clauses is satisfiable if we can assign true/false values to the variables
-so that all the clauses are true (the two clauses in the above example are not satisfiable). 
-Deciding whether a finite collection of clauses is satisfiable is 
+so that all the clauses are true. For example, the set of clauses $\{P\wedge(\neg Q), (\neg Q)\vee P\}$
+is not satisfiable (which one can check by trying all $4$ possibilities for $P$ and $Q$).
+Deciding whether a finite collection of clauses is satisfiable is
 the \texttt{SAT} problem.
 
 \hypertarget{sat-solvers}{%
@@ -199,20 +200,19 @@ Such programs are called \emph{\(\texttt{SAT}\) solvers} .
 While it appears that no program can solve all \(\texttt{SAT}\) problems
 reasonably fast (i.e., in polynomial time), high-performance \(\texttt{SAT}\)
 solvers try to solve as large a class of \(\texttt{SAT}\) problems as quickly as
-possible in practice. Indeed in many cases \(\texttt{SAT}\) problems are not that
-hard -- for example the problem becomes easier if there are either so
+possible in practice. Indeed in many cases a \(\texttt{SAT}\) problem may not be too
+hard -- for example the problem becomes reasonably easy if there are either so
 many solutions that one can readily find one or so many constraints that
-one can readily show that there are none.
+one can readily show that there are no solutions.
 
 \subsection{\texttt{SMT} Solvers}
 \(\texttt{SMT}\) solvers (for \emph{Satisfiability Modulo Theories}) extend these
 ideas to handle problems that involve not just Booleans, but also
 integers and real numbers. Thus, we can require that a collection of
 equations are satisfied, or a mixture of equations and inequations
-(inequations can be like \(x^2 < 3\), \(x^3 \geq 3z\) or
-\(y^2 + z^2 \neq 1\)) or even a logical combination of these (e.g.
-(\(x^2 < 3)\vee(y^2 + z^2 \neq 1)\), where \(\vee\) is the logical
-\emph{or}). Again, many instances of these problems are hard, and there
+(examples of inequations are \(x^2 < 3\), \(x^3 \geq 3z\), and
+\(y^2 + z^2 \neq 1\)) or even a logical combination of these (for example,
+(\(x^2 < 3)\vee(y^2 + z^2 \neq 1)\)). Again, many instances of these problems are hard, and there
 are even ones with no algorithmic solution. Nevertheless the approach
 taken is to solve as large a class of problems as efficiently as
 possible.
@@ -220,7 +220,7 @@ possible.
 
 \section{Geometry theorems as satisfiability problems}
 
-We next describe how we translated statements of theorems from 
+We next describe how we translated statements of theorems from
 Euclidean geometry into satisfiability results, suitable for using \texttt{SMT} solvers.
 
 \subsection{The Pappus Hexagon theorem}
@@ -250,7 +250,7 @@ of the above form.
 	\subsection{Equations for
 		collinearity}\label{equations-for-collinearity}}
 
-We shall formulate the Pappus theorem in terms of collinearity, and 
+We shall formulate the Pappus theorem in terms of collinearity, and
 then translate this into equations and inequations.
 Recall that collinearity can be
 expressed as a polynomial equality. Namely, points with coordinates
@@ -273,10 +273,14 @@ always collinear. Observe that the condition of not being collinear just
 means that equation in the above equation is replaced by the inequation
 \((y_2 - y_1)(x_3 - x_1) \neq (y_3 - y_1)(x_2 - x_1)\).
 
-Indeed the solvers \texttt{Z3} and \texttt{CVC4} prove this result instantly -- more
+Indeed the solvers \texttt{Z3} and \texttt{CVC4} (another \texttt{SMT} solver, and the champion in the 
+latest competition for \texttt{SMT} solvers) proved this result instantly -- more
 precisely, \texttt{Z3} took \(0.012\) seconds and \texttt{CVC4} took \(0.094\) seconds.
 
 \subsection{Formulating Pappus theorem using polynomial (in)equations}
+
+We next translate the Pappus theorem, first into coordinate geometry and then into
+real equations and inequations.
 
 \subsubsection{Choosing coordinates}
 
@@ -293,7 +297,7 @@ can assume that \(y_A > 0\).
 
 Let the points \(P= (x_P, y_p)\), \(Q = (x_Q, y_Q)\) and
 \(R= (x_R, y_R)\) have arbitrary coordinates. We add equations
-corresponding to their being intersection points as we see below. Thus,
+corresponding to their being intersection points, as we see below. Thus,
 we have \(12\) variables in all, \(6\) of them the parameters \(u\),
 \(v\), \(x_A\), \(y_A\), \(U\) and \(V\) for the problem and \(6\) more
 coordinates of the intersection points. Further, we have inequations
@@ -331,10 +335,10 @@ equations and inequations has a solution over reals. This system has
 High-performance \texttt{SMT} solvers such as \texttt{Z3} use a huge collection of algorithms, which they
 choose and mix using complex heuristics to decide whether a collection
 of constraints is satisfiable. When asked to check satisfiability, one of three possible
-results is returned -- \texttt{sat}, \texttt{unsat} and \texttt{unknown}, corresponding to 
-the problem being satisfiable, unsatisfiable and the chosen algorithm failing to answer 
-the problem. A fourth possibility is manual interruption if the solver appears to be failing 
-to answer -- which is a variant of \texttt{unknown} (indeed if a timeout limit is reached this 
+results is returned -- \texttt{sat}, \texttt{unsat} and \texttt{unknown}, corresponding to
+the problem being satisfiable, unsatisfiable and the chosen algorithm failing to answer
+the problem. A fourth possibility is manual interruption (i.e., the user giving up) if the solver appears to be failing
+to answer -- which is a variant of \texttt{unknown} (indeed if a timeout limit is reached this
 is what is returned).
 
 In addition, an \texttt{SMT} solver can be asked for a
@@ -344,9 +348,11 @@ that satisfy the constraint -- in case the problem is satisfiable.
 
 \subsection{First attempt: Proving Pappus theorem}
 
-As mentioned in the introduction, neither of the \texttt{SMT} solvers was able to
+When asked to solve the satisfiability problem \textbf{with proof}, 
+neither of the \texttt{SMT} solvers \texttt{Z3} and \texttt{CVC4} was able to
 prove the Pappus hexagon theorem. This was in spite of our (non-expert)
-attempts at changing their parameters to raise various limits.
+attempts at changing their parameters to raise various limits, 
+and allowing them to run for hours.
 
 To try to assess how far they were from proving the theorem, we attempted
 a simpler variant. Instead of having all six of \(u\), \(v\), \(x_A\),
@@ -364,18 +370,17 @@ fixed, the theorem was proved in about 6 seconds. However, when only
 \(3\) were fixed we could not get either solver to prove the result, in
 spite of changing parameters.
 
-\subsection{Next attempt: solving, proving Menelaus's theorem}
+\subsection{Next attempts: solving, proving Menelaus's theorem}
 
-Our next attempt (using a different program to interface with \texttt{Z3}) was Menelaus's theorem, 
+Our next attempt (using a different program to interface with \texttt{Z3}) was Menelaus's theorem,
 formulated as a satisfiability problem contradicting the
 statement, as sketched above. When run \texttt{Z3} instantly solved the satisfiability problem
-with \texttt{unsat} as the answer. 
+with \texttt{unsat} as the answer (as needed to obtain a contradiction).
 
-But there was a twist to the tale. When we used the same setup as that for the Pappus theorem, 
+But there was a twist to the tale. When we used the same setup as that for the Pappus theorem,
 \texttt{Z3} failed to solve the problem (when running for about 10
 minutes). Some experimentation revealed the crucial difference between
-the two programs -- we were asking for a proof, rather than just an
-answer.
+the two programs.
 
 Indeed, when the code for Menelaus's theorem was modified to ask for a
 proof, Z3 ran for a few seconds and returned \texttt{unknown} --
@@ -403,7 +408,7 @@ or explicitly giving up -- in addition to \texttt{sat} (satisfiable) and
 \texttt{unknown} (due to failure or timeout of the available
 algorithms).
 
-As we have seen, when asked only for a solution, \texttt{Z3} could quickly and correctly solve the 
+As we have seen, when asked only for a solution, \texttt{Z3} could quickly and correctly solve the
 satisfiability problems corresponding to the two theorems.
 Thus, to the extent that \texttt{Z3} can be trusted, we can readily check if
 problems of this complexity from Euclidean geometry, and presumably many
@@ -416,7 +421,7 @@ prove non-trivial Euclidean geometry theorems (without simply trusting \texttt{Z
 them and using \texttt{SMT} solvers. However, with the underlying solvers rapidly
 improving, the solutions in principle may become solutions in practice.
 This is especially the case if the algorithms are successfully
-parallelized -- to my surprise we observed that the algorithms were
+parallelized -- to our surprise we observed that the algorithms were
 essentially serial even when configured to be parallel, with occasional
 use of \(2\) cores being the only concurrency.
 
@@ -437,7 +442,7 @@ command line).
 
 
 \begin{figure}
-\begin{lstlisting}[language=LISP, frame=single]
+	\begin{lstlisting}[language=LISP, frame=single]
 (declare-fun u() Real)
 (declare-fun v() Real)
 (declare-fun Ax() Real)
@@ -473,10 +478,10 @@ command line).
 	(* (- Ry Py) (- Qx Px)))))
 (check-sat)
 \end{lstlisting}
-\caption{SMT format for Pappus theorem}\label{smt-pappus}
+	\caption{SMT format for Pappus theorem}\label{smt-pappus}
 \end{figure}
 
-As an example, we give the \texttt{SMT2} code for the Pappus problem. This is a language
+As an example, we give the \texttt{SMT2} code for the Pappus problem in Figure~\ref{smt-pappus}. This is a language
 with syntax (following LISP/Scheme) that is easy for both machines and
 people to read. Each statement is a so called \textbf{S-expression}
 (symbolic expression), which is a list enclosed in parenthesis.
@@ -492,10 +497,9 @@ generally be used to declare functions), or asserting conditions using a
 statement \texttt{(assert\ <expression>)} for a
 Boolean expression.
 
-The code for contradicting the Pappus theorem is in Figure~\ref{smt-pappus}.
 {\small
 \begin{figure}
-\begin{lstlisting}[language=Python, frame=single]
+	\begin{lstlisting}[language=Python, frame=single]
 def are_collinear(p, q, r):
   return ((q[1]-p[1])*(r[0]-p[0])==(r[1]-p[1])*(q[0]-p[0]))
 
@@ -503,7 +507,7 @@ menelaus_theorem = Implies(And(Not(are_collinear(A, B, C)),
   are_collinear(D, E, F)), 
   d(A, D) * d(B, E) * d(C, F) == d(D, B) * d(E, C) * d(F, A))
 \end{lstlisting}
-\caption{Extract of Python code for Menelaus's theorem}\label{python-menelaus}
+	\caption{Extract of Python code for Menelaus's theorem}\label{python-menelaus}
 \end{figure}
 }
 
