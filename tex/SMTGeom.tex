@@ -88,7 +88,7 @@ equation with integer coefficients, such as $n^2 + m^2 = 3$ or \(3n^2 + 7m^2 = r
 Solutions of such equations are assignments of \textbf{integers} to the variables so that
 the equations (or systems of equations) are satisfied.
 We say that a Diophantine equation (or a system of Diophantine equations) is \emph{satisfiable}
-if it has (integral) solutions
+if it has (integral) solutions.
 For
 instance, we can see that the Diophantine equation \(n^2 + m^2 = 3\) is not satisfiable,
 since there are no integers $n$ and $m$ with \(n^2 + m^2 = 3\), even though there
@@ -110,7 +110,7 @@ and geometric problems can be translated (as we illustrate in this article) into
 associate to a geometric problem equations and inequations with real coefficients,
 with satisfiability meaning that we can
 assign real values to the variables so the equations and inequations are satisfied.
-A geometric statement is true if and only if the corresponding equations and inequations are \emph{unsatisfiable}.
+A geometric statement is false if and only if the corresponding equations and inequations are \emph{unsatisfiable}. Thus, to prove a theorem in geometry, one can translate the negation of the theorem statement into a system of equations and inequations and verify that it is unsatisfiable (i.e., there are no real solutions).
 
 In the 1950s, Tarski proved that whether a (finite)
 collection of polynomial equations and inequations has solutions that
@@ -208,7 +208,7 @@ one can readily show that there are no solutions.
 \subsection{\texttt{SMT} Solvers}
 \(\texttt{SMT}\) solvers (for \emph{Satisfiability Modulo Theories}) extend these
 ideas to handle problems that involve not just Booleans, but also
-integers and real numbers. Thus, we can require that a collection of
+integers and real numbers (and in general, any first-order theories). Thus, we can require that a collection of
 equations are satisfied, or a mixture of equations and inequations
 (examples of inequations are \(x^2 < 3\), \(x^3 \geq 3z\), and
 \(y^2 + z^2 \neq 1\)) or even a logical combination of these (for example,
@@ -232,10 +232,10 @@ affine geometries over division rings), as you can read in the beautiful book~\c
 Suppose we are given two lines, with points \(a\), \(b\) and \(c\) on
 the first line and \(A\), \(B\) and \(C\) on the second line as in
 Figure~\ref{F:pappus}. We consider the general case, where no pair of lines
-involving these points are parallel. Let \texttt{P} be the intersection of
+involving these points are parallel. Let \(P\) be the intersection of
 the lines \(Ab\) and \(aB\), \(Q\) the intersection of \(Ac\) and
 \(aC\), and \(R\) the intersection of \(Bc\) and \(bC\). The Pappus
-hexagon theorem is the result that \texttt{P}, \(Q\) and \(R\) are
+hexagon theorem is the result that \(P\), \(Q\) and \(R\) are
 \emph{collinear}, i.e., there is a line containing all three of these
 points, for all choices of \(a\), \(b\), \(c\), \(A\), \(B\), and \(C\)
 of the above form.
@@ -307,13 +307,13 @@ these equations and inequations from the statement of the theorem.
 \subsubsection{Equations and inequations}
 
 We reformulate the Pappus hexagon theorem in terms of collinearity.
-Observe that \texttt{P} being the intersection point of \(Ab\) and \(aC\) is
+Observe that \(P\) being the intersection point of \(Ab\) and \(aC\) is
 equivalent to both the triples of points \((A, P, b)\) and \((a, P, B)\)
 being collinear. We have similar conditions for \(Q\) and \(R\). Thus,
-the conditions on \texttt{P}, \(Q\) and \(R\) can be formulated in terms of
+the conditions on \(P\), \(Q\) and \(R\) can be formulated in terms of
 collinearity of \(6\) triples of points.
 
-Finally, the conclusion is that \texttt{P}, \(Q\) and \(R\) are collinear. We
+Finally, the conclusion is that \(P\), \(Q\) and \(R\) are collinear. We
 seek to prove this by contradiction, namely we add the condition that
 they are not collinear, and show that the resulting system cannot be
 satisfied. Again, the condition that the points are not collinear gives
@@ -327,8 +327,68 @@ equations and inequations has a solution over reals. This system has
 
 \subsection{Menelaus's theorem}
 
+Another classical result in plane geometry is \emph{Menelaus' theorem}, formulated by Menelaus of Alexandria.
+
+Consider a triangle with vertices \(A\), \(B\) and \(C\) and a line that crosses the (possibly extended) edges \(AB\), \(BC\) and \(CA\) of the triangle at points \(D\), \(E\) and \(F\) respectively. Menelaus' theorem states that
+
+$$
+\frac{DA}{DB} \times \frac{EB}{EC} \times \frac{FC}{FA} = 1
+$$
+
+This theorem also has a converse, provided certain additional conditions are satisfied - if \(D\), \(E\) and \(F\) are points on the (possibly extended) edges of the triangle \(ABC\), and either exactly one or three of these points lie on extended edges, and the points satisfy the above equation, then they are collinear.
+
+Note that the additional condition of either exactly one or three of the points being contained on extended edges is automatically satisfied in the first statement.
+
+The above theorem is also valid when signed distances are used in place of regular distances (with signed distances, the line segments \(AB\) and \(BA\) have the same length but differ in sign). In this case, the extra condition is not required for the converse to be true.
+
 \subsection{Formulating Menelaus's theorem using polynomial (in)equations}
 
+Like Pappus' theorem, Menelaus' theorem is solved by formulating it in coordinate geometry and a system of equations in real variables.
+
+\subsubsection{Defining the variables}
+
+Three distinct points representing the vertices of the triangle \(ABC\) are arbitrarily chosen (one could optimise this by scaling and shifting the triangle to make two of the three vertices coincide with points \((0, 0)\) and \((1, 1)\) on the plane).
+
+A line passing through two points \(P\) and \(Q\) on the plane can be parameterised by a single real number \(l\). Moreover, this parameterisation can be chosen such that the value \(l = 0\) corresponds to the point \(P\) and \(l = 1\) corresponds to the point \(Q\).
+
+The three edges of the triangle - \(AB\), \(BC\), \(CA\) - can be parameterised in this manner by real numbers \(r\), \(s\) and \(t\).
+
+Since the theorem requires the transversal line to cross all three edges of the triangle, the points of intersection - \(D\), \(E\), \(F\) - correspond to some values of the parameters \(r\), \(s\) and \(t\).
+
+After defining the nine variables (six for the vertices of the triangle and three for the parameters of the edges) required to describe the setup in coordinate geometry, the next step is to formulate a system of equations describing the theorem.
+
+\subsubsection{Equations and inequations}
+
+For the "forward" part of the theorem statement, the hypothesis is that the three points of intersection - \(D\), \(E\) and \(F)\) - are collinear. As mentioned above, collinearity can be formulated as a polynomial equation in terms of the coordinates of the three points.
+
+The statement of Menelaus' theorem holds even when the regular Euclidean distances (given by $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$ for points $(x_1, y_1)$ and $(x_2, y_2)$) are replaced by the squares of the Euclidean distances ($(x_1 - x_2)^2 + (y_1 - y_2)^2$). The equation in the theorem can also be rewritten as
+
+$$
+DA \times EB \times FC = DB \times EC \times FA
+$$
+
+With these simplifications, the forward part of the theorem can be expressed as a polynomial in all the variables involved.
+
+The converse (or "reverse") statement has the additional requirement that the exactly either one or three of the intersection points lie on the extensions of edges of the triangle. Due to the way the parameterisation of the lines was chosen, a point lies on an extended edge if and only if the corresponding value of the parameter is not contained in the \(\left[0, 1\right]\) interval.
+
+The condition of a parameter $l$ being contained in the \(\left[0, 1\right]\) interval can be formulated in terms of inequations
+
+$$
+(0 < l) \wedge (l < 1)
+$$
+
+The converse of the theorem requires that out of the three parameters \(r\), \(s\), and \(t\), an odd number of them (either one or three) must \emph{not} satisfy the above condition.
+
+This can be captured using the \texttt{XOR} (exclusive \texttt{OR}, which is $true$ when exactly one of the inputs is $true$) function ($\oplus$) -
+
+$$
+\neg \left( \left( (0 < r) \wedge (r < 1) \right) \oplus \left( (0 < s) \wedge (s < 1) \right) \oplus \left( (0 < t) \wedge (t < 1) \right) \right)
+$$
+
+which is \(True\) only when an odd number of points lie on the extended edges.
+
+With these modifications, the statement of the theorem can be given to the Z3 solver in the form of a system of constraints and polynomial (in)equations over the reals.
+The theorem can be considered "proved" if the negation of the theorem statement is unsatisfiable.
 
 \section{Running \texttt{SMT} solvers}\label{running-smt-solvers}
 
@@ -370,7 +430,7 @@ fixed, the theorem was proved in about 6 seconds. However, when only
 \(3\) were fixed we could not get either solver to prove the result, in
 spite of changing parameters.
 
-\subsection{Next attempts: solving, proving Menelaus's theorem}
+\subsection{Next attempts: solving, but not proving Menelaus's theorem}
 
 Our next attempt (using a different program to interface with \texttt{Z3}) was Menelaus's theorem,
 formulated as a satisfiability problem contradicting the
@@ -383,7 +443,7 @@ minutes). Some experimentation revealed the crucial difference between
 the two programs.
 
 Indeed, when the code for Menelaus's theorem was modified to ask for a
-proof, Z3 ran for a few seconds and returned \texttt{unknown} --
+proof, \texttt{Z3} ran for a few seconds and returned \texttt{unknown} --
 presumably the system was forced to use an algorithm that returned a
 proof when the problem was not satisfiable, and this algorithm found the
 problem too hard.
@@ -417,7 +477,7 @@ other areas, are correct. Even without getting a proof this is valuable
 true, and identifying related statements that are true.
 
 The failure to solve with proofs suggests that at least show that, at present, we cannot hope to
-prove non-trivial Euclidean geometry theorems (without simply trusting \texttt{Z3}) by simply translating
+prove non-trivial Euclidean geometry theorems (without trusting \texttt{Z3}) by simply translating
 them and using \texttt{SMT} solvers. However, with the underlying solvers rapidly
 improving, the solutions in principle may become solutions in practice.
 This is especially the case if the algorithms are successfully
@@ -502,6 +562,9 @@ Boolean expression.
 	\begin{lstlisting}[language=Python, frame=single]
 def are_collinear(p, q, r):
   return ((q[1]-p[1])*(r[0]-p[0])==(r[1]-p[1])*(q[0]-p[0]))
+
+def d(p, q):
+        return (p[0]-q[0])**2 + (p[1]-q[1])**2
 
 menelaus_theorem = Implies(And(Not(are_collinear(A, B, C)), 
   are_collinear(D, E, F)), 
