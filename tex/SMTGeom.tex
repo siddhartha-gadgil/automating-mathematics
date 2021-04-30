@@ -114,7 +114,7 @@ A geometric statement is universally false (i.e., the statement never holds) if 
 
 In the 1950s, Tarski proved that whether a (finite)
 collection of polynomial equations and inequations has solutions that
-are real numbers is decidable.  Tarski's algorithm has been greatly improved,
+are real numbers is algorithmically decidable.  Tarski's algorithm has been greatly improved,
 and algorithms of a more algebraic nature have also been developed,
 improved and implemented. Yet they remain slow.
 
@@ -161,7 +161,7 @@ there is no proof of this. Whether every problem whose solution is easy
 to check has a solution that is easy to find is the \texttt{P} versus \texttt{NP}
 problem.
 
-What makes this problem specially interesting and fruitful is the
+What makes the \texttt{P} versus \texttt{NP} problem specially interesting and fruitful is the
 Cook-Levine theorem from the early 1970s. This says that if one specific
 problem (which is in NP), called the \emph{Boolean satisfiability problem} (or
 \(\texttt{SAT}\)), has a polynomial time solution, then \emph{every} problem that
@@ -185,8 +185,8 @@ is not satisfiable (which one can check by trying all $4$ possibilities for $P$ 
 Deciding whether a finite collection of clauses is satisfiable is
 the \texttt{SAT} problem.
 
-\hypertarget{sat-solvers}{%
-	\subsection{\texttt{SAT} solvers}\label{sat-solvers}}
+
+\subsection{\texttt{SAT} solvers}\label{sat-solvers}
 
 While the theoretical \texttt{P} vs \texttt{NP} problem remains mysterious, the
 Cook-Levine theorem has had some remarkable practical uses. Since so
@@ -208,7 +208,7 @@ one can readily show that there are no solutions.
 \subsection{\texttt{SMT} Solvers}
 \(\texttt{SMT}\) solvers (for \emph{Satisfiability Modulo Theories}) extend these
 ideas to handle problems that involve not just Booleans, but also
-integers and real numbers (and in general, any first-order theories). Thus, we can require that a collection of
+integers and real numbers (and, in general, any first-order theories). Thus, we can require that a collection of
 equations are satisfied, or a mixture of equations and inequations
 (examples of inequations are \(x^2 < 3\), \(x^3 \geq 3z\), and
 \(y^2 + z^2 \neq 1\)) or even a logical combination of these (for example,
@@ -325,6 +325,10 @@ equations and inequations has a solution over reals. This system has
 \(5\) inequations stating that variables are positive and an inequation
 (to contradict) stating that three points are not collinear.
 
+We shall discuss the results of our attempts to prove this in Section~\ref{running-smt-solvers}.
+Before that, we state, and translate into \texttt{SMT} form another geometric result, which 
+we also tried to prove.
+
 \subsection{Menelaus's theorem}
 
 Another classical result in geometry is \emph{Menelaus's theorem}, formulated by Menelaus of Alexandria.
@@ -341,7 +345,7 @@ $$
 	\frac{DA}{DB} \times \frac{EB}{EC} \times \frac{FC}{FA} = 1
 $$
 
-This theorem also has a converse, provided certain additional conditions are satisfied -- if \(D\), \(E\) and \(F\) are points on the (possibly extended) edges of the triangle \(ABC\), and either exactly one or three of these points lie on extended edges, and the points satisfy the above equation, then they are collinear.
+This theorem also has a converse, provided certain additional conditions are satisfied -- if \(D\), \(E\) and \(F\) are points on the (possibly extended) edges of the triangle \(ABC\), and either exactly one or exactly three of these points lie on extended edges, and the points satisfy the above equation, then they are collinear.
 
 Note that the additional condition of either exactly one or three of the points being contained on extended edges is automatically satisfied in the first statement.
 
@@ -394,7 +398,7 @@ $$
 which is \(true\) only when an odd number of points lie on the extended edges.
 
 With these modifications, the statement of the theorem can be given to the Z3 solver in the form of a system of constraints and polynomial (in)equations over the reals.
-The theorem can be considered "proved" if the negation of the theorem statement is unsatisfiable.
+The theorem is true if the negation of the theorem statement is unsatisfiable.
 
 \section{Running \texttt{SMT} solvers}\label{running-smt-solvers}
 
@@ -404,17 +408,16 @@ of constraints is satisfiable. When asked to check satisfiability, one of three 
 results is returned -- \texttt{sat}, \texttt{unsat} and \texttt{unknown}, corresponding to
 the problem being satisfiable, unsatisfiable and the chosen algorithm failing to answer
 the problem. A fourth possibility is manual interruption (i.e., the user giving up) if the solver appears to be failing
-to answer -- which is a variant of \texttt{unknown} (indeed if a timeout limit is reached this
-is what is returned).
+to answer -- which is a variant of \texttt{unknown} (indeed if a timeout limit is reached \texttt{unknown} is returned).
 
 In addition, an \texttt{SMT} solver can be asked for a
 \emph{proof} in case a problem is not satisfiable (i.e., a proof that
 the problem has no solution) or a \emph{model} -- values for variables
 that satisfy the constraint -- in case the problem is satisfiable.
 
-\subsection{First attempt: Proving Pappus theorem}
+\subsection{First attempt: proving Pappus theorem}
 
-When asked to solve the satisfiability problem \textbf{with proof},
+When asked to solve the satisfiability problem \emph{with proof},
 neither of the \texttt{SMT} solvers \texttt{Z3} and \texttt{CVC4} was able to
 prove the Pappus hexagon theorem. This was in spite of our (non-expert)
 attempts at changing their parameters to raise various limits,
@@ -436,7 +439,7 @@ fixed, the theorem was proved in about 6 seconds. However, when only
 \(3\) were fixed we could not get either solver to prove the result, in
 spite of changing parameters.
 
-\subsection{Next attempts: solving, but not proving Menelaus's theorem}
+\subsection{Next attempts: solving (but not proving) Menelaus's theorem}
 
 Our next attempt (using a different program to interface with \texttt{Z3}) was Menelaus's theorem,
 formulated as a satisfiability problem contradicting the
@@ -446,7 +449,7 @@ with \texttt{unsat} as the answer (as needed to obtain a contradiction).
 But there was a twist to the tale. When we used the same setup as that for the Pappus theorem,
 \texttt{Z3} failed to solve the problem (when running for about 10
 minutes). Some experimentation revealed the crucial difference between
-the two programs.
+the two programs was that in the latter we were asking for a proof.
 
 Indeed, when the code for Menelaus's theorem was modified to ask for a
 proof, \texttt{Z3} ran for a few seconds and returned \texttt{unknown} --
@@ -469,10 +472,7 @@ When run in this way, \texttt{Z3} solved the problem instantly (in 0.02 seconds)
 
 The above experiments showed that when asked for a proof, the choice of algorithms by \texttt{Z3}
 was different, either taking much longer (effectively not terminating),
-or explicitly giving up -- in addition to \texttt{sat} (satisfiable) and
-\texttt{unsat} (not satisfiable), \texttt{SMT} solvers can give the outcome
-\texttt{unknown} (due to failure or timeout of the available
-algorithms).
+or explicitly giving up.
 
 As we have seen, when asked only for a solution, \texttt{Z3} could quickly and correctly solve the
 satisfiability problems corresponding to the two theorems.
@@ -482,7 +482,7 @@ other areas, are correct. Even without getting a proof this is valuable
 -- at the least avoiding time and effort being spent on what is not
 true, and identifying related statements that are true.
 
-The failure to solve with proofs suggests that at least show that, at present, we cannot hope to
+The failure to solve with proofs suggests that, at least at present, we cannot hope to
 prove non-trivial Euclidean geometry theorems (without trusting \texttt{Z3}) by simply translating
 them and using \texttt{SMT} solvers. However, with the underlying solvers rapidly
 improving, the solutions in principle may become solutions in practice.
@@ -497,15 +497,7 @@ particular, while it is known that in the worst case any algorithm must
 be slow, perhaps there are special features in cases of interest that
 allow speeding up.
 
-\section{Appendix: running \texttt{Z3} and the \texttt{SMT} format}
-
-\texttt{SMT} solvers such as \texttt{Z3} can be run from many languages (in case of \texttt{Z3} we
-can use Python, C++, Java and other JVM languages such as Scala). But
-one nice way to run these, and especially to examine the problems being
-solved, is to use a standard format called \textbf{\texttt{SMT2}} which all \texttt{SMT}
-solvers support (this can be run interactively or as a file from the
-command line).
-
+\section*{Appendix: running \texttt{Z3} and the \texttt{SMT} format}
 
 \begin{figure}
 	\begin{lstlisting}[language=LISP, frame=single]
@@ -547,10 +539,17 @@ command line).
 	\caption{SMT format for Pappus theorem}\label{smt-pappus}
 \end{figure}
 
+\texttt{SMT} solvers such as \texttt{Z3} can be run from many languages (in case of \texttt{Z3} we
+can use Python, C++, Java and other JVM languages such as Scala). But
+one nice way to run these, and especially to examine the problems being
+solved, is to use a standard format called \textbf{\texttt{SMT2}} which all \texttt{SMT}
+solvers support (this can be run interactively or as a file from the
+command line).
+
 As an example, we give the \texttt{SMT2} code for the Pappus problem in Figure~\ref{smt-pappus}. This is a language
 with syntax (following LISP/Scheme) that is easy for both machines and
 people to read. Each statement is a so called \textbf{S-expression}
-(symbolic expression), which is a list enclosed in parenthesis.
+(i.e., symbolic expression), which is a list enclosed in parenthesis.
 Operators and functions come in the beginning, so we write, for example,
 \texttt{(+\ 2\ 3)} for \(2 + 3\) and \texttt{(=\ (+\ 2\ 3)\ (+\ 3\ 2))}
 for \(2 + 3 = 3 + 2\). In general, an S-expression is a list, enclosed
