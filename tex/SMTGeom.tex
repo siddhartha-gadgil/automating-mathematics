@@ -273,7 +273,7 @@ always collinear. Observe that the condition of not being collinear just
 means that equation in the above equation is replaced by the inequation
 \((y_2 - y_1)(x_3 - x_1) \neq (y_3 - y_1)(x_2 - x_1)\).
 
-Indeed the solvers \texttt{Z3} and \texttt{CVC4} (another \texttt{SMT} solver, and the champion in the 
+Indeed the solvers \texttt{Z3} and \texttt{CVC4} (another \texttt{SMT} solver, and the champion in the
 latest competition for \texttt{SMT} solvers) proved this result instantly -- more
 precisely, \texttt{Z3} took \(0.012\) seconds and \texttt{CVC4} took \(0.094\) seconds.
 
@@ -327,15 +327,21 @@ equations and inequations has a solution over reals. This system has
 
 \subsection{Menelaus's theorem}
 
-Another classical result in plane geometry is \emph{Menelaus' theorem}, formulated by Menelaus of Alexandria.
+Another classical result in geometry is \emph{Menelaus's theorem}, formulated by Menelaus of Alexandria.
 
-Consider a triangle with vertices \(A\), \(B\) and \(C\) and a line that crosses the (possibly extended) edges \(AB\), \(BC\) and \(CA\) of the triangle at points \(D\), \(E\) and \(F\) respectively. Menelaus' theorem states that
+\begin{figure}
+	\includegraphics[scale=0.15]{MenelausIllustration.png}
+	\caption{Menelaus's theorem}\label{F:menelaus}
+\end{figure}
+
+Consider a triangle with vertices \(A\), \(B\) and \(C\) and a line that crosses the (possibly extended) edges \(AB\), \(BC\) and \(CA\) 
+of the triangle at points \(D\), \(E\) and \(F\) respectively, as in Figure~\ref{F:menelaus}. Menelaus's theorem states that
 
 $$
-\frac{DA}{DB} \times \frac{EB}{EC} \times \frac{FC}{FA} = 1
+	\frac{DA}{DB} \times \frac{EB}{EC} \times \frac{FC}{FA} = 1
 $$
 
-This theorem also has a converse, provided certain additional conditions are satisfied - if \(D\), \(E\) and \(F\) are points on the (possibly extended) edges of the triangle \(ABC\), and either exactly one or three of these points lie on extended edges, and the points satisfy the above equation, then they are collinear.
+This theorem also has a converse, provided certain additional conditions are satisfied -- if \(D\), \(E\) and \(F\) are points on the (possibly extended) edges of the triangle \(ABC\), and either exactly one or three of these points lie on extended edges, and the points satisfy the above equation, then they are collinear.
 
 Note that the additional condition of either exactly one or three of the points being contained on extended edges is automatically satisfied in the first statement.
 
@@ -343,7 +349,7 @@ The above theorem is also valid when signed distances are used in place of regul
 
 \subsection{Formulating Menelaus's theorem using polynomial (in)equations}
 
-Like Pappus' theorem, Menelaus' theorem is solved by formulating it in coordinate geometry and a system of equations in real variables.
+Like Pappus' theorem, Menelaus's theorem is solved by formulating it in coordinate geometry, and then as a system of equations and inequations in real variables.
 
 \subsubsection{Defining the variables}
 
@@ -351,41 +357,41 @@ Three distinct points representing the vertices of the triangle \(ABC\) are arbi
 
 A line passing through two points \(P\) and \(Q\) on the plane can be parameterised by a single real number \(l\). Moreover, this parameterisation can be chosen such that the value \(l = 0\) corresponds to the point \(P\) and \(l = 1\) corresponds to the point \(Q\).
 
-The three edges of the triangle - \(AB\), \(BC\), \(CA\) - can be parameterised in this manner by real numbers \(r\), \(s\) and \(t\).
+The three edges of the triangle -- \(AB\), \(BC\), \(CA\) -- can be parameterised in this manner by real numbers \(r\), \(s\) and \(t\).
 
-Since the theorem requires the transversal line to cross all three edges of the triangle, the points of intersection - \(D\), \(E\), \(F\) - correspond to some values of the parameters \(r\), \(s\) and \(t\).
+Since the theorem requires the transversal line to cross all three edges of the triangle, the points of intersection -- \(D\), \(E\), \(F\) -- correspond to some values of the parameters \(r\), \(s\) and \(t\).
 
 After defining the nine variables (six for the vertices of the triangle and three for the parameters of the edges) required to describe the setup in coordinate geometry, the next step is to formulate a system of equations describing the theorem.
 
 \subsubsection{Equations and inequations}
 
-For the "forward" part of the theorem statement, the hypothesis is that the three points of intersection - \(D\), \(E\) and \(F)\) - are collinear. As mentioned above, collinearity can be formulated as a polynomial equation in terms of the coordinates of the three points.
+For the \emph{forward} part of the theorem statement, the hypothesis is that the three points of intersection -- \(D\), \(E\) and \(F\) -- are collinear. As mentioned above, collinearity can be formulated as a polynomial equation in terms of the coordinates of the three points.
 
-The statement of Menelaus' theorem holds even when the regular Euclidean distances (given by $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$ for points $(x_1, y_1)$ and $(x_2, y_2)$) are replaced by the squares of the Euclidean distances ($(x_1 - x_2)^2 + (y_1 - y_2)^2$). The equation in the theorem can also be rewritten as
+The statement of Menelaus'stheorem holds even when the regular Euclidean distances (given by $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$ for points $(x_1, y_1)$ and $(x_2, y_2)$) are replaced by the squares of the Euclidean distances ($(x_1 - x_2)^2 + (y_1 - y_2)^2$). The equation in the theorem can also be rewritten as
 
 $$
-DA \times EB \times FC = DB \times EC \times FA
+	DA \times EB \times FC = DB \times EC \times FA
 $$
 
 With these simplifications, the forward part of the theorem can be expressed as a polynomial in all the variables involved.
 
-The converse (or "reverse") statement has the additional requirement that the exactly either one or three of the intersection points lie on the extensions of edges of the triangle. Due to the way the parameterisation of the lines was chosen, a point lies on an extended edge if and only if the corresponding value of the parameter is not contained in the \(\left[0, 1\right]\) interval.
+The converse (or \emph{reverse}) statement has the additional requirement that the either exactly one or exactly three of the intersection points lie on the extensions of edges of the triangle. Due to the way the parameterisation of the lines was chosen, a point lies on an extended edge if and only if the corresponding value of the parameter is not contained in the \(\left[0, 1\right]\) interval.
 
 The condition of a parameter $l$ being contained in the \(\left[0, 1\right]\) interval can be formulated in terms of inequations
 
 $$
-(0 < l) \wedge (l < 1)
+	(0 < l) \wedge (l < 1)
 $$
 
 The converse of the theorem requires that out of the three parameters \(r\), \(s\), and \(t\), an odd number of them (either one or three) must \emph{not} satisfy the above condition.
 
-This can be captured using the \texttt{XOR} (exclusive \texttt{OR}, which is $true$ when exactly one of the inputs is $true$) function ($\oplus$) -
+This can be captured using the \texttt{XOR} (exclusive \texttt{OR}, which is $true$ when exactly one of the inputs is $true$) function ($\oplus$) --
 
 $$
-\neg \left( \left( (0 < r) \wedge (r < 1) \right) \oplus \left( (0 < s) \wedge (s < 1) \right) \oplus \left( (0 < t) \wedge (t < 1) \right) \right)
+	\neg \left( \left( (0 < r) \wedge (r < 1) \right) \oplus \left( (0 < s) \wedge (s < 1) \right) \oplus \left( (0 < t) \wedge (t < 1) \right) \right)
 $$
 
-which is \(True\) only when an odd number of points lie on the extended edges.
+which is \(true\) only when an odd number of points lie on the extended edges.
 
 With these modifications, the statement of the theorem can be given to the Z3 solver in the form of a system of constraints and polynomial (in)equations over the reals.
 The theorem can be considered "proved" if the negation of the theorem statement is unsatisfiable.
@@ -408,10 +414,10 @@ that satisfy the constraint -- in case the problem is satisfiable.
 
 \subsection{First attempt: Proving Pappus theorem}
 
-When asked to solve the satisfiability problem \textbf{with proof}, 
+When asked to solve the satisfiability problem \textbf{with proof},
 neither of the \texttt{SMT} solvers \texttt{Z3} and \texttt{CVC4} was able to
 prove the Pappus hexagon theorem. This was in spite of our (non-expert)
-attempts at changing their parameters to raise various limits, 
+attempts at changing their parameters to raise various limits,
 and allowing them to run for hours.
 
 To try to assess how far they were from proving the theorem, we attempted
@@ -557,9 +563,9 @@ generally be used to declare functions), or asserting conditions using a
 statement \texttt{(assert\ <expression>)} for a
 Boolean expression.
 
-{\small
-\begin{figure}
-	\begin{lstlisting}[language=Python, frame=single]
+	{\small
+		\begin{figure}
+			\begin{lstlisting}[language=Python, frame=single]
 def are_collinear(p, q, r):
   return ((q[1]-p[1])*(r[0]-p[0])==(r[1]-p[1])*(q[0]-p[0]))
 
@@ -570,9 +576,9 @@ menelaus_theorem = Implies(And(Not(are_collinear(A, B, C)),
   are_collinear(D, E, F)), 
   d(A, D) * d(B, E) * d(C, F) == d(D, B) * d(E, C) * d(F, A))
 \end{lstlisting}
-	\caption{Extract of Python code for Menelaus's theorem}\label{python-menelaus}
-\end{figure}
-}
+			\caption{Extract of Python code for Menelaus's theorem}\label{python-menelaus}
+		\end{figure}
+	}
 
 Incidentally, we have run \texttt{Z3} in a few ways -- using Python, using Scala
 via the Java API and using Scala to generate code in the \texttt{SMT2} language
