@@ -71,6 +71,13 @@
 \address{Indian Institute of Science Education and Research\\
 	Pune.}
 
+\begin{abstract}
+	Tarski showed in the 1950s that (first-order) questions in Euclidean geometry can be answered algorithmically. 
+	Algorithms for doing this have greatly improved over the decades, but still have high complexity (in terms of time taken). 
+	We experiment with using state-of-the art software, specifically so called \emph{SMT Solvers}, to see how practical it is 
+	to prove classical Euclidean geometry results in this way. 
+\end{abstract}
+
 \maketitle
 
 Computers are able to solve an increasing range of problems, many of
@@ -122,7 +129,7 @@ This article is about our experiments to use
 state-of-the-art solvers to try in practice to prove such results.
 These experiments were prompted by a lecture
 to undergraduate students, during which \texttt{Z3}, a high-performance
-solver from Microsoft, was used to solve a Sudoku problem (a standard demo for
+solver from Microsoft (which is open source), was used to solve a Sudoku problem (a standard demo for
 this technology). The puzzle was duly solved instantly. You can see such
 a demo \href{https://rise4fun.com/Z3/Cs7p}{online}, but the online
 version is slow.
@@ -137,10 +144,11 @@ but not when it was asked to give a solution with proof.
 Especially as these systems are vastly improving, it seems worthwhile to
 write about how such systems can be used at least in principle,
 especially since this does not seem to be widely known. We remark that the 
-specific problems can also be investigated using symbolic algebra software such 
+specific problems considered by us can also be investigated using symbolic algebra software such 
 as Mathematica and Maple.
 
-An interactive notebook with code for our examples is available onlineon Binder at \url{https://bit.ly/3e5bhfA}\footnote{Full link:\\\url{https://hub.gke2.mybinder.org/user/siddhartha-gadg-ing-mathematics-2x6efnix/notebooks/jupyter_notebook/SMTSolverDemonstration.ipynb}}.
+An interactive notebook with code for our examples is available onlineon Binder at 
+\url{https://bit.ly/3e5bhfA}\footnote{Full link:\\\url{https://hub.gke2.mybinder.org/user/siddhartha-gadg-ing-mathematics-2x6efnix/notebooks/jupyter_notebook/SMTSolverDemonstration.ipynb}}.
 
 \hypertarget{p-versus-np-and-satsmt-solvers}{%
 	\section{P versus NP and \texttt{SAT}/\texttt{SMT}
