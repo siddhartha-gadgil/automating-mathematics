@@ -129,8 +129,8 @@ improved and implemented. Yet they remain slow.
 This article is about our experiments to use
 state-of-the-art solvers to try in practice to prove such results.
 These experiments were prompted by a lecture
-to undergraduate students, during which \href{https://github.com/Z3Prover/z3}{\texttt{Z3}}, a high-performance
-solver from Microsoft (which is open source), was used to solve a Sudoku problem (a standard demo for this technology). The puzzle was duly solved instantly. You can see such
+to undergraduate students, during which \href{https://github.com/Z3Prover/z3}{\texttt{Z3}}, a high-performance (open source)
+solver from Microsoft, was used to solve a Sudoku problem (a standard demo for this technology). The puzzle was duly solved instantly. You can see such
 a demo \href{https://rise4fun.com/Z3/Cs7p}{online}, but the online
 version is slow.
 
@@ -383,17 +383,18 @@ After defining the nine variables (six for the vertices of the triangle and thre
 
 For the \emph{forward} part of the theorem statement, the hypothesis is that the three points of intersection -- \(D\), \(E\) and \(F\) -- are collinear. As mentioned above, collinearity can be formulated as a polynomial equation in terms of the coordinates of the three points.
 
-The statement of Menelaus's theorem holds even when the regular Euclidean distances (given by $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$ for points $(x_1, y_1)$ and $(x_2, y_2)$) are replaced by the squares of the Euclidean distances ($(x_1 - x_2)^2 + (y_1 - y_2)^2$). The equation in the theorem can also be rewritten as
-
+Since the Euclidean distance (given by $\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$, for pairs of points $(x_1, y_1)$ and $(x_2, y_2)$) involves square roots, we reformulate the theorem into an equivalent form. Namely, as distances are positive, the equation in the theorem can also be rewritten as
+$$\left(\frac{DA}{DB} \times \frac{EB}{EC} \times \frac{FC}{FA}\right)^2 = 1,$$
+or equivalently
 $$
-	DA \times EB \times FC = DB \times EC \times FA
+	(DA)^2 \times (EB)^2 \times (FC)^2 = (DB)^2 \times (EC)^2 \times (FA)^2
 $$
 
-With these simplifications, the forward part of the theorem can be expressed as a polynomial in all the variables involved.
+With these simplifications, as the square of the distance is a polynomial, the forward part of the theorem can be expressed as a polynomial in all the variables involved.
 
 The converse (or \emph{reverse}) statement has the additional requirement that the either exactly one or exactly three of the intersection points lie on the extensions of edges of the triangle. Due to the way the parameterisation of the lines was chosen, a point lies on an extended edge if and only if the corresponding value of the parameter is \emph{not} contained in the \(\left[0, 1\right]\) interval.
 
-The condition of a parameter $l$ being contained in the \(\left[0, 1\right]\) interval can be formulated in terms of inequations
+The condition of a parameter $l$ being contained in the \(\left(0, 1\right)\) interval can be formulated in terms of inequations
 
 $$
 	(0 < l) \wedge (l < 1)
@@ -461,7 +462,7 @@ with \texttt{unsat} as the answer (as needed to obtain a contradiction).
 But there was a twist to the tale. When we used the same setup as that for the Pappus theorem,
 \texttt{Z3} failed to solve the problem (when running for about 10
 minutes). Some experimentation revealed the crucial difference between
-the two programs was that in the former we were asking for a proof.
+the two programs was that in the one obtained by modifying the Pappus attempt we were asking for a proof.
 
 Indeed, when the code for Menelaus's theorem was modified to ask for a
 proof, \texttt{Z3} ran for a few seconds and returned \texttt{unknown} --
