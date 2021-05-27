@@ -164,4 +164,44 @@ On the other hand, the 3-Queens problem has no solutions. Indeed, our program gi
 
 ## Solving SAT
 
+We now describe the algorithm we implemented to solve `SAT` for a collection of clauses, giving either an assignment of truth values that satisfies all the clauses or a contradiction using resolution starting with the given clauses. We shall see this in stages.
 
+### Recursive solving: the DP algorithm
+
+We pick a variable `$P$` and look for solutions first when `$P$` is assigned the value true and then when it is assigned false (in our code we actually randomize the order of the branches). For solutions where `$P$` is true:
+
+- Any clause containing `$P$` is true, so can be dropped.
+- Any clause of the form `$\neg P\vee l_1\vee\dots\veel_n$` (up to reordering) is true if and only the clause `$C =l_1\vee\dots\veel_n$` obtained by dropping `$\neg P$` is true. We can thus replace `$\cnegP \vee C := \neg P\vee l_1\vee\dots\veel_n$` by `$C$` when considering solutions with `$P$` true.
+- Finally, clauses `$C$` containing neither `$P$` nor `$\neg P$` are unaffected, and should be satisfied even after assigning `$P$`.
+
+We thus get an instance of `SAT`, which we call the restricted problem, with fewer variables and in general fewer clauses. If the restricted problem has a solution then we get a solution to the original problem. Otherwise we look for a solution where `$P$` is false, once more obtaining a restricted `SAT` problem with fewer variables. If the latter problem has a solution so does the original one. If not, we know both the restricted problems have no solutions. Since `$P$` must be true or false, the original problem has no solution.
+
+Thus, we can reduce the solution of a `SAT` problem to the solution of `SAT` problems with fewer variables. This gives a recursive algorithm once we solve in the base case, which is the case with no variables. But in this case the only clause is the empty clause. Thus there are only two `SAT` problems.
+
+- The set of clauses is empty. Here every clause is satisfied, so there is a solution.
+- The set of clauses is a singleton, the empty clause. This is not satisfiable as the empty clause cannot be satisfied.
+
+Using the above, we get an algorithm for the `SAT` problem.
+
+### DLPP algorithm
+
+There are two ways in which the DP algorithm can be imdeduced, giving the DLPP algorithm. Firstly, if some clause is a _unit literal_, i.e., a literal `$l$` with `$l = P$` or `$l = \neg P$`, then `$P$` must be assigned the value that makes `$l$` true. On doing this, all clauses containing `$l$` are true and can be dropped, while a clause of the form `$\neg l\vee C$` can be replaced by the clause `$C$` obtained by deleting `$\neg l$`. On making such simplifications, new units may be created and this process repeated. For instance, if each clause has length 2 (so called `2-SAT`), this clearly gives a fast algorithm.
+
+A second improvement is to use _pure literals_, literals `$l$` so that `$\neg l$` is not present in any clause. Then the `SAT` problem has a solution if and only if it has a solution with `$l$` true. Hence we can assign the value of the variable `$P$` with `$l = P$` or `$l = \neg P$` to make `$l$` true, and drop all the clauses containing `$l$`.
+
+We have implemented this without further heuristics, except for some use of a _conflict driven_ approach to avoid full back-tracking, based on
+keeping track of proofs. We next sketch how we keep track of proofs (the algorithmic improvement will be evident).
+
+### Lifting proofs
+
+Suppose the given `SAT` problem has no solution, as discovered by our recursive algorithm. We can enhance our algorithm to in this case give a proof using resolution of a contradiction starting with the given clauses. We sketch this here. The main step is the _lifting_ of a proof from a restricted problem.
+
+To start with consider the base case where there is no variable. Here if the `SAT` problem is not satisfiable, we must have an empty clause. Thus a given clause is itself a contradiction.
+
+Now consider the general case with `$n$` variables (that are not assigned), and assume that our algorithm gives either a solution or a contradiction using resolution whenever we have fewer than `$n$` variables (that are not assigned). Pick a variable `$P$` and assign a truth value to this, say true. As above, we get a restricted problem collection of clauses not involving the variable `$P$`.
+
+Suppose the original problem has no solution, then the restricted problem does not either. Hence using resolution, we can deduce a contradiction starting with the clauses of the restricted problem. However note that some of the clauses `$C$` of the restricted problem are not clauses in the original problem &ndash; instead the clause `$\neg P\vee C$` is given in the original problem. Nevertheless we can lift the proof of a contradiction to something useful.
+
+Namely, we claim that if any clause `$C$` is deduced using resolution in the restricted problem, then either `$\neg P\vee C$` or `$C$` itself can be deduced by resolution in the original problem. By construction this is true for all the initial clauses in the restricted problem. As none of the clauses in the restricted problem involves `$P$`, if the claim holds for a pair of clauses it holds for the result by resolution as well. By induction we see that this holds for all clauses that can be deduced by resolution in the restricted problem.
+
+We apply the claim to the contradiction, i.e., the empty clause. Thus either a contradiction or `$\neg P$` can be deduced by resolution. If we have deduced a contradiction, we are done. Otherwise we have deduced `$\neg P$`. But we apply the same algorithm to the restricted problem when `$P$` is taken as false. In this case we deduce either a contradiction or `$P$`. Thus, we either have a contradiction or both `$P$` and `$\neg P$`. In the latter case resolution gives a contradiction.
