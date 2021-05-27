@@ -32,3 +32,6 @@ publishDir = "docs"
       {Name = "Superficial", URL = "https://github.com/siddhartha-gadgil/Superficial/"},
       {Name = "Automating Mathematics group", URL="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"}
   ]
+[outputFormats]
+  [outputFormats.html]
+    isPlainText = true
