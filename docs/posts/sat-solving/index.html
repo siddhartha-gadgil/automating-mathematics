@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sat Solving &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+  
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+    </script>
+    <style>
+    .sidebar-about h1{
+        font-size: 2.6rem !important;
+    } 
+    </style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Sat Solving</h1>
+  <time datetime=2021-05-18T08:53:42&#43;0530 class="post-date">Tue, May 18, 2021</time>
+  <p>To better understand the <code>SAT</code> (i.e., <em>boolean satisfiability</em>) problem and <code>SAT</code> solvers, I decided to implement a basic one. I was pleasantly surprised that wikipedia has enough details to implement the so called <strong>DLPP</strong> algorithm quite easily, with even some improvements described in wikipedia. Even better, in the case when there was no solution, the same algorithm gives a proof that there is no solution. The proof that there is no solution was based on <em>resolution</em> due to Davis-Putnam — so the algorithm gives as a bonus a proof that resolution is refutation complete for propositional calculus.</p>
+<p>The code corresponding to this blog is in the <code>fol</code> project of my <a href="https://github.com/siddhartha-gadgil/ProvingGround">ProvingGround</a> repository.</p>
+<h2 id="the-sat-boolean-satisfiability-problem">The <code>SAT</code> (Boolean satisfiability) problem</h2>
+<p>Suppose we are given finitely many variables <code>$P$</code>, <code>$Q$</code>, &hellip; which are <em>boolean</em>, i.e. represent whether a statement is true or false, and finitely many relations among them. The relations are logical statements built from the variables using logical operators such as <code>$\neg$</code> (<em>not</em>), <code>$\vee$</code>(<em>or</em>), <code>$\wedge$</code>(<em>and</em>), <code>$\Rightarrow$</code>(<em>implies</em>) and <code>$\Leftrightarrow$</code> (<em>equivalent</em>). The  <code>SAT</code> (<em>boolean satisfiability</em>) problem  asks whether we can assign truth values to these (i.e., declare each of <code>$P$</code>, <code>$Q$</code> , &hellip; to be <code>true</code> or <code>false</code>) so that all the relations are satisfied.</p>
+<p>In the sequel, we shall use the standard logic terminology. Logical statements are called <em>Propositions</em> (these can be either true or false, unlike the standard meaning of the word proposition in mathematics). Statements built from logical variables by logical operators are called <em>formulas</em>. All the variables we consider are boolean. Note that a boolean variable is itself a formula.</p>
+<h2 id="cnf">CNF</h2>
+<p>If <code>$P$</code> is a (boolean) variable, the formulas <code>$P$</code> and <code>$\neg P$</code> are called <em>literals</em>. A <em>clause</em> is a formula of the form <code>$l_1\vee l_2\vee\dots\vee l_n$</code> with each <code>$l_i$</code> a literal. A formula in <strong>CNF</strong> is a formula of the form <code>$C_1\wedge C_2\wedge\dots\wedge C_m$</code> such that each <code>$C_j$</code> is a clause. Observe that <code>$C_1\wedge C_2\wedge\dots\wedge C_m$</code> is satisfied if and only if all the formulas <code>$C_j$</code> are satisfied. Hence we can (and will) view a formula in <code>$CNF$</code> as a collection of clauses, all of which are required to be satisfied.</p>
+<p>Any formula can be rewritten as a CNF formula to which it is equivalent. Namely, we first rewrite all instances of <code>$A\Rightarrow B$</code> as <code>$\neg B\vee A$</code> and <code>$A\Leftrightarrow B$</code> as <code>$(\neg A\wedge \neg B)\vee (A\wedge B)$</code> to eliminate operators other than <code>$\vee$</code>, <code>$\wedge$</code> and <code>$\neg$</code>. Next we use <code>$\neg(A \vee B) = \neg A \wedge \neg B$</code> and <code>$\neg(A \wedge B) = \neg A \vee \neg B$</code> recursively to rewrite the formula as combinations of literals using <code>$\vee$</code> and <code>$\wedge$</code> only. Finally, using the distributivity property <code>$A \vee (B\wedge C)= (A\vee B)\wedge (A \vee C)$</code> recursively we get a formula in CNF.</p>
+<h3 id="tautologies-and-contradictions">Tautologies and Contradictions</h3>
+<p>Since <code>$l\vee l = l$</code>, we can assume that no literal appears more than once in a clause. Further, if a clause contains both <code>$P$</code> and <code>$\neg P$</code> for some variable <code>$P$</code>, then this clause is always true, i.e., is a <em>tautology</em>. We can drop such clauses. We henceforth assume both these simplifications have been made.</p>
+<p>On the other hand, an empty clause can never be satisfied (as <em>some</em> literal in the clause must be true for it to be satisfied). Thus, an empty clause is a <em>contradiction</em>, and we denote it by <code>$\bot$</code>. In particular, the formula in CNF has an empty clause, then it cannot be satisfied. This will rarely happen, but we shall see how to deduce new clauses in such a way as to get an empty clause for unsatisfiable formulas.</p>
+<h3 id="resolution">Resolution</h3>
+<p>Given two clauses of the form <code>$C = P\vee l_1\vee l_2\vee \dots\vee l_n$</code> and <code>$C' = P\vee l'_1\vee l'_2\vee \dots\vee l'_{n'}$</code> (after possibly reordering literals), we can deduce the clause <code>$l_1\vee l_2\vee \dots\vee l_n\vee l'_1\vee l'_2\vee \dots\vee l'_{n'}$</code>. Namely, if <code>$P$</code> is false then as <code>$C$</code> is true we must have <code>$l_1\vee l_2\vee \dots\vee l_n$</code>. On the other hand if <code>$P$</code> is true, as <code>$C'$</code> is true we must have <code>$l'_1\vee l'_2\vee \dots\vee l'_{n'}$</code>. Either way, <code>$l_1\vee l_2\vee \dots\vee l_n\vee l'_1\vee l'_2\vee \dots\vee l'_{n'}$</code> holds.</p>
+<p>The clause <code>$l_1\vee l_2\vee \dots\vee l_n\vee l'_1\vee l'_2\vee \dots\vee l'_{n'}$</code> is said to be obtained by <em>resolution</em> from <code>$C$</code> and <code>$C'$</code>. A theorem of Martin Davis and Hilary Putnam says that resolution is <em>refutation complete</em> not just for <code>SAT</code> but in a more general context, namely first-order logic. This means that if a collection of clauses is not satisfiable, then we can deduce the empty clause by (repeated) resolution starting with the given clauses. Note that the final step will be resolving (singleton) clauses of the form <code>$P$</code> and <code>$\neg P$</code> to get the empty clause <code>$\bot$</code>.</p>
+<p>The algorithm we implement gives either a solution to a collection of clauses or a deduction using resolution of the empty clause <code>$\bot$</code>. Thus, we get in particular a proof that resolution is refutation complete in the context of <code>SAT</code>.</p>
+<h2 id="an-example-the-n-queens-problem">An example: the N-Queens problem</h2>
+<p>Before we sketch our algorithm, we consider a class of examples, namely the N-Queens problem. This asks whether we can place <code>$N$</code> queens on an <code>$N\times N$</code> chessboard with no two queens attacking each other.</p>
+<p>To formulate this in terms of <code>SAT</code>, we consider a collection of <code>$N^2$</code> boolean variables <code>QueenAt(i, j)</code> for <code>$0 \leq i, j &lt; N$</code> representing whether a queen is present at the corresponding square on the grid (as is common with programs the indices begin at <code>$0$</code>). As is usual, instead of using (the clumsy) equation for their being (at least) <code>$N$</code> queens on the board, we use <code>$N$</code> equations saying that each row has a queen. We also have a bunch of equation for queens not attacking each other horizontally, vertically and along diagonals. These equations are generated (programmatically) as clauses.</p>
+<h3 id="solution-to-8-queens">Solution to 8-Queens</h3>
+<p>The classical 8-Queens problem is solved instantly. A little scripting lets us display the solution in a table (using a unicode character for the queen).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>♕</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>♕</td>
+</tr>
+<tr>
+<td>♕</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>♕</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>♕</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>♕</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>♕</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>♕</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="no-solution-for-3-queens">No solution for 3-Queens</h3>
+<p>On the other hand, the 3-Queens problem has no solutions. Indeed, our program gives a proof of this by deducing a contradiction using resolution, starting with the assumptions. A little scripting lets us write this solution as nested lists, with resolutions written in terms of the final clause being deduced from the given clauses. This gives a tree-like structure, with the root a contradiction and the leaves the given assumptions.</p>
+<ul>
+<li><em>Contradiction</em> <strong>from</strong> (¬QueenAt(1,0)) <strong>and</strong> (QueenAt(1,0)),
+<strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,0)) <strong>from</strong> (¬QueenAt(1,0) ∨ QueenAt(0,0)) <strong>and</strong>
+(¬QueenAt(0,0) ∨ ¬QueenAt(1,0)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,0) ∨ QueenAt(0,0)) <strong>from</strong> (¬QueenAt(1,0) ∨
+¬QueenAt(0,2)) <strong>and</strong> (¬QueenAt(1,0) ∨ QueenAt(0,0) ∨
+QueenAt(0,2)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,0) ∨ ¬QueenAt(0,2)) <strong>from</strong> (¬QueenAt(1,0)
+∨ QueenAt(2,2)) <strong>and</strong> (¬QueenAt(0,2) ∨ ¬QueenAt(2,2)),
+<strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,0) ∨ QueenAt(2,2)) <strong>from</strong>
+(¬QueenAt(2,1) ∨ ¬QueenAt(1,0)) <strong>and</strong>
+(¬QueenAt(1,0) ∨ QueenAt(2,1) ∨ QueenAt(2,2)),
+<strong>using</strong>
+<ul>
+<li>(¬QueenAt(2,1) ∨ ¬QueenAt(1,0)) by assumption</li>
+<li>(¬QueenAt(1,0) ∨ QueenAt(2,1) ∨ QueenAt(2,2))
+<strong>from</strong> (¬QueenAt(2,0) ∨ ¬QueenAt(1,0)) <strong>and</strong>
+(QueenAt(2,1) ∨ QueenAt(2,2) ∨ QueenAt(2,0)),
+<strong>using</strong>
+<ul>
+<li>(¬QueenAt(2,0) ∨ ¬QueenAt(1,0)) by
+assumption</li>
+<li>(QueenAt(2,1) ∨ QueenAt(2,2) ∨ QueenAt(2,0))
+by assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(¬QueenAt(0,2) ∨ ¬QueenAt(2,2)) by assumption</li>
+</ul>
+</li>
+<li>(¬QueenAt(1,0) ∨ QueenAt(0,0) ∨ QueenAt(0,2)) <strong>from</strong>
+(¬QueenAt(0,1) ∨ ¬QueenAt(1,0)) <strong>and</strong> (QueenAt(0,0) ∨
+QueenAt(0,2) ∨ QueenAt(0,1)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(0,1) ∨ ¬QueenAt(1,0)) by assumption</li>
+<li>(QueenAt(0,0) ∨ QueenAt(0,2) ∨ QueenAt(0,1)) by
+assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(¬QueenAt(0,0) ∨ ¬QueenAt(1,0)) by assumption</li>
+</ul>
+</li>
+<li>(QueenAt(1,0)) <strong>from</strong> (QueenAt(1,0) ∨ QueenAt(2,1)) <strong>and</strong>
+(¬QueenAt(2,1) ∨ QueenAt(1,0)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,0) ∨ QueenAt(2,1)) <strong>from</strong> (QueenAt(1,2) ∨
+QueenAt(1,0) ∨ QueenAt(2,1)) <strong>and</strong> (¬QueenAt(1,2) ∨
+QueenAt(2,1)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,2) ∨ QueenAt(1,0) ∨ QueenAt(2,1)) <strong>from</strong>
+(QueenAt(1,2) ∨ QueenAt(1,0) ∨ ¬QueenAt(2,0)) <strong>and</strong>
+(QueenAt(1,2) ∨ QueenAt(1,0) ∨ QueenAt(2,0) ∨
+QueenAt(2,1)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,2) ∨ QueenAt(1,0) ∨ ¬QueenAt(2,0))
+<strong>from</strong> (QueenAt(1,1) ∨ QueenAt(1,2) ∨
+QueenAt(1,0)) <strong>and</strong> (¬QueenAt(2,0) ∨
+¬QueenAt(1,1)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,1) ∨ QueenAt(1,2) ∨ QueenAt(1,0)) by
+assumption</li>
+<li>(¬QueenAt(2,0) ∨ ¬QueenAt(1,1)) by assumption</li>
+</ul>
+</li>
+<li>(QueenAt(1,2) ∨ QueenAt(1,0) ∨ QueenAt(2,0) ∨
+QueenAt(2,1)) <strong>from</strong> (QueenAt(1,2) ∨ QueenAt(1,0)
+∨ ¬QueenAt(2,2)) <strong>and</strong> (QueenAt(2,0) ∨
+QueenAt(2,2) ∨ QueenAt(2,1)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,2) ∨ QueenAt(1,0) ∨ ¬QueenAt(2,2))
+<strong>from</strong> (QueenAt(1,1) ∨ QueenAt(1,2) ∨
+QueenAt(1,0)) <strong>and</strong> (¬QueenAt(2,2) ∨
+¬QueenAt(1,1)), <strong>using</strong>
+<ul>
+<li>(QueenAt(1,1) ∨ QueenAt(1,2) ∨ QueenAt(1,0))
+by assumption</li>
+<li>(¬QueenAt(2,2) ∨ ¬QueenAt(1,1)) by
+assumption</li>
+</ul>
+</li>
+<li>(QueenAt(2,0) ∨ QueenAt(2,2) ∨ QueenAt(2,1)) by
+assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(¬QueenAt(1,2) ∨ QueenAt(2,1)) <strong>from</strong> (¬QueenAt(1,2) ∨
+QueenAt(2,1) ∨ QueenAt(0,1)) <strong>and</strong> (¬QueenAt(0,1) ∨
+¬QueenAt(1,2)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,2) ∨ QueenAt(2,1) ∨ QueenAt(0,1))
+<strong>from</strong> (¬QueenAt(1,2) ∨ QueenAt(2,1) ∨
+¬QueenAt(0,0)) <strong>and</strong> (¬QueenAt(1,2) ∨ QueenAt(0,0)
+∨ QueenAt(0,1)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,2) ∨ QueenAt(2,1) ∨ ¬QueenAt(0,0))
+<strong>from</strong> (¬QueenAt(1,2) ∨ QueenAt(2,0) ∨
+QueenAt(2,1)) <strong>and</strong> (¬QueenAt(0,0) ∨
+¬QueenAt(2,0)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,2) ∨ QueenAt(2,0) ∨
+QueenAt(2,1)) <strong>from</strong> (¬QueenAt(2,2) ∨
+¬QueenAt(1,2)) <strong>and</strong> (QueenAt(2,0) ∨
+QueenAt(2,2) ∨ QueenAt(2,1)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(2,2) ∨ ¬QueenAt(1,2)) by
+assumption</li>
+<li>(QueenAt(2,0) ∨ QueenAt(2,2) ∨
+QueenAt(2,1)) by assumption</li>
+</ul>
+</li>
+<li>(¬QueenAt(0,0) ∨ ¬QueenAt(2,0)) by
+assumption</li>
+</ul>
+</li>
+<li>(¬QueenAt(1,2) ∨ QueenAt(0,0) ∨ QueenAt(0,1))
+<strong>from</strong> (¬QueenAt(0,2) ∨ ¬QueenAt(1,2)) <strong>and</strong>
+(QueenAt(0,0) ∨ QueenAt(0,1) ∨ QueenAt(0,2)),
+<strong>using</strong>
+<ul>
+<li>(¬QueenAt(0,2) ∨ ¬QueenAt(1,2)) by
+assumption</li>
+<li>(QueenAt(0,0) ∨ QueenAt(0,1) ∨ QueenAt(0,2))
+by assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(¬QueenAt(0,1) ∨ ¬QueenAt(1,2)) by assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(¬QueenAt(2,1) ∨ QueenAt(1,0)) <strong>from</strong> (¬QueenAt(2,1) ∨
+QueenAt(1,1) ∨ QueenAt(1,0)) <strong>and</strong> (¬QueenAt(1,1) ∨
+¬QueenAt(2,1)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(2,1) ∨ QueenAt(1,1) ∨ QueenAt(1,0)) <strong>from</strong>
+(¬QueenAt(1,2) ∨ ¬QueenAt(2,1)) <strong>and</strong> (QueenAt(1,1) ∨
+QueenAt(1,2) ∨ QueenAt(1,0)), <strong>using</strong>
+<ul>
+<li>(¬QueenAt(1,2) ∨ ¬QueenAt(2,1)) by assumption</li>
+<li>(QueenAt(1,1) ∨ QueenAt(1,2) ∨ QueenAt(1,0)) by
+assumption</li>
+</ul>
+</li>
+<li>(¬QueenAt(1,1) ∨ ¬QueenAt(2,1)) by assumption</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="solving-sat">Solving SAT</h2>
+<p>We now describe the algorithm we implemented to solve <code>SAT</code> for a collection of clauses, giving either an assignment of truth values that satisfies all the clauses or a contradiction using resolution starting with the given clauses. We shall see this in stages.</p>
+<p>A <code>SAT</code> problem is specified by a finite set <code>$V$</code> of Boolean variables and a finite set <code>$E$</code> of clauses in these variables (we sometimes refer to this as <em>the <code>SAT</code> problem <code>$SAT(V, E)$</code></em>). We also assume that <code>$E$</code> does not contain tautologies, and none of the clauses contain a literal more than once. We also regard clauses as equal if they become so after reordering.</p>
+<h3 id="recursive-solving-the-dp-algorithm">Recursive solving: the DP algorithm</h3>
+<p>Assume that we are given sets <code>$V$</code> and <code>$E$</code> as above. We pick a variable <code>$P\in V$</code> and look for solutions first when <code>$P$</code> is assigned the value true and then when it is assigned false (in our code we actually randomize the order of the branches). For solutions where <code>$P$</code> is true:</p>
+<ol>
+<li>Any clause containing <code>$P$</code> is true, so can be dropped.</li>
+<li>Any clause of the form <code>$\neg P\vee l_1\vee\dots\vee l_n$</code> (up to reordering) is true if and only the clause <code>$C =l_1\vee\dots\vee l_n$</code> obtained by dropping <code>$\neg P$</code> is true. We can thus replace <code>$\neg P \vee C := \neg P\vee l_1\vee\dots\vee l_n$</code> by <code>$C$</code> when considering solutions with <code>$P$</code> true.</li>
+<li>Finally, clauses <code>$C$</code> containing neither <code>$P$</code> nor <code>$\neg P$</code> are unaffected, and should be satisfied even after assigning <code>$P$</code>.</li>
+</ol>
+<p>Thus, we get a new set of clauses, which we denote <code>$\rho(E, P)$</code>, in the variables <code>$V\setminus\{P\}$</code>, giving the <em>restricted</em> <code>SAT</code> problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code>.
+If the restricted problem has a solution then we get a solution to the original problem <code>$SAT(V, E)$</code> by assigning true to <code>$P$</code>. Otherwise we look for a solution where <code>$P$</code> is false, once more obtaining a restricted <code>SAT</code> problem <code>$SAT(V\setminus\{P\}, \rho(E, \neg P))$</code> with fewer variables (with <code>$\rho(E, \neg P))$</code> defined analogous to <code>$\rho(E, P))$</code>). If the latter problem has a solution so does the original one <code>$SAT(V, E)$</code>. If not, we know both the restricted problems have no solutions. Since <code>$P$</code> must be true or false, the original problem <code>$SAT(V, E)$</code> has no solution.</p>
+<p>Thus, we can reduce the solution of a <code>SAT</code> problem to the solution of <code>SAT</code> problems with fewer variables. This gives a recursive algorithm once we solve in the base case, which is the case with no variables. But in this case the only clause is the empty clause. Thus there are only two <code>SAT</code> problems.</p>
+<ul>
+<li><code>$E = \phi$</code>. Here every clause is satisfied, so there is a solution.</li>
+<li><code>$E = \{\bot\}$</code>, i.e., a singleton consisting of the empty clause. This is not satisfiable as the empty clause cannot be satisfied.</li>
+</ul>
+<p>Using the above, we get an algorithm for the <code>SAT</code> problem.</p>
+<h3 id="dlpp-algorithm">DLPP algorithm</h3>
+<p>There are two ways in which the DP algorithm can be improved, giving the DLPP algorithm. Firstly, if some clause is a <em>unit literal</em>, i.e., a literal <code>$l$</code> with <code>$l = P$</code> or <code>$l = \neg P$</code>, then <code>$P$</code> must be assigned the value that makes <code>$l$</code> true. On doing this, all clauses containing <code>$l$</code> are true and can be dropped, while a clause of the form <code>$\neg l\vee C$</code> can be replaced by the clause <code>$C$</code> obtained by deleting <code>$\neg l$</code>, i.e., we replace <code>$E$</code> by <code>$\rho(E, l)$</code>. On making such simplifications, new units may be created and this process repeated. For instance, if each clause has length 2 (so called <code>2-SAT</code>), this clearly gives a fast algorithm.</p>
+<p>A second improvement is to use <em>pure literals</em>, literals <code>$l$</code> so that <code>$\neg l$</code> is not present in any clause. Then the <code>SAT</code> problem has a solution if and only if it has a solution with <code>$l$</code> true. Hence we can assign the value of the variable <code>$P$</code> with <code>$l = P$</code> or <code>$l = \neg P$</code> to make <code>$l$</code> true, and drop all the clauses containing <code>$l$</code>.</p>
+<p>We have implemented this without further heuristics, except for some use of a <em>conflict driven</em> approach to avoid full back-tracking, based on
+keeping track of proofs. We next sketch how we keep track of proofs (the algorithmic improvement will be evident).</p>
+<h3 id="lifting-proofs">Lifting proofs</h3>
+<p>Suppose the given <code>SAT</code> problem has no solution, as discovered by our recursive algorithm. We can enhance our algorithm to in this case give a proof using resolution of a contradiction starting with the given clauses <code>$E$</code>. We sketch this here. The main step is the <em>lifting</em> of a proof from a restricted problem. We shall denote the set of clauses deduced by resolution from a set <code>$E$</code> of clauses by <code>$D(E)$</code>.</p>
+<p>To start with consider the base case where there is no variable. Here if the <code>SAT</code> problem is not satisfiable, we must have the empty clause in <code>$E$</code>. Thus a given clause is itself a contradiction.</p>
+<p>Now consider the general case with <code>$n$</code> variables, and assume that our algorithm gives either a solution or deduces a contradiction using resolution whenever we have fewer than <code>$n$</code> variables. Pick a variable <code>$P$</code> and assign a truth value to this, say true. As above, we get a restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> not involving the variable <code>$P$</code>.</p>
+<p>Suppose the original problem has no solution, then the restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> does not either. By the induction hypothesis, using resolution we can deduce a contradiction starting with  <code>$\rho(E, P)$</code>, i.e., <code>$\bot\in  D(\rho(E, P))$</code> (where <code>$\bot$</code> is the empty clause).
+We cannot conclude that <code>$\bot\in D(E)$</code>. Nevertheless we can lift the proof of a contradiction to something useful.</p>
+<p>Observe that, by the construction of <code>$\rho(E, P)$</code>, if <code>$C \in \rho(E, P)$</code> then either <code>$C \in E$</code> or <code>$\neg P\vee C\in E$</code> (if both hold we choose the first case for efficiency). We claim that an analogous statement holds for clauses deduced by resolution. Namely, if <code>$C \in D(\rho(E, P))$</code> then either <code>$C \in D(E)$</code> or <code>$\neg P\vee C\in D(E)$</code>.</p>
+<p>This claim can be proved by induction on the number of steps in the deduction using resolution. For <code>$\bot$</code> steps, we just get elements of <code>$\rho(E, P)$</code>, for which we have already observed the claim. On the other hand, if <code>$C \in D(\rho(E, P))$</code> is deduced in <code>$n$</code> steps, then <code>$C$</code> can be deduced from clauses <code>$C_1$</code> and <code>$C_2$</code> by resolution, and the clauses <code>$C_i$</code> can be deduced from <code>$\rho(E, p)$</code> in fewer than <code>$n$</code> steps.</p>
+<p>By induction hypothesis, it follows that, for each <code>$i =1, 2$</code>, either <code>$C_i \in D(E)$</code> or <code>$\neg P\vee C_i\in D(E)$</code>. By definition of resolution, if both <code>$C_1$</code> and <code>$C_2$</code> are in <code>$D(E)$</code> then <code>$C\in D(E)$</code>, and in all other cases <code>$\neg P\vee C\in D(E)$</code>.</p>
+<p>As <code>$\bot \in D(\rho(E, P))$</code>, it follows that either <code>$\bot\in D(E)$</code> or <code>$\neg P \in D(E)$</code>.
+If  <code>$\bot\in D(E)$</code>, we have proved unsatifiability. Otherwise we apply the same algorithm to the restricted problem <code>$SAT(V \setminus \{P\}, \rho(E, \neg P))$</code> where <code>$P$</code> is assigned the value false. In this case we deduce either <code>$\bot\in D(E)$</code> or that <code>$P\in D(E)$</code>. Thus, we either have a proof of unsatisfiability or both <code>$P\in D(E)$</code> and <code>$\neg P\in D(E)$</code> hold. But resolution using <code>$P$</code> and <code>$\neg P$</code> gives <code>$\bot$</code>, showing that <code>$\bot\in D(E)$</code>.</p>
+<p>The above has been described as an existence result, but indeed all steps are effective, giving a proof in the case of problems that are not satisfiable. Note that by checking if the contradiction requires the assumption of the truth value of <code>$P$</code> while lifting, we have also avoided full back-tracking in some cases.</p>
+<h2 id="looking-ahead-formal-programs-and-proofs">Looking ahead: formal programs and proofs</h2>
+<p>Using languages implementing <em>Dependent Type Theory</em> such as <code>Idris</code> and <code>Lean 4</code>, one can hope for more — a program that outputs one of the following:</p>
+<ul>
+<li>a solution together with a proof that this is a solution, or</li>
+<li>a proof that there is no solution, not just a resolution tree but a proof in the given foundations.</li>
+</ul>
+<p>Furthermore, we would like the compiler to be able to check that the program terminates for any valid input, and has correct output of one of the above forms. There is no obstruction in principle to doing this, but some work is needed.</p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
