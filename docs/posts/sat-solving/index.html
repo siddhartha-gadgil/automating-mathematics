@@ -29,7 +29,9 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
 
-<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/sat.css">
+
   
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -365,7 +367,7 @@ assumption</li>
 </li>
 </ul>
 <h2 id="solving-sat">Solving SAT</h2>
-<p>We now describe the algorithm we implemented to solve <code>SAT</code> for a collection of clauses, giving either an assignment of truth values that satisfies all the clauses or a contradiction using resolution starting with the given clauses. We shall see this in stages.</p>
+<p>I now describe the algorithm I implemented to solve <code>SAT</code> for a collection of clauses, giving either an assignment of truth values that satisfies all the clauses or a contradiction using resolution starting with the given clauses. We shall see this in stages.</p>
 <p>A <code>SAT</code> problem is specified by a finite set <code>$V$</code> of Boolean variables and a finite set <code>$E$</code> of clauses in these variables (we sometimes refer to this as <em>the <code>SAT</code> problem <code>$SAT(V, E)$</code></em>). We also assume that <code>$E$</code> does not contain tautologies, and none of the clauses contain a literal more than once. We also regard clauses as equal if they become so after reordering.</p>
 <h3 id="recursive-solving-the-dp-algorithm">Recursive solving: the DP algorithm</h3>
 <p>Assume that we are given sets <code>$V$</code> and <code>$E$</code> as above. We pick a variable <code>$P\in V$</code> and look for solutions first when <code>$P$</code> is assigned the value true and then when it is assigned false (in our code we actually randomize the order of the branches). For solutions where <code>$P$</code> is true:</p>
@@ -381,31 +383,32 @@ If the restricted problem has a solution then we get a solution to the original 
 <li><code>$E = \phi$</code>. Here every clause is satisfied, so there is a solution.</li>
 <li><code>$E = \{\bot\}$</code>, i.e., a singleton consisting of the empty clause. This is not satisfiable as the empty clause cannot be satisfied.</li>
 </ul>
-<p>Using the above, we get an algorithm for the <code>SAT</code> problem.</p>
+<p>To summarize, we have a recursive algorithm by reducing to a simpler case, namely with fewer variables, in case the set of variables is non-empty, and (easily) solving in the case where the set of variables is empty.</p>
 <h3 id="dlpp-algorithm">DLPP algorithm</h3>
 <p>There are two ways in which the DP algorithm can be improved, giving the DLPP algorithm. Firstly, if some clause is a <em>unit literal</em>, i.e., a literal <code>$l$</code> with <code>$l = P$</code> or <code>$l = \neg P$</code>, then <code>$P$</code> must be assigned the value that makes <code>$l$</code> true. On doing this, all clauses containing <code>$l$</code> are true and can be dropped, while a clause of the form <code>$\neg l\vee C$</code> can be replaced by the clause <code>$C$</code> obtained by deleting <code>$\neg l$</code>, i.e., we replace <code>$E$</code> by <code>$\rho(E, l)$</code>. On making such simplifications, new units may be created and this process repeated. For instance, if each clause has length 2 (so called <code>2-SAT</code>), this clearly gives a fast algorithm.</p>
 <p>A second improvement is to use <em>pure literals</em>, literals <code>$l$</code> so that <code>$\neg l$</code> is not present in any clause. Then the <code>SAT</code> problem has a solution if and only if it has a solution with <code>$l$</code> true. Hence we can assign the value of the variable <code>$P$</code> with <code>$l = P$</code> or <code>$l = \neg P$</code> to make <code>$l$</code> true, and drop all the clauses containing <code>$l$</code>.</p>
-<p>We have implemented this without further heuristics, except for some use of a <em>conflict driven</em> approach to avoid full back-tracking, based on
-keeping track of proofs. We next sketch how we keep track of proofs (the algorithmic improvement will be evident).</p>
+<p>I have implemented this without further heuristics, except for some use of a <em>conflict driven</em> approach to avoid full back-tracking, based on
+keeping track of proofs. I next sketch how we keep track of proofs (the algorithmic improvement will be evident).</p>
 <h3 id="lifting-proofs">Lifting proofs</h3>
-<p>Suppose the given <code>SAT</code> problem has no solution, as discovered by our recursive algorithm. We can enhance our algorithm to in this case give a proof using resolution of a contradiction starting with the given clauses <code>$E$</code>. We sketch this here. The main step is the <em>lifting</em> of a proof from a restricted problem. We shall denote the set of clauses deduced by resolution from a set <code>$E$</code> of clauses by <code>$D(E)$</code>.</p>
+<p>Suppose the given <code>SAT</code> problem <code>$SAT(V, E)$</code> has no solution. We can enhance our algorithm to in this case give a proof using resolution of a contradiction starting with the given clauses <code>$E$</code>. I sketch this here. The main step is the <em>lifting</em> of a proof from a restricted problem. We shall denote the set of clauses deduced by resolution from a set of clauses <code>$E$</code> by <code>$D(E)$</code>. Thus, <code>$D(E)\supset E$</code>, and is the smallest set containing <code>$E$</code> that is closed under resolution.</p>
 <p>To start with consider the base case where there is no variable. Here if the <code>SAT</code> problem is not satisfiable, we must have the empty clause in <code>$E$</code>. Thus a given clause is itself a contradiction.</p>
-<p>Now consider the general case with <code>$n$</code> variables, and assume that our algorithm gives either a solution or deduces a contradiction using resolution whenever we have fewer than <code>$n$</code> variables. Pick a variable <code>$P$</code> and assign a truth value to this, say true. As above, we get a restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> not involving the variable <code>$P$</code>.</p>
-<p>Suppose the original problem has no solution, then the restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> does not either. By the induction hypothesis, using resolution we can deduce a contradiction starting with  <code>$\rho(E, P)$</code>, i.e., <code>$\bot\in  D(\rho(E, P))$</code> (where <code>$\bot$</code> is the empty clause).
-We cannot conclude that <code>$\bot\in D(E)$</code>. Nevertheless we can lift the proof of a contradiction to something useful.</p>
+<p>Now consider the general case with <code>$n$</code> variables, and assume that our algorithm gives either a solution or deduces a contradiction using resolution whenever we have fewer than <code>$n$</code> variables. Pick a variable <code>$P$</code> and assign that <code>$P$</code> is true. As above, we get a restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> not involving the variable <code>$P$</code>.</p>
+<p>Suppose the original problem <code>$SAT(V, E)$</code> has no solution, then the restricted problem <code>$SAT(V\setminus\{P\}, \rho(E, P))$</code> does not either. By the induction hypothesis, using resolution we can deduce a contradiction starting with  <code>$\rho(E, P)$</code>, i.e., <code>$\bot\in  D(\rho(E, P))$</code> (where <code>$\bot$</code> is the empty clause).
+We cannot in general conclude from this that <code>$\bot\in D(E)$</code>. Nevertheless we can lift the proof of a contradiction to something useful.</p>
 <p>Observe that, by the construction of <code>$\rho(E, P)$</code>, if <code>$C \in \rho(E, P)$</code> then either <code>$C \in E$</code> or <code>$\neg P\vee C\in E$</code> (if both hold we choose the first case for efficiency). We claim that an analogous statement holds for clauses deduced by resolution. Namely, if <code>$C \in D(\rho(E, P))$</code> then either <code>$C \in D(E)$</code> or <code>$\neg P\vee C\in D(E)$</code>.</p>
-<p>This claim can be proved by induction on the number of steps in the deduction using resolution. For <code>$\bot$</code> steps, we just get elements of <code>$\rho(E, P)$</code>, for which we have already observed the claim. On the other hand, if <code>$C \in D(\rho(E, P))$</code> is deduced in <code>$n$</code> steps, then <code>$C$</code> can be deduced from clauses <code>$C_1$</code> and <code>$C_2$</code> by resolution, and the clauses <code>$C_i$</code> can be deduced from <code>$\rho(E, p)$</code> in fewer than <code>$n$</code> steps.</p>
+<p>This claim can be proved by induction on the number of steps in the deduction using resolution. For the case with <code>$0$</code> steps, we just get elements of <code>$\rho(E, P)$</code>, for which we have the claim by the above observation and <code>$E\subset D()E$</code>.</p>
+<p>Next, if <code>$C \in D(\rho(E, P))$</code> is deduced in <code>$n &gt; 0$</code> steps, then <code>$C$</code> can be deduced from clauses <code>$C_1$</code> and <code>$C_2$</code> by resolution, and the clauses <code>$C_i$</code> can be deduced from <code>$\rho(E, p)$</code> in fewer than <code>$n$</code> steps.</p>
 <p>By induction hypothesis, it follows that, for each <code>$i =1, 2$</code>, either <code>$C_i \in D(E)$</code> or <code>$\neg P\vee C_i\in D(E)$</code>. By definition of resolution, if both <code>$C_1$</code> and <code>$C_2$</code> are in <code>$D(E)$</code> then <code>$C\in D(E)$</code>, and in all other cases <code>$\neg P\vee C\in D(E)$</code>.</p>
-<p>As <code>$\bot \in D(\rho(E, P))$</code>, it follows that either <code>$\bot\in D(E)$</code> or <code>$\neg P \in D(E)$</code>.
-If  <code>$\bot\in D(E)$</code>, we have proved unsatifiability. Otherwise we apply the same algorithm to the restricted problem <code>$SAT(V \setminus \{P\}, \rho(E, \neg P))$</code> where <code>$P$</code> is assigned the value false. In this case we deduce either <code>$\bot\in D(E)$</code> or that <code>$P\in D(E)$</code>. Thus, we either have a proof of unsatisfiability or both <code>$P\in D(E)$</code> and <code>$\neg P\in D(E)$</code> hold. But resolution using <code>$P$</code> and <code>$\neg P$</code> gives <code>$\bot$</code>, showing that <code>$\bot\in D(E)$</code>.</p>
-<p>The above has been described as an existence result, but indeed all steps are effective, giving a proof in the case of problems that are not satisfiable. Note that by checking if the contradiction requires the assumption of the truth value of <code>$P$</code> while lifting, we have also avoided full back-tracking in some cases.</p>
+<p>As <code>$\bot \in D(\rho(E, P))$</code>, it follows that either <code>$\bot\in D(E)$</code> or <code>$\neg P = \neg P\vee \bot \in D(E)$</code>.
+If  <code>$\bot\in D(E)$</code>, we have proved unsatifiability. Otherwise we apply the same algorithm to the restricted problem <code>$SAT(V \setminus \{P\}, \rho(E, \neg P))$</code> obtained by assigning the value false to <code>$P$</code>. In this case we deduce either <code>$\bot\in D(E)$</code> or that <code>$P\in D(E)$</code>. Thus, we either have a proof of unsatisfiability or both <code>$P\in D(E)$</code> and <code>$\neg P\in D(E)$</code> hold. But resolution using <code>$P$</code> and <code>$\neg P$</code> gives <code>$\bot$</code>, showing that <code>$\bot\in D(E)$</code>.</p>
+<p>The above has been sketched as an existence result, but indeed all steps are effective, giving a proof in the case of problems that are not satisfiable. Note that by checking if the contradiction requires the assumption of the truth value of <code>$P$</code> while lifting, we have also avoided full back-tracking in some cases.</p>
 <h2 id="looking-ahead-formal-programs-and-proofs">Looking ahead: formal programs and proofs</h2>
-<p>Using languages implementing <em>Dependent Type Theory</em> such as <code>Idris</code> and <code>Lean 4</code>, one can hope for more — a program that outputs one of the following:</p>
+<p>Using languages implementing <em>Dependent Type Theory</em> such as <code>Lean 4</code> or <code>Idris</code>, one can hope for more — a program that outputs one of the following:</p>
 <ul>
 <li>a solution together with a proof that this is a solution, or</li>
-<li>a proof that there is no solution, not just a resolution tree but a proof in the given foundations.</li>
+<li>a proof that there is no solution — not just a resolution tree but a proof in the given foundations.</li>
 </ul>
-<p>Furthermore, we would like the compiler to be able to check that the program terminates for any valid input, and has correct output of one of the above forms. There is no obstruction in principle to doing this, but some work is needed.</p>
+<p>Furthermore, the compiler should be able to verify that the program terminates for any valid input, and has correct output of one of the above forms. It appears that there is no obstruction in principle to doing this, but some work is needed.</p>
 </div>
 
 

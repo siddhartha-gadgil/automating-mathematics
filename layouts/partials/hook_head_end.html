@@ -3,7 +3,9 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
 
-<link rel="stylesheet" href="{{ .Site.BaseURL }}css/custom.css">
+{{ if isset .Params "css" }}
+<link rel="stylesheet" href="{{ .Site.BaseURL }}css/{{.Params.css}}">
+{{ end }}
   
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
