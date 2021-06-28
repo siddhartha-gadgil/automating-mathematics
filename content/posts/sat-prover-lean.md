@@ -14,7 +14,7 @@ I describe here [SATurn](https://github.com/siddhartha-gadgil/Saturn/)  a `SAT` 
 - a solution together with a proof that this is a solution, or
 - a proof that there is no solution &mdash; not just a resolution tree but a proof in the given foundations.
 
-Furthermore, the compiler verifies that the program terminates for any valid input, and has correct output of one of the above forms. Indeed, the program (once it compiled) ran correctly immediately &mdash; I have never experienced this with a program of comparable complexity that I have written.
+Furthermore, the compiler verifies that the program terminates for any valid input, and has correct output of one of the above forms. Indeed, the program (once it compiled) ran correctly immediately &mdash; I have never experienced this with a program of comparable complexity that I have written. This is in contrast to (at least my experience with) computer assisted proofs of any complexity even in strongly-typed language like scala  &mdash; a lot of time spent, and especially cognitive burden, is in checking and debugging.
 
 ## Why `SAT`?
 
@@ -121,3 +121,5 @@ def eg1 : unsat eg1Statement := getProof eg1Soln -- should be unsat
 def eg2 : sat eg2Statement := getProof eg2Soln -- should be sat
 ```
 
+If we use `sat` or `unsat` incorrectly, then the type is wrong and we get a compiler error. If we do not specify the type, it is inferred more weakly, so is not 
+readily usable. A method `proveOrDisprove` combines `solve` and `getProof`.
