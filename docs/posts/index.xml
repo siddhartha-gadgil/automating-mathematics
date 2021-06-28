@@ -8,7 +8,16 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Tue, 18 May 2021 08:53:42 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Jun 2021 07:00:52 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SAT Solver-Prover in Lean 4</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-prover-lean/</link>
+      <pubDate>Mon, 28 Jun 2021 07:00:52 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-prover-lean/</guid>
+      <description>The Boolean satisfiability problem (SAT) asks whether a finite set of formulas in Boolean (i.e., true or false valued) variables $P$, $Q$,&amp;hellip; has a solution. The formulas are built from the variables using logical operations such as $\vee$ (and), $\wedge$ (or) and $\neg$ (not).</description>
+    </item>
+    
     <item>
       <title>Sat Solving</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/</link>

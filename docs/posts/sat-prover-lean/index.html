@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SAT Solver-Prover in Lean 4 &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+  
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+    </script>
+    <style>
+    .sidebar-about h1{
+        font-size: 2.6rem !important;
+    } 
+    </style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>SAT Solver-Prover in Lean 4</h1>
+  <time datetime=2021-06-28T07:00:52&#43;0530 class="post-date">Mon, Jun 28, 2021</time>
+  <p>The Boolean satisfiability problem (<strong>SAT</strong>) asks whether a finite set of formulas in <em>Boolean</em> (i.e., <em>true</em> or <em>false</em> valued) variables <code>$P$</code>, <code>$Q$</code>,&hellip; has a solution. The formulas are built from the variables using logical operations such as <code>$\vee$</code> (and), <code>$\wedge$</code> (or) and <code>$\neg$</code> (not). A <em>SAT solver</em> is a program that solves such a problem, returning <em>sat</em> with a solution if solutions exists, and <em>unsat</em>  if no solutions exist, often with some kind of proof that there is no solution in the latter case.</p>
+<p>In the case there is no solution, a SAT solver <strong>does not</strong> simply check all possible assignments of boolean values to variables and see that they fail. Instead the solver searches for a <em>contradiction</em>, i.e., a deduction of <em>False</em>, assuming the existence of a solution.
+The deductions may be returned as human readable tree-like structures, as we described in a <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/">previous post</a> about implementation of a SAT solver.</p>
+<p>I describe here <a href="https://github.com/siddhartha-gadgil/Saturn/">SATurn</a> — a SAT solver-prover I implemented in <strong>Lean 4</strong>. This is a program that outputs one of</p>
+<ul>
+<li>a solution together with a proof that this is a solution, or</li>
+<li>a proof that there is no solution.</li>
+</ul>
+<p>Furthermore, the compiler verifies that the program terminates for any valid input, and has correct output of one of the above two forms.</p>
+<p>Indeed, the program (once it compiled) ran correctly immediately — something I have never experienced with a program of comparable (or even close to comparable) complexity.
+In contrast, while attempting computer assisted proofs of any complexity (even in a strongly-typed language like scala) a lot of time and effort spent (and  cognitive load) is in checking and debugging.</p>
+<h2 id="why-sat">Why SAT?</h2>
+<p>The importance of SAT comes from  the Cook-Levine theorem from the early 1970s. This says that if SAT has a polynomial time solution, then <em>every</em> problem that is in <strong>NP</strong> can be solved in polynomial time. Indeed every problem in NP can be mapped to a problem in SAT so that a solution of the SAT problem can be transformed in polynomial time to a solution of the original problem. In practice even problems that are not in NP make use of SAT solvers to solve sub-problems.</p>
+<p>An additional motivation for considering SAT is that I feel it is a typical algorithmic mathematical problem. Specifically, a solution to SAT involves a smart search, giving a structured mathematical object that is often useful for further work (though in the worst case is too large and complex to comprehend). This proof object maps to an actual proof of a statement, with correctness of the proof depending only on the correct formulation of the statement. Many mathematical algorithms are of this nature, though in general one has to allow <em>unknown</em> as an option for the answer.</p>
+<p>For instance a search for whether a knot is <a href="https://en.wikipedia.org/wiki/Slice_knot"><em>slice</em></a>  can give a bounding disc (showing slice), an obstruction to being slice (showing not slice) or fail to solve (i.e., return <em>unknown</em>). In case we get an answer (either a bounding disc or an obstruction), this will be illuminating beyond establishing the truth of the statement.</p>
+<h2 id="why-__lean-4__-for-solver-provers">Why <strong>Lean 4</strong> for solver-provers?</h2>
+<p>A <em>solver-prover</em> for a mathematical problem is a program that is guaranteed to terminate and return an answer with a proof of its correctness. The proof of correctness should either be in the foundations of a formal system, or should be transformable into such a proof (with a guarantee that the transformation function is correct and terminates). In the case of problems without algorithmic solutions (or with algorithmic solutions but where we may wish to allow a timeout), we can consider <em>incomplete solver-provers</em>, which may return <em>unknown</em>.</p>
+<p>For solver-provers to be possible, useful and practical we need a language with three features, of which the first two are needed even for the possibility of a solver-prover.</p>
+<ol>
+<li>Statements and proofs can be represented in the language so that the compiler can check correctness.</li>
+<li>The language can run efficiently.</li>
+<li>There is a decent mathematics library and community of mathematicians working with the language.</li>
+</ol>
+<p>Without the first, clearly the compiler cannot check correctness and termination. Without the second, nobody will be able to run the algorithms – so they will be essentially constructive proofs.</p>
+<p>The presence of a mathematical library means that one does not have to start from scratch. More importantly, all algorithms involving (for example) <em>free groups</em> uses the same internal representation (that of the library), they will be able to work together. Finally, if solver-provers work well they can contribute to the library.</p>
+<p>As far as I know, <strong>Idris</strong> is the first language to meet the first two criteria, and <strong>Lean 4</strong> is (or will soon be) the first to meet all three.</p>
+<h2 id="using-saturn">Using SATurn</h2>
+<p>I will not discuss here the details of implementation, which closely follows the <em>scala</em> implementation described in a <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/">previous post</a>. I only describe (some aspects of) how SAT problems and proofs are represented and how SATurn works in some simple examples. This section assumes familiarity with Lean or some similar language such as Agda or Idris.</p>
+<h3 id="representing-sat">Representing SAT</h3>
+<p>Any SAT problem can be represented in <strong>CNF</strong>. This means that we are given a finite collection of formulas which must be satisfied, each of which is a so called <em>clause</em>. A clause is a formula of the form <code>$l_1\vee\dots\vee l_n$</code>, with each <code>$l_j$</code> (called a <em>literal</em>) of the form either <code>$l_j = P$</code> or <code>$l_j = \neg P$</code> for a variable <code>$P$</code>.</p>
+<p>Note that if both <code>$P$</code> and <code>$\neg P$</code> are present in a clause then it is always true. We omit such clauses. Thus, to specify a clause is equivalent to specifying for each variable <code>$P$</code> which of three possible cases listed below holds. It is natural to associate to the three cases an element in <code>Option Bool</code>.</p>
+<ol>
+<li>If <code>$P$</code> is present: we associate <code>some true</code>.</li>
+<li>If <code>$\neg P$</code> is present: we associate <code>some false</code>.</li>
+<li>Neither <code>$P$</code> nor <code>$\neg P$</code> are present: we associate <code>none</code>.</li>
+</ol>
+<p>We shall use indices from <code>$0$</code> to <code>$n - 1$</code> to represent the variables, where <code>$n$</code> is the number of variables. Thus, a clause is (represented by) a finite sequence of length $n$ with values in <code>Option Bool</code>. A finite sequence with values in a type <code>$\alpha$</code> is in turn represented by a dependent function
+<code>$(j: \textrm{Nat}) \to j &lt; n \to \alpha$</code> (I switched to this from <code>$Fin\ n \to \alpha$</code> due to problems with pattern matching since <code>$Fin\ n$</code> is not an indexed inductive type in Lean).</p>
+<p>A <em>valuation</em>, i.e., an assignment of truth to each variable, clearly corresponds to a finite sequence of booleans of length <code>$n$</code>. It is easy to see that a clause <code>$c$</code> is true at some valuation<code>$v$</code> if and only if, for some <code>$k$</code> with <code>$0\leq k &lt; n$</code>, we have <code>$c (k) = some (v(k))$</code>. Thus, taking witnesses into account, we define propositions <code>sat</code> and <code>unsat</code> depending on a finite sequence of clauses by</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> sat<span style="color:#f92672">{</span>dom n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">}(</span>clauses <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#66d9ef">dom</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">)))</span> <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span>
+          <span style="color:#f92672">∃</span> valuat <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Valuat</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span>  
+           <span style="color:#f92672">∀</span> <span style="color:#f92672">(</span>p <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∀</span> pw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">p</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">dom</span><span style="color:#f92672">,</span> 
+              <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>k <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>kw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">k</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span> 
+                <span style="color:#f92672">(</span>clauses p pw k kw<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> some <span style="color:#f92672">(</span>valuat k kw<span style="color:#f92672">)</span>
+</code></pre></div><p>and</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> unsat<span style="color:#f92672">{</span>dom n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">}(</span>clauses <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#66d9ef">dom</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">)))</span> <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span>
+          <span style="color:#f92672">∀</span> valuat <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Valuat</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span>  
+           <span style="color:#a6e22e">Not</span> <span style="color:#f92672">(</span>
+            <span style="color:#f92672">∀</span> <span style="color:#f92672">(</span>p <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∀</span> pw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">p</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">dom</span><span style="color:#f92672">,</span>   
+              <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>k <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>kw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">k</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span> 
+              <span style="color:#f92672">(</span>clauses p pw k kw<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> some <span style="color:#f92672">(</span>valuat k kw<span style="color:#f92672">)</span>
+              <span style="color:#f92672">)</span>
+</code></pre></div><h3 id="examples">Examples</h3>
+<p>We define three clauses <code>$P \vee Q$</code>, <code>$\neg P$</code> and <code>$\neg Q$</code> and two corresponding statements as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> cl1 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span>   
+  <span style="color:#f92672">(</span>some <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>some <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+
+<span style="color:#66d9ef">def</span> cl2 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span> 
+  <span style="color:#f92672">(</span>some <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>none<span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+
+
+<span style="color:#66d9ef">def</span> cl3 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span> 
+  <span style="color:#f92672">(</span>none<span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>some <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+
+
+<span style="color:#66d9ef">def</span> eg1Statement <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#960050;background-color:#1e0010">3</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">:=</span> 
+                                    cl2 <span style="color:#f92672">+:</span> cl1 <span style="color:#f92672">+:</span> cl3 <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+
+<span style="color:#66d9ef">def</span> eg2Statement <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> tail eg1Statement
+</code></pre></div><p>Typically one does not know whether the solution is positive or negative. Hence it is best to first find structured solutions using <code>solve</code> and view them. We shall see how to skip this step if desired. Thus we run</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> eg1Soln <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> solve <span style="color:#f92672">(</span>eg1Statement<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">def</span> eg2Soln <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> solve <span style="color:#f92672">(</span>eg2Statement<span style="color:#f92672">)</span>
+
+<span style="color:#66d9ef">#</span>eval eg1Soln<span style="color:#f92672">.</span>toString
+<span style="color:#66d9ef">#</span>eval eg2Soln<span style="color:#f92672">.</span>toString
+</code></pre></div><p>and obtain the outputs:</p>
+<ul>
+<li>a resolution tree</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#a6e22e">Examples</span><span style="color:#f92672">.</span>lean<span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">29</span><span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">0</span>
+<span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#66d9ef">unsat:</span> <span style="color:#f92672">[</span><span style="color:#66d9ef">none</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> from <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">];</span> using<span style="color:#66d9ef">:</span> <span style="color:#f92672">{</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">),</span> <span style="color:#66d9ef">none</span><span style="color:#960050;background-color:#1e0010">]</span><span style="color:#f92672">}</span> and <span style="color:#f92672">{[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> from <span style="color:#f92672">[</span><span style="color:#66d9ef">none</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)]</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)];</span> using<span style="color:#66d9ef">:</span> <span style="color:#f92672">{</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#66d9ef">none</span><span style="color:#f92672">,</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span><span style="color:#960050;background-color:#1e0010">]</span><span style="color:#f92672">}</span> and <span style="color:#f92672">{[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)]}}</span><span style="color:#960050;background-color:#1e0010">&#34;</span>
+</code></pre></div><ul>
+<li>a valuation that is a solution</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#a6e22e">Examples</span><span style="color:#f92672">.</span>lean<span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">30</span><span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">0</span>
+<span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#66d9ef">sat:</span> <span style="color:#f92672">[</span><span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">false</span><span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">&#34;</span>
+</code></pre></div><p>We can then obtain the proofs of the appropriate proposition using the <code>getProof</code> function on the structured proof. This depends on the <em>typeclass</em> <code>Prover</code> which associates a statement and proof to the structured proof.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> eg1 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">unsat</span> <span style="color:#66d9ef">eg1Statement</span> <span style="color:#66d9ef">:=</span> <span style="color:#66d9ef">getProof</span> <span style="color:#66d9ef">eg1Soln</span> 
+<span style="color:#66d9ef">def</span> eg2 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">sat</span> <span style="color:#66d9ef">eg2Statement</span> <span style="color:#66d9ef">:=</span> <span style="color:#66d9ef">getProof</span> <span style="color:#66d9ef">eg2Soln</span> 
+
+<span style="color:#66d9ef">#</span>check eg1
+<span style="color:#66d9ef">#</span>check eg2
+</code></pre></div><p>If we specify the type using the incorrect choice between <code>sat</code> and <code>unsat</code>, then we get a compiler error. If we do not specify the type, it is inferred more weakly, so is not
+readily usable. A function <code>proveOrDisprove</code> combines <code>solve</code> and <code>getProof</code> in case one wants to directly obtain a proof.</p>
+<p>This code has not been tested for performance. Further this is my first serious work with lean, i.e., beyond following along some tutorials. Hence there is a lot of scope for improvement. Suggestions and comments are most welcome.</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
