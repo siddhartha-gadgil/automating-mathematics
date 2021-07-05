@@ -7,7 +7,7 @@ categories = []
 css = "sat.css"
 +++
 
-To better understand the `SAT` (i.e., _boolean satisfiability_) problem and `SAT` solvers, I decided to implement a basic one. I was pleasantly surprised that wikipedia has enough details to implement the so called __DLPP__ algorithm quite easily, with even some improvements described in wikipedia. Even better, in the case when there was no solution, the same algorithm gives a proof that there is no solution. The proof that there is no solution was based on _resolution_ due to Davis-Putnam &mdash; so the algorithm gives as a bonus a proof that resolution is refutation complete for propositional calculus.
+To better understand the `SAT` (i.e., _boolean satisfiability_) problem and `SAT` solvers, I decided to implement a basic one. I was pleasantly surprised that wikipedia has enough details to implement the so called __DPLL__ algorithm quite easily, with even some improvements described in wikipedia. Even better, in the case when there was no solution, the same algorithm gives a proof that there is no solution. The proof that there is no solution was based on _resolution_ due to Davis-Putnam &mdash; so the algorithm gives as a bonus a proof that resolution is refutation complete for propositional calculus.
 <!--more-->
 
 The code corresponding to this blog is in the `fol` project (and directory) of my [ProvingGround](https://github.com/siddhartha-gadgil/ProvingGround) repository.
@@ -189,9 +189,9 @@ Thus, we can reduce the solution of a `SAT` problem to the solution of `SAT` pro
 
 To summarize, we have a recursive algorithm by reducing to a simpler case, namely with fewer variables, in case the set of variables is non-empty, and (easily) solving in the case where the set of variables is empty.
 
-### DLPP algorithm
+### DPLL algorithm
 
-There are two ways in which the DP algorithm can be improved, giving the DLPP algorithm. Firstly, if some clause is a _unit literal_, i.e., a literal `$l$` with `$l = P$` or `$l = \neg P$`, then `$P$` must be assigned the value that makes `$l$` true. On doing this, all clauses containing `$l$` are true and can be dropped, while a clause of the form `$\neg l\vee C$` can be replaced by the clause `$C$` obtained by deleting `$\neg l$`, i.e., we replace `$E$` by `$\rho(E, l)$`. On making such simplifications, new units may be created and this process repeated. For instance, if each clause has length 2 (so called `2-SAT`), this clearly gives a fast algorithm.
+There are two ways in which the DP algorithm can be improved, giving the DPLL algorithm. Firstly, if some clause is a _unit literal_, i.e., a literal `$l$` with `$l = P$` or `$l = \neg P$`, then `$P$` must be assigned the value that makes `$l$` true. On doing this, all clauses containing `$l$` are true and can be dropped, while a clause of the form `$\neg l\vee C$` can be replaced by the clause `$C$` obtained by deleting `$\neg l$`, i.e., we replace `$E$` by `$\rho(E, l)$`. On making such simplifications, new units may be created and this process repeated. For instance, if each clause has length 2 (so called `2-SAT`), this clearly gives a fast algorithm.
 
 A second improvement is to use _pure literals_, which are literals `$l$` so that `$\neg l$` is not present in any clause. Then the `SAT` problem has a solution if and only if it has a solution with `$l$` true. Hence we can assign the value of the variable `$P$` with `$l = P$` or `$l = \neg P$` to make `$l$` true, and drop all the clauses containing `$l$`.
 
