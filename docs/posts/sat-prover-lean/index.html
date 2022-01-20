@@ -50,6 +50,15 @@
     messageStyle: "none",
     "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
     });
+
+    </script>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+    <link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/zenburn.css">
+    <script type="text/javascript">
+      hljs.highlightAll();
     </script>
     <style>
     .sidebar-about h1{
@@ -75,7 +84,7 @@
       </ul>
     </nav>
 
-    <p>&copy; 2021. All rights reserved. </p>
+    <p>&copy; 2022. All rights reserved. </p>
   </div>
 </aside>
 
@@ -122,60 +131,60 @@ In contrast, while attempting computer assisted proofs of any complexity (even i
 <p>We shall use indices from <code>$0$</code> to <code>$n - 1$</code> to represent the variables, where <code>$n$</code> is the number of variables. Thus, a clause is (represented by) a finite sequence of length $n$ with values in <code>Option Bool</code>. A finite sequence with values in a type <code>$\alpha$</code> is in turn represented by a dependent function
 <code>$(j: \textrm{Nat}) \to j &lt; n \to \alpha$</code> (I switched to this from <code>$Fin\ n \to \alpha$</code> due to problems with pattern matching since <code>$Fin\ n$</code> is not an indexed inductive type in Lean).</p>
 <p>A <em>valuation</em>, i.e., an assignment of truth to each variable, clearly corresponds to a finite sequence of booleans of length <code>$n$</code>. It is easy to see that a clause <code>$c$</code> is true at some valuation<code>$v$</code> if and only if, for some <code>$k$</code> with <code>$0\leq k &lt; n$</code>, we have <code>$c (k) = some (v(k))$</code>. Thus, taking witnesses into account, we define propositions <code>sat</code> and <code>unsat</code> depending on a finite sequence of clauses by</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> sat<span style="color:#f92672">{</span>dom n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">}(</span>clauses <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#66d9ef">dom</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">)))</span> <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span>
-          <span style="color:#f92672">∃</span> valuat <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Valuat</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span>  
-           <span style="color:#f92672">∀</span> <span style="color:#f92672">(</span>p <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∀</span> pw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">p</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">dom</span><span style="color:#f92672">,</span> 
-              <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>k <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>kw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">k</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span> 
-                <span style="color:#f92672">(</span>clauses p pw k kw<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> some <span style="color:#f92672">(</span>valuat k kw<span style="color:#f92672">)</span>
-</code></pre></div><p>and</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> unsat<span style="color:#f92672">{</span>dom n<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">}(</span>clauses <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#66d9ef">dom</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">)))</span> <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span>
-          <span style="color:#f92672">∀</span> valuat <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Valuat</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span>  
-           <span style="color:#a6e22e">Not</span> <span style="color:#f92672">(</span>
-            <span style="color:#f92672">∀</span> <span style="color:#f92672">(</span>p <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∀</span> pw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">p</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">dom</span><span style="color:#f92672">,</span>   
-              <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>k <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Nat</span><span style="color:#f92672">),</span> <span style="color:#f92672">∃</span> <span style="color:#f92672">(</span>kw <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">k</span> <span style="color:#66d9ef">&lt;</span> <span style="color:#66d9ef">n</span> <span style="color:#66d9ef">+</span> <span style="color:#960050;background-color:#1e0010">1</span><span style="color:#f92672">),</span> 
-              <span style="color:#f92672">(</span>clauses p pw k kw<span style="color:#f92672">)</span> <span style="color:#66d9ef">=</span> some <span style="color:#f92672">(</span>valuat k kw<span style="color:#f92672">)</span>
-              <span style="color:#f92672">)</span>
-</code></pre></div><h3 id="examples">Examples</h3>
+<pre><code class="language-lean" data-lang="lean">def sat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
+          ∃ valuat : Valuat (n + 1),  
+           ∀ (p : Nat), ∀ pw : p &lt; dom, 
+              ∃ (k : Nat), ∃ (kw : k &lt; n + 1), 
+                (clauses p pw k kw) = some (valuat k kw)
+</code></pre><p>and</p>
+<pre><code class="language-lean" data-lang="lean">def unsat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
+          ∀ valuat : Valuat (n + 1),  
+           Not (
+            ∀ (p : Nat), ∀ pw : p &lt; dom,   
+              ∃ (k : Nat), ∃ (kw : k &lt; n + 1), 
+              (clauses p pw k kw) = some (valuat k kw)
+              )
+</code></pre><h3 id="examples">Examples</h3>
 <p>We define three clauses <code>$P \vee Q$</code>, <code>$\neg P$</code> and <code>$\neg Q$</code> and two corresponding statements as follows:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> cl1 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span>   
-  <span style="color:#f92672">(</span>some <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>some <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+<pre><code class="language-lean" data-lang="lean">def cl1 : Clause 2 :=   
+  (some true) +: (some true) +: FinSeq.empty
 
-<span style="color:#66d9ef">def</span> cl2 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span> 
-  <span style="color:#f92672">(</span>some <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>none<span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
-
-
-<span style="color:#66d9ef">def</span> cl3 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span> <span style="color:#66d9ef">:=</span> 
-  <span style="color:#f92672">(</span>none<span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#f92672">(</span>some <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+def cl2 : Clause 2 := 
+  (some false) +: (none) +: FinSeq.empty
 
 
-<span style="color:#66d9ef">def</span> eg1Statement <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">FinSeq</span> <span style="color:#960050;background-color:#1e0010">3</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">Clause</span> <span style="color:#960050;background-color:#1e0010">2</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">:=</span> 
-                                    cl2 <span style="color:#f92672">+:</span> cl1 <span style="color:#f92672">+:</span> cl3 <span style="color:#f92672">+:</span> <span style="color:#a6e22e">FinSeq</span><span style="color:#f92672">.</span>empty
+def cl3 : Clause 2 := 
+  (none) +: (some false) +: FinSeq.empty
 
-<span style="color:#66d9ef">def</span> eg2Statement <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> tail eg1Statement
-</code></pre></div><p>Typically one does not know whether the solution is positive or negative. Hence it is best to first find structured solutions using <code>solve</code> and view them. We shall see how to skip this step if desired. Thus we run</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> eg1Soln <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> solve <span style="color:#f92672">(</span>eg1Statement<span style="color:#f92672">)</span>
-<span style="color:#66d9ef">def</span> eg2Soln <span style="color:#66d9ef">:</span><span style="color:#f92672">=</span> solve <span style="color:#f92672">(</span>eg2Statement<span style="color:#f92672">)</span>
 
-<span style="color:#66d9ef">#</span>eval eg1Soln<span style="color:#f92672">.</span>toString
-<span style="color:#66d9ef">#</span>eval eg2Soln<span style="color:#f92672">.</span>toString
-</code></pre></div><p>and obtain the outputs:</p>
+def eg1Statement : FinSeq 3 (Clause 2) := 
+                                    cl2 +: cl1 +: cl3 +: FinSeq.empty
+
+def eg2Statement := tail eg1Statement
+</code></pre><p>Typically one does not know whether the solution is positive or negative. Hence it is best to first find structured solutions using <code>solve</code> and view them. We shall see how to skip this step if desired. Thus we run</p>
+<pre><code class="language-lean" data-lang="lean">def eg1Soln := solve (eg1Statement)
+def eg2Soln := solve (eg2Statement)
+
+#eval eg1Soln.toString
+#eval eg2Soln.toString
+</code></pre><p>and obtain the outputs:</p>
 <ul>
 <li>a resolution tree</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#a6e22e">Examples</span><span style="color:#f92672">.</span>lean<span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">29</span><span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">0</span>
-<span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#66d9ef">unsat:</span> <span style="color:#f92672">[</span><span style="color:#66d9ef">none</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> from <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">];</span> using<span style="color:#66d9ef">:</span> <span style="color:#f92672">{</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">),</span> <span style="color:#66d9ef">none</span><span style="color:#960050;background-color:#1e0010">]</span><span style="color:#f92672">}</span> and <span style="color:#f92672">{[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#66d9ef">none</span><span style="color:#f92672">]</span> from <span style="color:#f92672">[</span><span style="color:#66d9ef">none</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)]</span> <span style="color:#f92672">&amp;</span> <span style="color:#f92672">[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)];</span> using<span style="color:#66d9ef">:</span> <span style="color:#f92672">{</span><span style="color:#960050;background-color:#1e0010">[</span><span style="color:#66d9ef">none</span><span style="color:#f92672">,</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span><span style="color:#960050;background-color:#1e0010">]</span><span style="color:#f92672">}</span> and <span style="color:#f92672">{[(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#66d9ef">some</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)]}}</span><span style="color:#960050;background-color:#1e0010">&#34;</span>
-</code></pre></div><ul>
+<pre><code class="language-lean" data-lang="lean">Examples.lean:29:0
+&quot;unsat: [none, none] from [(some false), none] &amp; [(some true), none]; using: {[(some false), none]} and {[(some true), none] from [none, (some false)] &amp; [(some true), (some true)]; using: {[none, (some false)]} and {[(some true), (some true)]}}&quot;
+</code></pre><ul>
 <li>a valuation that is a solution</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#a6e22e">Examples</span><span style="color:#f92672">.</span>lean<span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">30</span><span style="color:#66d9ef">:</span><span style="color:#960050;background-color:#1e0010">0</span>
-<span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#66d9ef">sat:</span> <span style="color:#f92672">[</span><span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">false</span><span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">&#34;</span>
-</code></pre></div><p>We can then obtain the proofs of the appropriate proposition using the <code>getProof</code> function on the structured proof. This depends on the <em>typeclass</em> <code>Prover</code> which associates a statement and proof to the structured proof.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scala" data-lang="scala"><span style="color:#66d9ef">def</span> eg1 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">unsat</span> <span style="color:#66d9ef">eg1Statement</span> <span style="color:#66d9ef">:=</span> <span style="color:#66d9ef">getProof</span> <span style="color:#66d9ef">eg1Soln</span> 
-<span style="color:#66d9ef">def</span> eg2 <span style="color:#66d9ef">:</span> <span style="color:#66d9ef">sat</span> <span style="color:#66d9ef">eg2Statement</span> <span style="color:#66d9ef">:=</span> <span style="color:#66d9ef">getProof</span> <span style="color:#66d9ef">eg2Soln</span> 
+<pre><code class="language-lean" data-lang="lean">Examples.lean:30:0
+&quot;sat: [true, false]&quot;
+</code></pre><p>We can then obtain the proofs of the appropriate proposition using the <code>getProof</code> function on the structured proof. This depends on the <em>typeclass</em> <code>Prover</code> which associates a statement and proof to the structured proof.</p>
+<pre><code class="language-lean" data-lang="lean">def eg1 : unsat eg1Statement := getProof eg1Soln 
+def eg2 : sat eg2Statement := getProof eg2Soln 
 
-<span style="color:#66d9ef">#</span>check eg1
-<span style="color:#66d9ef">#</span>check eg2
-</code></pre></div><p>If we specify the type using the incorrect choice between <code>sat</code> and <code>unsat</code>, then we get a compiler error. If we do not specify the type, it is inferred more weakly, so is not
+#check eg1
+#check eg2
+</code></pre><p>If we specify the type using the incorrect choice between <code>sat</code> and <code>unsat</code>, then we get a compiler error. If we do not specify the type, it is inferred more weakly, so is not
 readily usable. A function <code>proveOrDisprove</code> combines <code>solve</code> and <code>getProof</code> in case one wants to directly obtain a proof.</p>
 <p>This code has not been tested for performance. Further this is my first serious work with lean, i.e., beyond following along some tutorials. Hence there is a lot of scope for improvement. Suggestions and comments are most welcome.</p>
 
