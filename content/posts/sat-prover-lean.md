@@ -64,7 +64,7 @@ We shall use indices from `$0$` to `$n - 1$` to represent the variables, where `
 
 A _valuation_, i.e., an assignment of truth to each variable, clearly corresponds to a finite sequence of booleans of length `$n$`. It is easy to see that a clause `$c$` is true at some valuation`$v$` if and only if, for some `$k$` with `$0\leq k < n$`, we have `$c (k) = some (v(k))$`. Thus, taking witnesses into account, we define propositions `sat` and `unsat` depending on a finite sequence of clauses by
 
-```scala
+```lean
 def sat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
           ∃ valuat : Valuat (n + 1),  
            ∀ (p : Nat), ∀ pw : p < dom, 
@@ -74,7 +74,7 @@ def sat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
 
 and
 
-```scala
+```lean
 def unsat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
           ∀ valuat : Valuat (n + 1),  
            Not (
@@ -88,7 +88,7 @@ def unsat{dom n: Nat}(clauses : FinSeq dom (Clause (n + 1))) :=
 
 We define three clauses `$P \vee Q$`, `$\neg P$` and `$\neg Q$` and two corresponding statements as follows:
 
-```scala
+```lean
 def cl1 : Clause 2 :=   
   (some true) +: (some true) +: FinSeq.empty
 
@@ -108,7 +108,7 @@ def eg2Statement := tail eg1Statement
 
 Typically one does not know whether the solution is positive or negative. Hence it is best to first find structured solutions using `solve` and view them. We shall see how to skip this step if desired. Thus we run 
 
-```scala
+```lean
 def eg1Soln := solve (eg1Statement)
 def eg2Soln := solve (eg2Statement)
 
@@ -120,21 +120,21 @@ and obtain the outputs:
 
 - a resolution tree
 
-```scala
+```lean
 Examples.lean:29:0
 "unsat: [none, none] from [(some false), none] & [(some true), none]; using: {[(some false), none]} and {[(some true), none] from [none, (some false)] & [(some true), (some true)]; using: {[none, (some false)]} and {[(some true), (some true)]}}"
 ```
 
 - a valuation that is a solution
 
-```scala
+```lean
 Examples.lean:30:0
 "sat: [true, false]"
 ```
 
 We can then obtain the proofs of the appropriate proposition using the `getProof` function on the structured proof. This depends on the _typeclass_ `Prover` which associates a statement and proof to the structured proof.
 
-```scala
+```lean
 def eg1 : unsat eg1Statement := getProof eg1Soln 
 def eg2 : sat eg2Statement := getProof eg2Soln 
 
