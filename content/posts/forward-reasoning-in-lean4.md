@@ -6,15 +6,17 @@ tags = []
 categories = []
 +++
 
-I describe here my experiments with _forward reasoning_ (reasoning from the premises), as well as _mixed reasoning_ (reasoning both from the premises and from the conclusion) in Lean 4. The code for this is in the [Lean Loris](https://github.com/siddhartha-gadgil/lean-loris) repository. This code (and especially the ideas in it) is a successor to my scala code in [ProvingGround](https://github.com/siddhartha-gadgil/ProvingGround).
+I describe here my experiments with _forward reasoning_ (reasoning from the premises), as well as _mixed reasoning_ (reasoning both from the premises and from the conclusion) in Lean 4. The code for this is in the [Lean Loris](https://github.com/siddhartha-gadgil/lean-loris) repository. This code (and especially the ideas in it) is a successor to my scala code in [ProvingGround](https://github.com/siddhartha-gadgil/ProvingGround). The file [ProofExamples.lean](https://github.com/siddhartha-gadgil/lean-loris/blob/main/LeanLoris/ProofExamples.lean) contains some simple examples of forward and mixed reasoning.
 
 Lean has a very powerful collection of _tactics_ to perform backward reasoning, i.e., reasoning starting from the conclusion. One hopes that the forward reasoning capabilities can complement these. In particular, forward reasoning can be open-ended, exploring consequences of the premises.
 
 <!--more-->
 
-## Purely forward reasoning: first examples and techniques.
+## Purely forward reasoning: examples, techniques.
 
-The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients of forward reasoning, which I will sketch in the context of our code finding the proof (with tuning for the problem). I will also give a second example which is easier, and can be instantly solved in the interpreter, to illustrate using this code.
+The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients of forward reasoning, which I will sketch in the context of our code finding the proof (with tuning for the problem). 
+
+I will also give a second example which is easier, and can be instantly solved in the interpreter. The easier example illustrates a way of using the Lean-Loris code.
 
 ### The Problem and a Proof
 
@@ -157,32 +159,42 @@ def left_right_identities2(α : Type)[Mul α](eₗ eᵣ: α)
 
 Firstly, observe that the final cut-off was taken as `$1$` instead of `$2$` in the first proof -- this is because of the simple statement. Secondly, observe that the result of the first evolution is saved and used as the initial state for the second evolution -- appropriate serialization is needed for this.
 
-## Mixed reasoning: Some examples
+## Mixed reasoning: examples and evolvers
 
 We describe some examples where forward reasoning is mixed with backward reasoning. We do not have an explicit notion of goals -- instead (expressions for) terms in the expression distribution that are (expressions for) propositions (or even types) are viewed as goals. We have functions that lift a tactic to an evolver. In our examples, we essentially use lifts of the `induction`, `intro` and `apply` tactics, though for technical reasons we use evolvers that we directly implement.
 
-### First example: `$f(n + 1) = f(n)$` implies `$f$` is constant.
+### First example: if `$f(n + 1) = f(n)$` for all `$n$` then `$f$` is constant.
 
-Our main example for mixed reasoning is the following: suppose `$f: \mathbb{N} \to \alpha$` is a function on natural numbers such that `$\forall n\in \mathbb{N}, f(n + 1) = f(n)$`, then `$\forall n\in \mathbb{N}, f(n) = f(0)$`. This can be proved in compiled code in 3-4 seconds (on my laptop), with evolvers tuned for this problem.
+Our main example for mixed reasoning is the following: suppose `$f: \mathbb{N} \to \alpha$` is a function on natural numbers such that `$\forall n\in \mathbb{N}, f(n + 1) = f(n)$`, then `$\forall n\in \mathbb{N}, f(n) = f(0)$`. This can be proved in compiled code in 3--4 seconds (on my laptop), with evolvers tuned for this problem.
 
 Specifically, we use two evolvers that are based on backward reasoning:
 
 * induction for natural numbers,
-* introduction of a variable (hence an island) corresponding to the domain of a `$\Pi$`-type.
+* introduction of a variable (hence an island) for the domain of a `$\Pi$`-type.
+* proving equalities of the form `$x = x$` by reflexivity.
 
-In addition we use forward reasoning evolvers as mentioned above -- for function application and using symmetry and transitivity of equality (with look-ahead reduced degree for generated equalities where appropriate). In addition we use a simple evolver proving equalities of the form `$x = x$` by equality.
+The forward reasoning evolvers are some of those described above 
 
-A second example of such mixed reasoning is Modus Ponens. As this is instantly proved in the interpreter, we give the code below.
+* function application
+* using symmetry and transitivity of equality (with look-ahead reduced degree for generated equalities where appropriate). 
+
+A second example of such mixed reasoning is Modus Ponens. This is instantly proved in the interpreter as follows.
 
 ```lean
 def modus_ponens(A B: Prop) : A → (A → B)→ B := by
   evolve ev![intro, simple-app] 1 
 ```
 
+Alternatively, we can use lean's apply tactic for the backward reasoning with an evolver to complete the proof.
+
+```lean
+def modus_ponens2(A B: Prop) : A → (A → B)→ B := by
+  intros
+  evolve ev![simple-app] 1
+```
+
 ## Concluding remarks
 
 Our methods are undoubtedly much less powerful than two dominant modes of automated proving -- tactics and SAT/SMT solvers. We hope however that the methods here complement these. This is especially so as we seek to automate reasoning further, as finding intermediate steps in purely backward reasoning is difficult. One of the things I plan to work on (and did do to some extent in ProvingGround) is to identify (simple) statements that have neither been proved nor disproved and target them with mixed reasoning.
 
-Currently we have two ways of forming an initial state -- specifying it manually or using the local context. The most important workpoint here (and in many other contexts) is to have reasonable _premise selection_ based on data. This is a natural target for machine learning, which I hope to work on (or to use a solution that somebody else develops which is compatible).
-
-
+Currently we have two ways of forming an initial state -- specifying it manually or using the local context. The most important workpoint here (and in many other contexts) is to have reasonable _premise selection_, which is learned from data. This is a natural target for machine learning.
