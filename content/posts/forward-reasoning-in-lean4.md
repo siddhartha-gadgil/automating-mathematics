@@ -14,9 +14,9 @@ Lean has a very powerful collection of _tactics_ to perform backward reasoning, 
 
 ## Purely forward reasoning: examples, techniques.
 
-The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients of forward reasoning, which I will sketch in the context of our code finding the proof (with tuning for the problem). 
+The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients of forward reasoning, which I will sketch in the context of the lean-loris code finding the proof (with tuning for the problem). 
 
-I will also give a second example which is easier, and can be instantly solved in the interpreter. The easier example illustrates a way of using the Lean-Loris code.
+I will also give a second example which is easier, and can be instantly solved in the interpreter. The second example illustrates how to use the Lean-Loris code.
 
 ### The Problem and a Proof
 
@@ -26,7 +26,7 @@ Let `$M$` be a set with a binary operation `$*$`. Suppose we have the axioms
 
 then `$\forall m, n\in M$, $m * n = n * m$`.
 
-To begin with, here is a _lean_ proof of this theorem (a mathematical sketch follows).
+To begin with, here is a proof of this theorem in Lean 4 (a mathematical sketch follows).
 
 ```lean
 theorem CzSlOly : (∀ a b : M, (a * b) * b = a) → 
@@ -46,7 +46,7 @@ theorem CzSlOly : (∀ a b : M, (a * b) * b = a) →
         assumption 
 ```
 
-Fix elements `$m$` and `$n$` in `$M$`. We obtain the first 3 lemmas that are obtained by substituting various elements of $M$ in the axioms. Thus, we have
+In mathematical terms (and more detail), the proof is as follow. Fix elements `$m$` and `$n$` in `$M$`. The first 3 lemmas we need are obtained by substituting various elements of $M$ in the axioms. Thus, we have
 
 * Lemma 1: `$(m * n) * n = m$`
 * Lemma 2: `$(m * n) * ((m * n) * n) = n$`
@@ -73,21 +73,23 @@ And finally Lemmas 3 and 6 give
 There are two things we do to find the proof:
 
 * generate terms and proofs from previous proofs in various ways.   
-* recognize non-trivial, hence potentially useful, results : here we just consider results with _simple_ statements.
+* recognize non-trivial, hence potentially useful, results: here we just recognize and use results with simple statements.
 
 ### Generating and selecting terms and proofs
 
-We make use of lean's superb meta-programming framework to generate terms and proofs. We work with collections of _expressions_.
+We make use of lean's superb meta-programming framework to generate terms and proofs. We work throughout with collections of _expressions_.
 
 #### Expression distributions
 
-We start with and generate distributions of expressions. In my earlier approach (in ProvingGround) I used probability distributions. However I used a simpler approach (as experience suggested this is more robust, besides greatly speeding up computations). The collections we use, `ExprDist`, are arrays of expressions with _degrees_, with the degree a natural number. The degree roughly plays the role of `$-log(p)` for a probability `$p$`, but there is no normalization analogous to total probability one. More importantly, when distributions are combined, the resulting degree of an element present in both is taken to be the _minimum_ of the degrees.
+We start with and generate distributions of expressions. In my earlier approach (in ProvingGround) I used probability distributions. However here I used a simpler approach (as experience suggested this is more robust, besides greatly speeding up computations). 
+
+The collections we use, with type `ExprDist`, are arrays of expressions with _degrees_, with the degree a natural number. The degree plays a role similar to `$-\log(p)$` for a probability `$p$`, but there is no normalization analogous to the total probability being one. More importantly, when distributions are combined, the resulting degree of an element present in both is taken to be simply the _minimum_ of the degrees.
 
 In practice we have two arrays, one for expressions representing terms that are not proofs and one for those representing proofs. The latter is an array of triples, including also the proposition proved. At each stage it is assumed and ensured that no two terms in the array are _definitionally equal_, and the propositions corresponding to two proofs are also not _definitionally equal_. We need to use arrays, rather than `HashMap`s, as hashes are only invariant under _boolean equality_ of expressions.
 
 #### Simple Evolvers
 
-We call functions that generate expression distributions from existing distributions given parameters such as bounds on degrees _evolvers_. A trivial one simply returns the same distribution. Others can be formed by using functions application, including with _unification_. We use evolvers based on application in the Czech-Slovak olympiad problem. These let us deduce the first three lemmas, which are simply function applications of the axioms. In practice we use a couple of variations of function applications -- where we have two arguments (for binary operations and relations) and where the function is given by a name.
+We call functions that generate expression distributions from existing distributions given parameters such as bounds on degrees _evolvers_. A trivial one, `init`, simply returns the given distribution. Others can be formed by using functions application, including with _unification_. We use evolvers based on application in the Czech-Slovak olympiad problem to deduce the first three lemmas (these are function applications of the axioms). In practice we use a couple of variations of function applications -- where we have two arguments (for binary operations and relations) and where the function is given by a name.
 
 Further, evolvers can be combined by combining the distributions they generate. As mentioned above, distributions are combined by taking minimum degree.
 
@@ -95,7 +97,7 @@ Further, evolvers can be combined by combining the distributions they generate. 
 
 To deduce Lemma 4, we need to deduce an equality of the form `$f(a) = f(b)$` from an equality of the form `$a = b$`. For this we need to generate functions with _domain_ the type of `$x$` (and `$y$`). For this, we use _Recursive Evolvers_, i.e., evolvers that depend on other evolvers. These are then combined and called with recursively as we outline below.
 
-Firstly, we describe the recursive evolver we use here, which will depend on a given evolver. Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the given evolver to this, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_, with expressions in this distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` to the expression `$x \mapsto y$`, a so-called `$\lambda$`-expression.
+We first describe the recursive evolver we use for deducing such equalities. which will depend on a given evolver. Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the given evolver to this, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_, with expressions in this distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` to the expression `$x \mapsto y$`, a so-called `$\lambda$`-expression.
 
 Implementing the above is easy because of the superb meta-programming facilities of lean 4 -- an environment can be created with a new free variable (using `withLocalDecl`), the given evolver run and a convenient function (`mkLambdaFVars`) can be used for mapping `$y$` to `$x \mapsto y$`.
 
@@ -120,7 +122,7 @@ Given a collection of equalities, we can generate new ones using symmetry and tr
 
 We can (and do have a function to) transform expression distributions so that the weight of a proof is replaced by the weight of the statement if the latter is lower. However, in this case to use this will mean generating with weight bound large enough to generate the proof of Lemma 5, and this stretches (perhaps exceeds) available resources. Instead we can, and do, _look ahead_ and observe that the generated equality will have low weight. Thus, the evolver we use to apply symmetry and transitivity generates equalities with either the proof or the statement within the weight bound.
 
-#### Solving the problem
+### Solving the problem
 
 The evolvers sketched above are all we need to solve the problem with some help with the initial distribution and with with appropriately chosen combinations of evolvers with suitable degree bounds. Observe that we can compose evolvers, and the evolver we use is indeed a composition. Concretely, the proof is discovered as follows.
 
@@ -136,7 +138,7 @@ The evolvers sketched above are all we need to solve the problem with some help 
 
 We consider a second example to illustrate purely forward reasoning. This is much easier, so we can include the code to prove this (instantly, in the interpreter). 
 
-The problem we consider is often one of the first abstract problems a student encounters in mathematics -- given a product with a left identity `$e_l$` and a right identity `$e_r$`, we have `$e_l = e_r$`. We can use evolution in two forms -- based on _elaboration_ or based on _tactics_. We give the proof based on tactics as the notation is cleaner and tactics will be more familiar to most. Here is the first such proof.
+The problem we consider is often one of the first abstract problems a student encounters in mathematics -- given a product with a left identity `$e_l$` and a right identity `$e_r$`, we have `$e_l = e_r$`. Proofs using evolution can take two forms -- based on _elaboration_ or based on _tactics_. We give the proof based on tactics as the notation is cleaner and tactics will be more familiar to most. Here is such a proof.
 
 ```lean
 def left_right_identities1(α : Type)[Mul α](eₗ eᵣ: α)
