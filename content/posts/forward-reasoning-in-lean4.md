@@ -1,12 +1,14 @@
 +++
 title = "Forward Reasoning in Lean 4"
 date = 2022-03-10T19:20:21+05:30
-draft = true
+draft = false
 tags = []
 categories = []
 +++
 
-I describe here my experiments with _forward reasoning_ (reasoning from the premises), as well as _mixed reasoning_ (reasoning both from the premises and from the conclusion) in Lean 4. The code for this is in the [Lean Loris](https://github.com/siddhartha-gadgil/lean-loris) repository. This code (and especially the ideas in it) is a successor to my scala code in [ProvingGround](https://github.com/siddhartha-gadgil/ProvingGround). The file [ProofExamples.lean](https://github.com/siddhartha-gadgil/lean-loris/blob/main/LeanLoris/ProofExamples.lean) contains some simple examples of forward and mixed reasoning.
+I describe here my experiments with _forward reasoning_ (reasoning from the premises), as well as _mixed reasoning_ (reasoning both from the premises and from the conclusion) in Lean 4. The code for this is in the [Lean-Loris](https://github.com/siddhartha-gadgil/lean-loris) repository. This code (and especially the ideas in it) is a successor to my scala code in [ProvingGround](https://github.com/siddhartha-gadgil/ProvingGround). 
+
+There are three ways to prove results using Lean-Loris: in __compiled code__ or in the  __interpreter__ using _elaboration_, and in the interpreter using _tactics_. In this post I describe examples showing what can be proved, and also the principles, framework and ingredients that go into the proof. The main examples of forward and mixed reasoning need to run with compiled code. A few simpler examples, which run (instantly) in the interpreter, are in the file [ProofExamples.lean](https://github.com/siddhartha-gadgil/lean-loris/blob/main/LeanLoris/ProofExamples.lean). Two of these are also described below.
 
 Lean has a very powerful collection of _tactics_ to perform backward reasoning, i.e., reasoning starting from the conclusion. One hopes that the forward reasoning capabilities can complement these. In particular, forward reasoning can be open-ended, exploring consequences of the premises.
 
@@ -14,9 +16,9 @@ Lean has a very powerful collection of _tactics_ to perform backward reasoning, 
 
 ## Purely forward reasoning: examples, techniques.
 
-The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients of forward reasoning, which I will sketch in the context of the lean-loris code finding the proof (with tuning for the problem). 
+The main example on which I focussed while developing this code (as also part of my earlier code) was a problem from a Czech-Slovak Olympiad (the first experiments with this in ProvingGround were done by Achal Kumar, an undergraduate at IISc). This illustrates the main ingredients used for forward reasoning, which I will sketch in the context of the lean-loris code finding the proof (with tuning for the problem). 
 
-I will also give a second example which is easier, and can be instantly solved in the interpreter. The second example illustrates how to use the Lean-Loris code.
+I will also give a second example which is easier, and can be instantly solved in the interpreter, in part as an illustration of using Lean-Loris.
 
 ### The Problem and a Proof
 
@@ -46,7 +48,7 @@ theorem CzSlOly : (∀ a b : M, (a * b) * b = a) →
         assumption 
 ```
 
-In mathematical terms (and more detail), the proof is as follow. Fix elements `$m$` and `$n$` in `$M$`. The first 3 lemmas we need are obtained by substituting various elements of $M$ in the axioms. Thus, we have
+In mathematical terms (and in more detail), the proof is as follow. Fix elements `$m$` and `$n$` in `$M$`. The first 3 lemmas we need are obtained by substituting various elements of $M$ in the axioms. Thus, we have
 
 * Lemma 1: `$(m * n) * n = m$`
 * Lemma 2: `$(m * n) * ((m * n) * n) = n$`
@@ -83,21 +85,21 @@ We make use of lean's superb meta-programming framework to generate terms and pr
 
 We start with and generate distributions of expressions. In my earlier approach (in ProvingGround) I used probability distributions. However here I used a simpler approach (as experience suggested this is more robust, besides greatly speeding up computations). 
 
-The collections we use, with type `ExprDist`, are arrays of expressions with _degrees_, with the degree a natural number. The degree plays a role similar to `$-\log(p)$` for a probability `$p$`, but there is no normalization analogous to the total probability being one. More importantly, when distributions are combined, the resulting degree of an element present in both is taken to be simply the _minimum_ of the degrees.
+The collections we use (with type `ExprDist`) are arrays of expressions with _degrees_, with the degree a natural number. The degree plays a role similar to `$-\log(p)$` for a probability `$p$`, but there is no normalization analogous to the total probability being one. More importantly, when distributions are combined, the resulting degree of an element present in both is taken to be simply the _minimum_ of the degrees.
 
-In practice we have two arrays, one for expressions representing terms that are not proofs and one for those representing proofs. The latter is an array of triples, including also the proposition proved. At each stage it is assumed and ensured that no two terms in the array are _definitionally equal_, and the propositions corresponding to two proofs are also not _definitionally equal_. We need to use arrays, rather than `HashMap`s, as hashes are only invariant under _boolean equality_ of expressions.
+In practice we have two arrays, one for expressions representing terms that are not proofs and one for those representing proofs. The latter is an array of triples: the proposition proved, the proof and the degree. At each stage it is assumed and ensured that no two terms in the array are _definitionally equal_, and the propositions corresponding to two proofs are also not _definitionally equal_. We need to use arrays, rather than `HashMap`s, as hashes are only invariant under _boolean equality_ of expressions.
 
 #### Simple Evolvers
 
-We call functions that generate expression distributions from existing distributions given parameters such as bounds on degrees _evolvers_. A trivial one, `init`, simply returns the given distribution. Others can be formed by using functions application, including with _unification_. We use evolvers based on application in the Czech-Slovak olympiad problem to deduce the first three lemmas (these are function applications of the axioms). In practice we use a couple of variations of function applications -- where we have two arguments (for binary operations and relations) and where the function is given by a name.
+_Evolvers_ are functions that generate a _final_ expression distributions from an _initial_ distributions a bound on degrees and other parameters. A trivial one, `init`, simply returns the initial distribution. Others can be formed by using functions application, including with _unification_. We use evolvers based on application in the Czech-Slovak olympiad problem to deduce the first three lemmas (these are function applications of the axioms). In practice we use a couple of variations of function applications -- where we apply a function to two arguments (for binary operations and relations) and where the function is a constant specified by a name.
 
 Further, evolvers can be combined by combining the distributions they generate. As mentioned above, distributions are combined by taking minimum degree.
 
 #### Islands and Recursive Evolvers
 
-To deduce Lemma 4, we need to deduce an equality of the form `$f(a) = f(b)$` from an equality of the form `$a = b$`. For this we need to generate functions with _domain_ the type of `$x$` (and `$y$`). For this, we use _Recursive Evolvers_, i.e., evolvers that depend on other evolvers. These are then combined and called with recursively as we outline below.
+To deduce Lemma 4, we need to deduce an equality of the form `$f(a) = f(b)$` from an equality of the form `$a = b$`. For this we need to generate functions with _domain_ the type of `$x$` (and `$y$`). For this, we use _Recursive Evolvers_, i.e., evolvers that depend on an auxiliary evolver. These are then combined and called recursively as we outline below.
 
-We first describe the recursive evolver we use for deducing such equalities. which will depend on a given evolver. Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the given evolver to this, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_, with expressions in this distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` to the expression `$x \mapsto y$`, a so-called `$\lambda$`-expression.
+We first describe the recursive evolver we use for deducing such equalities (depending on an given evolver. Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the given evolver to this, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_, with expressions in this distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` to the expression `$x \mapsto y$`, a so-called `$\lambda$`-expression.
 
 Implementing the above is easy because of the superb meta-programming facilities of lean 4 -- an environment can be created with a new free variable (using `withLocalDecl`), the given evolver run and a convenient function (`mkLambdaFVars`) can be used for mapping `$y$` to `$x \mapsto y$`.
 
