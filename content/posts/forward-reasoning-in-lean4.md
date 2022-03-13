@@ -56,7 +56,7 @@ In mathematical terms (and in more detail), the proof is as follow. Fix elements
 * Lemma 2: `$(m * n) * ((m * n) * n) = n$`
 * Lemma 3: `$((m * n) * m) * m = m * n$`
 
-The next lemma is obtained by multiplying both sides of Lemma 1 on the left by `$m * n$`. This uses the property that, given an equality `$x = y$` for `$x, y\in S$` and a function `$f: S \to T$`, we can deduce the equality `$f (x) = f (y)$`. This is called `congrArg` in lean. Thus, we deduce:
+The next lemma is obtained by multiplying both sides of Lemma 1 on the left by `$m * n$`. This uses the property that, given an equality `$a = b$` for `$a, b\in S$` and a function `$f: S \to T$`, we can deduce the equality `$f (a) = f (b)$`. This is called `congrArg` in lean. Thus, we deduce:
 
 * Lemma 4: `$(m * n) * ((m * n) * n) = (m * n) * m$`
 
@@ -101,13 +101,13 @@ Further, evolvers can be combined by combining the distributions they generate (
 
 To deduce Lemma 4, we need to deduce an equality of the form `$f(a) = f(b)$` from an equality of the form `$a = b$`. For this we need to generate functions with _domain_ the type of `$a$` (which is automatically the type of `$b$`). For this, we use _Recursive Evolvers_, i.e., evolvers that depend on an auxiliary evolver. These are then combined and called recursively as we outline below.
 
-We first describe the recursive evolver we use for deducing such equalities (depending on an auxiliary evolver, which is passed as an argument). Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the auxiliary evolver to this, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_. Observe that expressions in the isle distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` in the isle distribution to the expression `$x \mapsto y$` (the function mapping `$x$` to `$y$`), a so-called `$\lambda$`-expression.
+We first describe the recursive evolver we use for deducing such equalities (depending on an auxiliary evolver, which is passed as an argument). Suppose we have an equality `$a = b$` with type `$\alpha$`. We introduce a variable `$x$` with type `$\alpha$` and add this with degree `$0$` to the initial distribution (we view this as entering an island). We then apply the auxiliary evolver to the new initial distribution, with appropriate parameters (in particular, the bound on degree is reduced by one). This gives a distribution of expressions with degrees, which we call the _isle distribution_. Observe that expressions in the isle distribution in general depending on the variable `$x$`. To get the final distribution of the recursive evolver we map an expression `$y$` in the isle distribution to the expression `$x \mapsto y$` (the function mapping `$x$` to `$y$`), a so-called `$\lambda$`-expression.
 
-Implementing the above is easy because of the superb meta-programming facilities of lean 4 -- an environment can be created with a new free variable (using `withLocalDecl`), the given evolver run and a convenient function (`mkLambdaFVars`) can be used for mapping `$y$` to `$x \mapsto y$`.
+Implementing the above is easy because of the superb meta-programming facilities of lean 4 -- an environment can be created with the new free variable `$x$` (using `withLocalDecl`), the given evolver run and a convenient function (`mkLambdaFVars`) can be used for mapping `$y$` to `$x \mapsto y$` (technically we use a continuation).
 
 We define the recursive evolver needed to prove Lemma 4 using an island as above. For efficiency we group equalities by the types of their left-hand sides (which is also the type of their right-hand sides). For each type `$\alpha$` of a left-hand side, we generate functions `$f$` with domain `$\alpha$` by _forming islands_ as above. We then apply these to the equalities.
 
-For efficiency, in the isles used above we do not generate constant functions -- more precisely we filter out expressions that were in the initial distribution before taking `$\lambda$`s. In other isles, if a term `$y$` is a type we also generate the corresponding `$\Pi$`-type `$\prod_{x\in\alpha} y$`. 
+For efficiency, in the isles used above we do not generate constant functions -- more precisely we filter out expressions that were in the initial distribution before taking `$\lambda$`s. In isles used by some other evolvers, if a term `$y$` is a type we also generate the corresponding `$\Pi$`-type `$\prod_{x\in\alpha} y$`. 
 #### Combining and calling recursive evolvers
 
 As with evolvers , recursive evolvers can be combined by combining their final distributions. Further, an evolver can be made into a recursive evolver by simply ignoring the auxiliary evolver passed to it as an argument. We can thus combine recursive evolvers and simple evolvers (we again call this the sum).
@@ -122,7 +122,7 @@ It is crucial that we first combine recursive evolvers and then take the fixed p
 
 #### Recognizing lemmas and generating equalities
 
-Given a collection of equalities, we can generate new ones using symmetry and transitivity. We can try to generate the proof of Lemma 5. However if we assign the proof a degree based on how it was generated, its degree will be too high -- either the degree bound will prevent us from generating a proof of Lemma 6 using this or there will be so many expressions within the degree bound that the system will run out of memory or take forever to run.
+Given a collection of equalities, we can generate new ones using symmetry and transitivity. We can try to generate the proof of Lemma 5 using this. However if we assign the proof a degree based on how it was generated, its degree will be too high -- either the degree bound will prevent us from generating a proof of Lemma 6 (which is deduced from Lemma 5) or there will be so many expressions within the degree bound that the system will run out of memory or take forever to run.
 
 We can (and do have a function to) transform expression distributions so that the weight of a proof is replaced by the weight of the statement if the latter is lower. However to use this here will require generating with weight bound large enough to generate a proof of Lemma 5, and this stretches (perhaps exceeds) available resources. Instead we can, and do, _look ahead_ and observe that the generated equality will have low weight. Thus, the evolver we use to apply symmetry and transitivity generates equalities with either the proof or the statement within the weight bound.
 
@@ -130,12 +130,12 @@ We can (and do have a function to) transform expression distributions so that th
 
 The evolvers sketched above are all we need to solve the problem, but with some help with the initial distribution and with appropriately chosen combinations of evolvers and degree bounds. Observe that we can compose evolvers -- indeed the evolver we use is a composition. Concretely, a proof is discovered as follows.
 
-* Our initial distribution has expressions for `m`, `n`, `m * n`, the two axioms and the name `mul` (for multiplication), all with degree `$0$`. Except `m * n` all others are canonical (and would be picked up by tactics as we sketch below). Including `m * n` is extra help we are giving the prover, but could alternatively be derived from the heuristic assigning weight `$0$` to sub-expressions of the goals.
+* Our initial distribution has expressions for `m`, `n`, `m * n`, the two axioms and the name `mul` (for multiplication), all with degree `$0$`. Except `m * n` all others are canonical (and would be picked up by tactics as we sketch below). Including `m * n` in the initial distribution is extra help we are giving the prover, but we could alternatively use heuristics like assigning weight `$0$` to sub-expressions of the goals.
 * We use a composition of two basic evolvers:
-    - The sum of certain evolvers based on function application (including with unification, with two arguments, and with names of functions), the `congrAg` evolver, which deduces equalities of the form `$f(a) = f(b)$` from equalities `$a = b$`, and the `init` evolver. This evolver (i.e., the evolver obtained by summing) is used with weight bound `$3$`.
+    - The sum of certain evolvers based on function application (including with unification, with two arguments, and with names of functions), the `congrAg` evolver (which deduces equalities of the form `$f(a) = f(b)$` from equalities `$a = b$`), and the `init` evolver. This evolver (i.e., the evolver obtained by summing) is used with weight bound `$3$`.
     - The evolver that deduces equalities from others using symmetry and transitivity, with the look-ahead generation and degree assignment (more precisely the sum of this with the `init` evolver). This is used with weight bound `$1$`.
 * Specifically, we apply the first evolver, then the second, then the first again and then the second again. This is done by constructing a composed evolver (with the side-effect of logging progress after each evolver).
-* We see (from the logs) that the first `$4$` lemmas are generated in the first step (using the first evolver), Lemma 5 in the second step (using the second evolver), Lemma 6 in the third step (using the first evolver again), and the theorem in the fourth step (using the second evolver again).
+* We see (from the logs) that the first 4 lemmas are generated in the first step (using the first evolver), Lemma 5 in the second step (using the second evolver), Lemma 6 in the third step (using the first evolver again), and the theorem in the fourth step (using the second evolver again).
 * This is run in compiled code, and finishes in about a minute and a half on my laptop (a Dell XPS 15 with 16 GB RAM).
 
 To see this problem being solved, you can download, build and run the code. For convenience, below is a screen-cast of the problem being solved.
@@ -145,7 +145,7 @@ To see this problem being solved, you can download, build and run the code. For 
 
 We consider a second example to illustrate purely forward reasoning. This is much easier, so we include the code to prove this (instantly, in the interpreter). 
 
-The problem we consider is often one of the first abstract problems a student encounters in mathematics: given a product (on some set) with a left identity `$e_l$` and a right identity `$e_r$`, we have `$e_l = e_r$`. Proofs using evolution can take two forms -- based on _elaboration_ or based on _tactics_. We give a proof based on tactics as the notation is cleaner and tactics will be more familiar to most. Here is such a proof.
+The problem we consider is often one of the first abstract problems a student encounters in mathematics: given a product (on some set) with a left identity `$e_l$` and a right identity `$e_r$`, we have `$e_l = e_r$`. Interactive proofs using evolution can be based on _elaboration_ or based on _tactics_. We give a proof based on tactics as the notation is cleaner and tactics will be more familiar to most. Here is such a proof.
 
 ```lean
 def left_right_identities1(α : Type)[Mul α](eₗ eᵣ: α)
@@ -170,7 +170,7 @@ Firstly, observe that the final cut-off was taken as `$1$` instead of `$2$` in t
 
 ## Mixed reasoning: examples and evolvers
 
-We describe some examples where forward reasoning is mixed with backward reasoning. We do not have an explicit notion of goals (at least for now, based on experience this may change). Instead (expressions for) terms in the expression distribution that are (expressions for) propositions (or even types) are viewed as goals. We have functions that lift a tactic to an evolver. In our examples, we essentially use lifts of the `induction`, `intro` and `apply` tactics, though, for technical reasons we use evolvers that we directly implement.
+We describe some examples where forward reasoning is mixed with backward reasoning. We do not have an explicit notion of goals (at least for now, based on experience this may change). Instead (expressions for) terms in the expression distribution that are (expressions for) propositions (or all types, depending on the evolver used) are viewed as goals. We have functions that lift a tactic to an evolver. In our examples, we essentially use lifts of the `induction`, `intro` and `apply` tactics, though, for technical reasons we use evolvers that we directly implement.
 
 ### First example: if `$f(n + 1) = f(n)$` for all `$n$` then `$f$` is constant.
 
@@ -180,7 +180,7 @@ Specifically, we use three evolvers that are based on backward reasoning, which 
 
 * induction for natural numbers,
 * introduction of a variable (hence an island) for the domain of a `$\Pi$`-type.
-* proving equalities of the form `$x = x$` by reflexivity.
+* proving equalities of the form `$a = a$` by reflexivity.
 
 The forward reasoning evolvers are some of those described above:
 
