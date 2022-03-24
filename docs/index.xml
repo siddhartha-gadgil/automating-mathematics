@@ -8,7 +8,17 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Thu, 10 Mar 2022 19:20:21 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Mar 2022 11:10:36 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Some things I learnt from Dennis Sullivan</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/some-lessons-from-sullivan/</link>
+      <pubDate>Thu, 24 Mar 2022 11:10:36 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/some-lessons-from-sullivan/</guid>
+      <description>&lt;p&gt;This post is to celebrate the &lt;a href=&#34;https://abelprize.no/abel-prize-laureates/2022&#34;&gt;Abel prize&lt;/a&gt; awarded to Dennis Sullivan. Sullivan is not only one of the deepest and broadest mathematicians, but also one of the most inspiring &amp;ndash; in particular to me. I learnt much from him during my three years at Stony Brook and during his two visits to India. This is a somewhat whimsical account of some of this, with quotes from memory (hence error prone).  Some stuff is general and some more technical.&lt;/p&gt;
+&lt;p&gt;Since much of this is about the process of mathematics it should also be useful for automated theorem proving &amp;ndash; my excuse for posting this here 😃.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Forward Reasoning in Lean 4</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/forward-reasoning-in-lean4/</link>

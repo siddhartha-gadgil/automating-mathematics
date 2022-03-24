@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Some things I learnt from Dennis Sullivan &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Some things I learnt from Dennis Sullivan</h1>
+  <time datetime=2022-03-24T11:10:36&#43;0530 class="post-date">Thu, Mar 24, 2022</time>
+  <p>This post is to celebrate the <a href="https://abelprize.no/abel-prize-laureates/2022">Abel prize</a> awarded to Dennis Sullivan. Sullivan is not only one of the deepest and broadest mathematicians, but also one of the most inspiring &ndash; in particular to me. I learnt much from him during my three years at Stony Brook and during his two visits to India. This is a somewhat whimsical account of some of this, with quotes from memory (hence error prone).  Some stuff is general and some more technical.</p>
+<p>Since much of this is about the process of mathematics it should also be useful for automated theorem proving &ndash; my excuse for posting this here 😃.</p>
+<h3 id="why-be-clever-when-we-can-be-intelligent">&ldquo;Why be clever when we can be intelligent?&rdquo;</h3>
+<p>A clever proof shows something is true, while an intelligent proof gives an understanding of why it is true and shows it is as a consequence. Sullivan was not saying do not be clever, just what is better if both are possible.</p>
+<h3 id="give-a-description-on-a-single-sheet-of-paper">&ldquo;Give a description on a single sheet of paper&rdquo;</h3>
+<p>I had proved a result that gave a <em>triangulation</em>, i.e., a <em>finite description</em> of some spaces (homotopy compactifications of moduli spaces of punctured surfaces). Sullivan was very encouraging after a lecture on this, but asked for a description of the solution (not including the proof) that fit on two sides of a sheet of paper. Writing such a description, with the rest of the paper proving this, not only made the stuff much better written, but also increased my understanding of my work.</p>
+<h3 id="try-to-prove-things-without-hypothesis">&ldquo;Try to prove things without hypothesis&rdquo;</h3>
+<p>This was in the context of a major question in mathematics called the <em>Geometrization conjecture</em> about <code>$3$</code>-dimensional manifolds. Sullivan described an approach he had tried which was to prove that all <code>$3$</code>-dimensional manifolds have conformally flat structures, and to deduce geometrization as a consequence. The actual statement of geometrization involves hypothesis on the manifolds implying that they had appropriate geometric structures. Sullivan&rsquo;s point was that when we have such hypothesis (and the statement is false without them) we have to use them somehow, and using hypothesis can be hard.</p>
+<p>In this case, the approach did not go far as it was not true that all <code>$3$</code>-dimensional manifolds had conformally flat structures. So we can try to get rid of hypotheses by making auxiliary statements, but these better be true.</p>
+<p>Indeed in the case of geometrization a major technical advantage of the approach that Perelman carried out successfully was that the hypothesis of being <em>aspherical</em> was not needed &ndash; a statement was proved without this which could then be specialized.</p>
+<h3 id="the-power-of-calculations">&ldquo;The power of calculations&rdquo;</h3>
+<p>Sullivan exclaimed this during a mathematical discussion when my friend (and colleague) Harish showed why something is true with a calculation. Harish was quite amused that this exclamation was prompted by a simple calculation.</p>
+<p><strong>Moral:</strong> sometimes one just proves things by calculating.</p>
+<h3 id="too-much-technique-too-few-interesting-questions">Too much technique, too few interesting questions</h3>
+<p>Sullivan commented that mathematics has a problem of too much technique used for questions that are not that interesting. I am often struck by this after seminars where a lot of technical work gives a bounds on, for example, the <em>slice-genus</em> of a handful of knots.</p>
+<p>One may conclude from this that one should seek more questions and focus less on technique. Perhaps we should collectively do this.
+However, at an individual level, unless one is at the very top, my experience is that mathematicians should accept that this is the nature of the beast and focus on technique. Or move on to something that is not really mathematics.</p>
+<h3 id="trees-random-walks-harmonic-functions">Trees, random walks, harmonic functions</h3>
+<p>Suppose one wanders randomly in a tree such as the following.
+<img src="https://siddhartha-gadgil.github.io/automating-mathematics/F2.png" alt="tree">
+There are more ways to go away from the center than towards it. Many results of Sullivan (to quote him) were built on just this. Specifically this gives a way of constructing harmonic functions on negatively curved spaces.</p>
+<p>Closely related is a favourite of Sullivan &ndash; the Riemann mapping theorem. In particular, if we have a surface with some boundary components at the bottom (<em>inputs</em>) and some on top (<em>outputs</em>) then (given a <em>conformal structure</em>) we have a (unique) harmonic map which is <code>$0$</code> at the bottom and <code>$1$</code> at the top. From this we get a locally flat metric, and hence a parametrization of conformal structures.</p>
+<h3 id="magic-of-minimal-models">Magic of minimal models</h3>
+<p>This is Sullivan&rsquo;s famous work, which I saw in a lecture in his course. It is magical how some formal algerbraic structures give <em>homotopy groups</em>, all captured by the simple equation <code>$d\circ d = 0$</code>.</p>
+<h3 id="infty-structures"><code>$\infty$</code>-structures</h3>
+<p>Probably the most important bit of mathematics that I learnt from Sullivan, especially as it reappeared in my mathematical life with Voevodsky&rsquo;s discovery of <em>Homotopy Type theory</em>.</p>
+<p>The basic idea is that in topology (and other mathematics) we often make choices, especially of perturbations (or of parametrizations). The result does not depend on these choices <em>up to equivalence</em>, and one traditionally works with this. However we can do better and consider the equivalence as an object. This may need another perturbation, but resulting equivalences are still equivalent. One can go on in this way to get an <code>$\infty$</code>-structure.</p>
+<p>A specific case occurs when we <em>discretize</em> or (closely related to this) <em>subdivide</em>. The main idea is that many natural partial differential equations can be expressed in terms of the <em>exterior</em> derivative <code>$d$</code> and the <em>wedge product</em>. These have discrete counterparts, and one can map to the discretization by averaging. One can similarly average when subdividing a discrete system to get a better approximation.</p>
+<p>This works well for linear PDEs as the averaging maps <code>$d$</code> to its discrete counterparts. However the wedge is not mapped to its discrete counterparts, and even worse the discrete counterparts of the wedge are not associative. However, if the <em>wedge</em> product is viewed as a degenerate case of an <code>$\infty$</code>-structure, then we do have algebraic structures and these map correctly. Sullivan has an approach to the Navier-Stokes equations which is based on this.</p>
+<h3 id="string-topology-and-the-goldman-bracket">String topology and the Goldman bracket</h3>
+<p>The other candidate for the most important mathematics I learnt from Sullivan. Loop spaces have been central to topology for a while, and these are very useful new operations on them, inspired by the Goldman bracket.</p>
+<p>Multiplying loops by taking one followed by the other is an old idea in topology &ndash; Poincaré&rsquo;s definition of the fundamental group was based on these. In string topology multiplying loops is used to give an operation on families of loops (technically the homology of the loop space). This is done by perturbing, and then multiplying loops where they intersect.</p>
+<h3 id="foliation-cycles">Foliation cycles</h3>
+<p>This is Sullivan&rsquo;s work, but I mainly learnt it from his paper and various people (in particular Slava Matveyev) and sources (Candel and Conlon&rsquo;s superb book on foliations). A whole bunch of geometric results follow from one central idea &ndash; one such characterizes <em>taut foliatations</em> (a topological idea, the best work on which was due to my advisor David Gabai) as foliations all of whose <em>leaves</em> are area minimizing. The idea is roughly that when we are seeking structures in a cone, either such a structure exists or there is a <em>dual</em> structure obstructing it by having zero integral on subspaces that define the cone.</p>
+<h3 id="merely-complex-structures----somewhere-where-we-know-nothing">(Merely) Complex structures &ndash; somewhere where we know nothing</h3>
+<p>A famous question in mathematics is whether the <code>$6$</code>-sphere has a complex structure (more precisely a so called <em>integrable complex structure</em>). Complex structures are stronger than so called <em>almost complex structures</em> &ndash; about which we know essentially everything, and Kähler structures, about which we know a lot and do not know a lot. What I learnt from Sullivan is that, except in dimension <code>$6$</code>, we know <strong>nothing</strong> about complex structures other than what is true about almost complex ones. So we have examples of Complex but not Kähler manifolds &ndash; we construct these showing they are complex, and what we know about Kähler manifolds shows that these are not Kähler. But we have no way of ruling out having a Complex structure unless we can rule out almost complex structures.</p>
+<p>The more general point &ndash; we can have whole classes of structures which are clearly interesting but about which we know nothing.</p>
+<h3 id="lipschitz-functions-for-topology">Lipschitz functions for topology</h3>
+<p>Traditionally in topology one either studies smooth objects or objects up to continuous functions. As I learnt from Sullivan, often the correct view is to consider <em>Lipschitz functions</em> and associated structures. A theorem of Sullivan says that in high dimensions these are unique. Yet Lipschitz charts give us much more structure than just continuous charts.</p>
+<h3 id="measures-in-different-contexts">Measures in different contexts</h3>
+<p>Since I first saw this as an undergraduate, a general question that intrigued me was why <em>countable additivity</em> was the correct notion for a measure. Another thing I learnt from Sullivan &ndash; it is simply not true that countable additivity is always the correct notion &ndash; in some cases (e.g. <em>amenability</em>) something else like finite additivity is the correct notion.</p>
+<h3 id="quantum-cohomology-is-just-the-equivariant-cohomology-of-the-loop-space">&ldquo;Quantum cohomology is just the equivariant cohomology of the loop space&rdquo;</h3>
+<p>Here I am quoting Alexander Givental, speaking at a (7 hour long) Sullivan seminar. I cannot say I truly understand this. But a natural question is: the loop space does not need a symplectic structure but quantum cohomology does &ndash; why? The answer (from Sullivan) is that the symplectic structure gives a notion of positivity, which makes various sums finite.</p>
+<h3 id="what-is-the-central-mathematical-question-in-your-life">&ldquo;What is the central mathematical question in your life?&rdquo;</h3>
+<p>Perhaps a good note on which to end, and leave the reader to answer this question I have heard Sullivan ask (with mathematical appropriately substituted).</p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
