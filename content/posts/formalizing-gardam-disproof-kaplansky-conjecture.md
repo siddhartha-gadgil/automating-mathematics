@@ -177,7 +177,9 @@ The construction and properties of the group `$P$` in lean 4 are mostly a transl
 
 ### Constructing the Group
 
-The group is constructed by first constructing metabelian groups in general given group actions and cocycles, and then specializing to the specific case of the group `$P$`. Given the action and the cocycle, the multiplication on `$K\times Q$` is straightforward. Work is needed to show that this is indeed a group, especially that the group action property and the cocycle condition imply associativity.
+The group is constructed by first constructing metabelian groups in general given group actions and cocycles, and then specializing to the specific case of the group `$P$`. When defining a metabelian group given an action and the cocycle, defining the multiplication on `$K\times Q$` is straightforward. However, work is needed to show that this is indeed a group, especially that the group action property and the cocycle condition imply associativity.
+
+Once the general metabelian group construction is shown to give a group, the specific action and cocycles for `$P$` can be defined. We show that these indeed satisfy the required conditions, in part using enumeration and decidability as mentioned above.
 
 ### Torsion freeness
 
