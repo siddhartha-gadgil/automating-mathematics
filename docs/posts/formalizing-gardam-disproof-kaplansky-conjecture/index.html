@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Formalizing Gardam&#39;s disproof of Kaplansky&#39;s Unit Conjecture &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  <link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2022. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Formalizing Gardam&#39;s disproof of Kaplansky&#39;s Unit Conjecture</h1>
+  <time datetime=2022-06-07T06:50:53&#43;0530 class="post-date">Tue, Jun 7, 2022</time>
+  <p>A little over an year ago, Giles Gardam <a href="https://arxiv.org/abs/2102.11818">disproved</a> a long-standing conjecture, often called the <em>Kaplansky Unit Conjecture</em>. This was a striking result &ndash; the statement was a simple and basic one, it had a long history, and it was one of a cluster of related conjectures with important relations to many areas (including the Whitehead conjecture in topology). Gardam&rsquo;s work is published in the <em>Annals of Mathematics</em>.</p>
+<p>Anand Rao Tadipatri and I have <a href="https://github.com/siddhartha-gadgil/Polylean">formalized</a> Gardam&rsquo;s disproof in <strong>lean 4</strong>. We used <strong>lean 4</strong> as a proof assistant, but also took advantage of its being a (full fledged and really nice) programming language. This post is an account of the Unit conjecture and our formalization of it.</p>
+<h2 id="kaplanskys-unit-conjecture">Kaplansky&rsquo;s Unit Conjecture</h2>
+<p>Kaplansky&rsquo;s unit conjecture says that the only units in the <em>group ring</em> <code>$k[G]$</code> of a <em>torsion-free</em> group <code>$G$</code> over a field <code>$k$</code> are elements of the form <code>$a\cdot g$</code> where <code>$a$</code> is a unit in <code>$k$</code> and <code>$g$</code> is an element of <code>$G$</code>. We first recall the definition of group rings and motivate the question.</p>
+<h3 id="group-rings">Group Rings</h3>
+<p>Group rings are analogues of polynomials, or better still <!-- raw HTML omitted -->Laurent polynomials<!-- raw HTML omitted -->, i.e., finite sums
+<code>$\sum_{i=1}^k a_i x^{n_i}$</code> with <code>$n_i\in \Z$</code> for all <code>$i$</code>. The coefficients <code>$a_i$</code> are in general elements of a ring <code>$R$</code>.</p>
+<p>To motivate Kaplansky&rsquo;s conjectures, observe that if we assume that the coefficients lie in a field <code>$k$</code>, then by considering degrees we can easily deduce the following  for a pair of Laurent polynomials <code>$p(x)$</code> and <code>$q(x).$</code></p>
+<ul>
+<li>If <code>$p(x)q(x)=0$</code>, then <code>$p(x)=0$</code> or <code>$q(x)=0$</code>.</li>
+<li>If <code>$p(x)q(x)=1$</code>, then both <code>$p(x)$</code> and <code>$q(x)$</code> are of the form <code>$cx^d$</code>, <code>$c\neq 0$</code>, <code>$d\in\Z$</code>.</li>
+</ul>
+<p>Fix a group $G$ and a ring $R$. The group ring <code>$R[G]$</code> is the set of formal sums <code>$\sum_{i=1}^n a_i g_i$</code>, i.e., the free <code>$R$</code>-module with basis <code>$G$</code> (a <em>free module</em> is the analogue of a vector space with a given basis, allowing coefficients to be in a ring instead of a field). The multiplication in <code>$R[G]$</code> is the bilinear extension of that of  $G$, i.e.,
+<code>$$(\sum_{i=1}^k a_i g_i)\cdot (\sum_{j=1}^l b_j h_j) = \sum_{i=1}^k\sum_{j=1}^l (a_ib_j)(g_ih_j).$$</code>
+Note that we group together terms in the right hand side corresponding to the same group elements.</p>
+<p>Observe that the group ring <code>$R[\Z]$</code> is precisely the ring of Laurent polynomials with coefficients in <code>$R$</code>, with <code>$\Z$</code> viewed as the infinite cyclic multiplicative group <code>$\langle x\rangle$</code>, i.e., with <code>$n\in\Z$</code> identified with the element <code>$x^n\in \langle x\rangle.$</code></p>
+<h3 id="why-group-rings">Why group rings?</h3>
+<p>A vector space <code>$V$</code> over a field <code>$k$</code> with a group of linear symmetries <code>$G$</code> becomes a module over the group ring <code>$k[G]$</code>. Similarly modules over a ring <code>$R$</code> with the group of symmetries <code>$G$</code> become modules over the group ring <code>$R[G]$</code>. A typical example is the chain complex of a covering space, with <code>$G$</code> the group of deck transformations. Many important topological invariants, such as the Alexander polynomials and Reidemeister torsion, are constructed from such <code>$R[G]$</code>-modules.</p>
+<p>Indeed, the above is abstracted to give the notion of the cohomomology of a group. A specific case, <em>Galois cohomology</em>, is very important in algebraic number theory.</p>
+<h3 id="kaplanskys-conjectures">Kaplansky&rsquo;s conjectures</h3>
+<p>Consider group rings over a field <code>$k$</code>. Suppose <code>$g$</code> is a torsion element in a group <code>$G$</code>, i.e., we have <code>$g^n = e$</code> for some <code>$n &gt; 1$</code> but <code>$g\neq e$</code>. In contrast to the case of Laurent polynomials (i.e. <code>$G=\Z$</code>), we do have zero-divisors in <code>$k[G]$</code> as <code>$$(1-g)(1 + g + \dots + g^{n-1}) = 1 - g^n = 0.$$</code>
+Similarly, for many groups with torsion, $k[G]$ has <!-- raw HTML omitted -->non-trivial<!-- raw HTML omitted --> units, i.e., units not of the form $ag$.</p>
+<p>The Kaplansky conjectures assert that we do not have non-trivial units or zero divisors if <code>$G$</code> is <strong>torsion free</strong>, i.e., if <code>$k$</code> is a field and <code>$G$</code> is a torsion free group. Thus, if <code>$k$</code> is a field, and <code>$G$</code> is a torsion free group, we have the following conjectures.</p>
+<ul>
+<li><strong>Unit Conjecture:</strong> for <code>$\alpha$</code>, <code>$\beta$</code> in <code>$k[G]$</code>, if <code>$\alpha\beta=1$</code> then there exists <code>$a\in k$</code>, <code>$g \in G$</code>  such that <code>$\alpha = ag$</code>.</li>
+<li><strong>Zero divisor conjecture:</strong>  for <code>$\alpha$</code>, <code>$\beta$</code> in <code>$k[G]$</code>, if <code>$\alpha\beta=0$</code> then <code>$\alpha=0$</code> or <code>$\beta=0$</code>.</li>
+</ul>
+<p>Beyond the simplicity and generality of the statements, these are attractive because of their similarity, both formally and structurally, to many important questions. For example, in understanding a basic question in topology &ndash; the relation between homotopy type and homeomorphism type &ndash; Whitehead introduced an intermediate relation, <em>simple homotopy type</em>, and showed that simple homotopy types are classified by elements of the <em>Whitehead Group</em>. Again, torsion elements lead to non-trivial Whitehead groups, while the <strong>Whitehead Conjecture</strong> postulates that torsion-free groups have trivial Whitehead groups. Indeed there are direct relations too between the Whitehead group and Kaplansky&rsquo;s conjectures.</p>
+<h2 id="gardams-theorem">Gardam&rsquo;s theorem</h2>
+<p><strong>Theorem (Gardam)</strong> Kaplansky&rsquo;s unit conjecture is false.</p>
+<p>Specifically, Gardam considered a certain (well studied) group <code>$P$</code>, called the <em>Promislow</em> or <em>Hantzsche–Wendt</em> group. This was known to be torsion free. Gardam showed that there are elements <code>$\alpha, \alpha'\in \mathbb{F}_2[P]$</code> with <code>$\alpha\cdot\alpha'=1$</code> and with <code>$\alpha$</code> not of the form <code>$ag$</code>. The elements were discovered by a computer search using <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/">SAT solvers</a> and were given explicitly by Gardam.</p>
+<p>Gardam gives many descriptions of the group <code>$P$</code>. Indeed, for topologists, it is the fundamental group of a <code>$3$</code>-manifold <code>$M$</code> obtained by gluing two copies of the twisted <code>$I$</code>-bundle over the Klein bottle along their boundaries. But the description that was most convenient to us was as a <em>Metabelian</em> group. We next recall metabelian groups.</p>
+<h3 id="metabelian-groups">Metabelian Groups</h3>
+<p>A <em>Metabelian Group</em> is a group <code>$G$</code> with an <em>abelian normal subgroup</em> <code>$K$</code> so that the quotient <code>$Q=G/K$</code> is also abelian. The simplest such groups are the products <code>$K \times Q$</code>, which are in fact abelian.  However for fixed <code>$K$</code> and <code>$Q$</code>, there are in general other corresponding metabelian groups <code>$G$</code>, as we see with following examples.</p>
+<ul>
+<li>The permutation group  <code>$G=S_3$</code> on <code>$3$</code> letters is a metabelian group, with abelian normal subgroup <code>$K\cong \Z/3$</code> generated by the cycle <code>$\sigma$</code> and quotient <code>$Q\cong \Z/2$</code>.</li>
+<li>Let <code>$G=\Z$</code> and <code>$K=2\Z$</code> be the subgroup of even integers. Then <code>$Q = G/K \cong \Z/2$</code>. This gives <code>$\Z$</code> a description as a metabelian group with <code>$K\cong \Z$</code> and <code>$Q\cong \Z/2$</code>.</li>
+</ul>
+<p>The two examples illustrate the two ways in which <code>$G$</code> can fail to be a product. We see that, in a precise sense, these are the only two ways. Thus, we can determine all metabelian groups <code>$G$</code> corresponding to fixed <code>$K$</code> and <code>$Q$</code> in terms of some explicit data. We remark that this is a special case of the so called <em>group extension</em> problem.</p>
+<p>Firstly, observe that as a <em>set</em> we can always identify <code>$G$</code> with <code>$K\times Q$</code> by choosing a <em>section</em> <code>$s: Q \to G$</code>, i.e., a function <code>$s: Q \to G$</code> such that <code>$q(s(x))=x$</code> for all <code>$x$</code> in <code>$Q$</code>, where <code>$q: G \to Q$</code> is the quotient homomorphism. Every element <code>$g\in G$</code> is then uniquely of the form <code>$g =k\cdot s(q)$</code> with <code>$k\in K$</code> and <code>$q \in Q$</code>.</p>
+<p>In the case of the permutation group we can choose <code>$s$</code> to be a homomorphism by mapping the generator <code>$1_2$</code> of <code>$\Z/2$</code> to a transposition <code>$\tau$</code>. Thus <code>$Q$</code> can be identified with a subgroup of <code>$G$</code> and <code>$s$</code> regarded as the inclusion (and omitted from the notation). However, an elements of the group <code>$K\subset G$</code> does not in general commute with an element of <code>$Q\subset G$</code>, so <code>$G$</code> is not a product of <code>$K$</code> and <code>$Q$</code>. Instead, we can write <code>$kqk'q' = kk'^{q}qq'$</code>, where <code>$k'^q=qk'q^{-1}$</code> is the result of conjugation. Conjugation gives a <em>group action</em> of <code>$Q\subset G$</code> on <code>$K$</code>. Conversely, given an arbitrary group action <code>$Q \times K\to K$</code>,  <code>$(q, k) \mapsto q\cdot k$</code>, we can define a metabelian group with underlying set <code>$K\times Q$</code> and multiplication given by the formula
+<code>$$(k, q)\cdot (k', q') = (k + q\cdot k', q+ q').$$</code>
+This is a special case of the familiar <em>semi-direct product</em> construction.</p>
+<p>Indeed, as <code>$K$</code> is abelian, for all metabelian groups we have an action of <code>$Q$</code> on <code>$K$</code> which does not depend on <code>$s$</code>. This action is part of the data determining a metabelian group. Suppose henceforth we have fixed <code>$K$</code>, <code>$Q$</code> and a group action of <code>$Q$</code> on <code>$K$</code>.</p>
+<p>The second example illustrates that the group action is not enough to determine <code>$G$</code>; indeed, as <code>$G$</code> is abelian the action is trivial, but <code>$G$</code> is not the product of <code>$K$</code> and <code>$Q$</code>. The reason for this is we cannot choose the section <code>$s:Q \to G$</code> to be a homomorphism; the image <code>$s(1_2)$</code> must be an odd number <code>$2k + 1$</code>, and while <code>$1_2 + 1_2 = 0$</code>, <code>$s(1_2) + s(1_2) = 4k + 2\neq 0$</code> (and <code>$s(0) = 0$</code> for a homomorphism).</p>
+<p>We can measure the extent to which <code>$s$</code> is not a homomorphism by considering, for elements <code>$q, q'\in Q$</code>, the quantity <code>$c(q, q') := s(qq')\cdot(s(q)s(q'))^{-1}$.</code> As <code>$s$</code> is a section, we can deduce that in fact <code>$c(q, q')\in K\subset G$</code>, so <code>$c$</code> gives a function <code>$c: Q \times Q \to K$</code>.</p>
+<p>The associativity of <code>$G$</code> implies a certain condition on the function <code>$c$</code>, called the <em>cocycle condition</em>. Functions <code>$c: Q \times Q \to K$</code> satisfying this condition are called <em>cocycles</em>. Conversely, given a (group action and) a cocycle, we can define a group structure on <code>$G= K \times Q$</code> by
+<code>$$(k, q)\cdot (k', q') = (k + q\cdot k' + c(q, q'), q+ q').$$</code>
+Indeed all metabelian groups are of this form. Thus, a metabelian group is determined by $K$, $Q$, an action of $Q$ on $K$ and a cocyle.</p>
+<p>As an aside (not used in the sequel), note that even if $G$ is a (semi-)direct product an arbitrary section <code>$s: Q \to G$</code> need not be a homomorphism (indeed is usually not a homomorphism). Thus, the cocycle <code>$c$</code> is not zero. However, note that if <code>$s$</code> is a section and <code>$\varphi: Q \to K$</code> is a function, then <code>$s': q \mapsto \varphi(q)s(q)$</code> is a section, and indeed all sections are of this form. It is easy to compute the cocycle <code>$c'$</code> corresponding to <code>$s'$</code> in terms of <code>$c$</code> and <code>$\varphi$</code>, namely <code>$c'$</code> differs from <code>$c$</code> by a so called <em>coboundary</em>. Thus, metabelian groups are determined by $K$, $Q$, an action of $Q$ on $K$, and a cocyle up to a coboundary. A cocycle up to a coboundary is an element of a group called <code>$Ext(Q, K)$</code> (for extension), which is also the group cohomology <code>$H^1(Q, K)$</code>.</p>
+<h3 id="the-group-p-and-its-torsion-freeness">The Group <code>$P$</code> and its Torsion Freeness</h3>
+<p>The group <code>$P$</code> is a metabelian group with kernel <code>$K=\Z^3$</code> and quotient <code>$Q=\Z/2\times \Z/2$</code>. Gardam gives an explicit description of the action and the cocycle which determine <code>$P$</code>. This allows us to explicitly (without much effort) work with elements in <code>$P$</code>. In particular, the (well known) result that <code>$P$</code> is torsion free can be proved as follows:</p>
+<ul>
+<li>Let <code>$g\in P$</code> and <code>$n &gt; 1$</code> be such that <code>$g^n=e$</code>.</li>
+<li>Observe that <code>$(g^2)^n = (g^n)^2 = e$</code> (this is true for any group).</li>
+<li>Using the explicit description of <code>$P$</code>, we see that <code>$g^2\in K\cong \Z^3$</code>.</li>
+<li>As <code>$K\cong \Z^3$</code> is torsion free and <code>$(g^2)^n=e$</code>, it follows that <code>$g^2=e$</code>.</li>
+<li>Using the explicit description of <code>$P$</code> once more, we see that <code>$g^2=e$</code> implies <code>$g =e$</code>, completing the proof of torsion freeness.</li>
+</ul>
+<h1 id="formalization-proofs-computation">Formalization: proofs, computation</h1>
+<p>Formalization is the process of explaining a proof to a computer, i.e., writing a proof in a form that a computer can understand. This is typically done in an interactive theorem prover, as in our case where we used <strong>lean 4</strong>.</p>
+<p>The system in particular checks the correctness of the proof. Further, the part of the system that checks correctness is a small <em>kernel</em>, whose correctness can be carefully checked. One can also write independent checkers that check proofs. Thus, formalization gives a superhuman guarantee of correctness.</p>
+<p>But the applications, present and future, of formalization are not limited to checking correctness of proofs. The article <a href="https://www.imo.universite-paris-saclay.fr/~pmassot/files/exposition/why_formalize.pdf">&ldquo;Why formalize mathematics?&quot;</a> by Patrick Massot is a superb account of why formalization is worthwhile.</p>
+<p>Our particular formalization used, and is in part motivated by illustrating, the integration of computation (that is provably correct) and proving within the same system. Such an integration is an attractive aspect of <strong>lean 4</strong> &ndash; the latest (under development) version  of the <strong>lean theorem prover</strong>. Gardam&rsquo;s theorem was very well suited for such a formalization. We were additionally motivated by our interest in Geometric Group Theory.</p>
+<p>We sketch below some of the aspects of the formalization, in particular illustrating methods and choices for integrating proofs and computations. Henceforth, <strong>show</strong> or <strong>prove</strong> mean <strong>formally prove in lean 4.</strong></p>
+<h2 id="free-modules-and-group-rings">Free Modules and Group rings</h2>
+<p>We need to construct the group ring <code>$\mathbb{F}_2[P]$</code> and also be able to decide (with proof) when two elements of <code>$\mathbb{F}_2[P]$</code> are equal. Being able to decide whether a proposition is true or false together with a proof in either case is encoded in a so-called <em>typeclass</em> called <code>Decidable</code>. We make extensive use of this, as well as so called <em>typeclass inference</em> that automates (among other things) solving decision problems using solutions of simpler decision problems.</p>
+<p>A group ring <code>$R[G]$</code> is a free <code>$R$</code>-module with an additional structure, the product. Further the product is a bilinear extension of a function given on the basis <code>$G$</code> of the free <code>$R$</code>-module. Thus, our goal is to construct free <code>$R$</code>-modules with basis <code>$X$</code>, including when <code>$X$</code> is infinite, allowing both of the following.</p>
+<ul>
+<li>We can decide when two elements of the free <code>$R$</code>-module are equal, provided we can decide equality in <code>$R$</code> and in <code>$X$</code>.</li>
+<li>We can define <code>$R$</code>-module homomorphisms given their values on the basis <code>$X$</code>.</li>
+</ul>
+<p>The first is a computational goal and the second a theoretical one. To achieve both, we make two constructions, and essentially prove they are equivalent. Both are quotients of <em>formal sums</em>. We first sketch the first construction, which is the definition used, and decidable equality using this. We then sketch the second construction and its equivalence to the first.</p>
+<h3 id="formal-sums-coordinates-and-free-modules">Formal sums, Coordinates and Free modules</h3>
+<p>Fix a ring <code>$R$</code> and <code>$X$</code>. A <em>formal sum</em> is an expression of the form <code>$\sum_{i=1}^n a_i x_i$</code> where <code>$a_i\in R$</code> and <code>$x_i\in X$</code>-element. We simply encode these as lists of pairs <code>$(a_i, x_i)$</code>.</p>
+<p>Given a formal sum <code>$\sum_{i=1}^n a_i x_i$</code>, we can associate to it coordinates as a function <code>$\chi_s: X\to R$</code>, with the coordinate of an element <code>$x_0$</code> of <code>$X$</code> being the sum of the coefficients <code>$a_i$</code> corresponding to indices <code>$i$</code> with <code>$x_i=x_0$</code>. Note that only finitely many coordinates are non-zero (but we do not formally state or prove this).</p>
+<p>Note that to define the coordinate function <code>$\chi_s$</code> as a (computable) function, we need decidability of equality in <code>$X$</code>. Lean allows us to make existential definitions marked <strong>noncomputable</strong>, but as we will use this definition in computations we need an effective (i.e., not declared as noncomputable) definition.</p>
+<p>We define two formal sums <code>$s_1$</code> and <code>$s_2$</code> to be equivalent if <code>$\chi_{s_1} = \chi_{s_2}$</code>. It is easy to show that this is an equivalence relation. The free module <code>$R[X]$</code> is defined as the quotient of the formal sums of <code>$X$</code> by this equivalence relation.</p>
+<h3 id="supports-and-decidable-equality">Supports and Decidable equality</h3>
+<p>Observe that if <code>$X$</code> is infinite (as it is in our case), we cannot check equality of coordinate functions by checking at all values. Thus, we need some other way to check equality of coordinates. We do this by relating coordinates to supports.</p>
+<p>We define the support <code>$supp(s)$</code> of the formal sum <code>$s=\sum_{i=1}^n a_i x_i$</code> to be list consisting of the elements <code>$x_i$</code> (this is a coarse notion of support, ignoring that coefficients may be zero and/or may cancel). We show that if <code>$x_0\in X$</code> is not in the support of <code>$s$</code>, then <code>$\chi_s(x_0)$</code> is zero.</p>
+<p>Thus, for formal sums <code>$s_1$</code> and <code>$s_2$</code>, <code>$\chi_{s_1} = \chi_{s_2}$</code> if and only if we the following two statements are true:</p>
+<ul>
+<li>for all <code>$x_0\in supp(s_1)$</code>, <code>$\chi_{s_1}(x_0) = \chi_{s_2}(x_0)$</code></li>
+<li>for all <code>$x_0\in supp(s_2)$</code>, <code>$\chi_{s_1}(x_0) = \chi_{s_2}(x_0)$</code></li>
+</ul>
+<p>Having proved this, we are reduced to deciding when two functions with values in <code>$R$</code> are equal for members of a list in <code>$X$</code>. This is easily done using induction (using the assumption that we can decide equality in <code>$R$</code>). Thus, we can decide when formal sums are equivalent.</p>
+<p>With a little work, we can deduce decidability of equality in <code>$R[X]$</code> from decidability of equivalence of formal sums (these are mathematically identical).</p>
+<h3 id="elementary-moves-and-universal-properties">Elementary moves and Universal properties</h3>
+<p>In particular to construct multiplication in the Group Ring, we need to extend function from <code>$X$</code> to <code>$R$</code>-modules to <code>$R[X]$</code>-module homomorphisms. We do not formally define <code>$R$</code>-modules or prove such an extension result, but we implicitly make the definitions and prove the results involved and use them in the group ring construction.</p>
+<p>Given a function <code>$f: X \to N$</code>, with <code>$N$</code> an <code>$R$</code>-module, <code>$f$</code> clearly extends to formal sums by <code>$f(\sum_{i=1}^n a_i x_i) = \sum_{i=1}^n a_i f(x_i)$</code>. What needs to be shown is that if formal sums are equivalent then they map to the same element. This is not so easy when <code>$X$</code> is infinite.</p>
+<p>We instead give a second description of free modules. Namely, we define a relation on formal sums as given by elementary moves: merging coefficients for equal elements, deleting terms with zero coefficients, swapping terms, and prepending the same term to two formal sums related by an elementary move. Note that this is not an equivalence relation. Nevertheless, in lean, the quotient is defined, and is the quotient by the equivalence relation generated by the elementary moves.</p>
+<p>It is straightforward to show that coordinates are unchanged by elementary moves. The key result, which takes some work, is to show that two formal sums with the same coordinate function are related by a sequence of elementary moves, i.e., have equal images in the quotient by elementary moves. This in turn depends on the technical result that if a formal sum <code>$s$</code> has <code>$a_0:=\chi_s(x_0)\neq 0$</code> for some <code>$x_0\in X$</code>, then <code>$s$</code> is related by a sequence of elementary moves to a formal sum of the form <code>$a_0x_0 + t$</code>, with the number of terms in <code>$t$</code> less than the number in <code>$s$</code>. This is proved by well-founded recursion, and the main result is also deduced from this by well-founded recursion.</p>
+<p>The relations between moves and coordinates show that the equivalence relation generated by moves is the same as that given by having the same coordinate functions. In practice, we use the consequence that a function on formal sums is constant on equivalence classes (corresponding to equal coordinates), and hence well-defined on the Free Module, if and only if it is invariant under elementary moves. This can be conveniently used by using the induction tactic for an elementary move.</p>
+<h3 id="group-rings-1">Group Rings</h3>
+<p>Using the construction and properties of Free Modules, we construct the group ring <code>$R[G]$</code>. First, we define multiplication on formal sums recursively in two steps, first recursively defining multiplication of a formal sum on the right by a monomial <code>$ag$</code>, and then recursively defining multiplication of formal sums.</p>
+<p>Various properties are proved by (iterated) recursion with this definition. These allow us to define the product on <code>$R[G]$</code> by showing invariance under elementary moves. This is also done in two steps, where in the first the first term is a formal sum.</p>
+<p>Further, we show that there is a ring structure on the group ring. This is not actually used but is done as a check, as the only real point where a formal proof could be wrong is in the definitions.</p>
+<h2 id="lifting-decisions-using-enumeration-bases">Lifting Decisions using Enumeration, Bases</h2>
+<p>As the group <code>$Q$</code> is finite, deciding whether the cocycle condition holds for a function <code>$c: Q \to Q \to K$</code>, for example, can be done by enumeration, since this is a decidable property for each triple of elements of <code>$Q$</code>. We automate such enumerations using a typeclass <code>DecideForall</code>. This captures the property of <code>$Q$</code> that if <code>$p:Q \to Prop$</code> is a property of elements of <code>$Q$</code> such that each <code>$p(q)$</code> is decidable, so is the proposition <code>$\forall x: Q, p(x)$</code>.</p>
+<p>By recursion we prove that for <code>Fin n</code>, which consists of the natural numbers below <code>n</code>, we have an <em>instance</em> of <code>DecideForAll</code>. This means we can decide the proposition <code>∀ x : Fin n, p(x)</code> if we can decide <code>p(x)</code> for each <code>x</code>. Further, we construct instances of <code>DEcideForAll</code> of products and sums given those for components. This lets us infer an instance for <code>$Q$</code>.</p>
+<p>Further, in the case of <em>finitely generated free abelian groups</em>, we can define homomorphisms by specifying their values on the basis, and we can decide equality of homomorphisms by enumeration of basis elements. Once more we define a typeclass, <code>FreeAbelianGroup</code> &ndash; corresponding to an abelian group <code>$A$</code> being free with basis <code>$X$</code>. We construct instances for <code>$\Z$</code> with basis a singleton (represented by <code>Unit</code> in lean), and for direct products of free abelian groups, with basis the direct sum of the bases of the factors. Note that we do not require <code>$X$</code> to be contained in <code>$A$</code>, instead a field of the typeclass is an inclusion.</p>
+<p>We show that if <code>$A$</code> is free abelian with basis <code>$X$</code> for some <code>$X$</code>, then equality of homomorphisms on <code>$A$</code> is decidable (provided the codomain has decidable equality). We also show that functions from <code>$X$</code> to abelian groups extend uniquely to homomorphisms on <code>$A$</code>.</p>
+<h2 id="the-group-p">The Group <code>$P$</code></h2>
+<p>The construction and properties of the group <code>$P$</code> in lean 4 are mostly a translation of the mathematical description from above, with the use of simplification and other tactics to show desired results (along with use of enumeration as sketched above).</p>
+<h3 id="constructing-the-group">Constructing the Group</h3>
+<p>The group is constructed by first constructing metabelian groups in general given group actions and cocycles, and then specializing to the specific case of the group <code>$P$</code>. Given the action and the cocycle, the multiplication on <code>$K\times Q$</code> is straightforward. Work is needed to show that this is indeed a group, especially that the group action property and the cocycle condition imply associativity.</p>
+<h3 id="torsion-freeness">Torsion freeness</h3>
+<p>Torsion freeness similarly follows the mathematical sketch above to reduce to the torsion freeness of the subgroup <code>$K$</code>. At this stage typeclass inference is used to infer isomorphisms as well as torsion freeness. In particular a general result (encoded as an instance) shows that the subgroup is isomorphic to <code>$K$</code>. Further, it is shown that products of torsion free groups are torsion free. Thus, the problem reduces to <code>$\Z$</code> being torsion free, which is proved directly.</p>
+<h2 id="the-unit-conjecture">The Unit Conjecture</h2>
+<p>With the group <code>$P$</code> constructed, its torsion freeness proved, and the group ring constructed, Gardam&rsquo;s disproof of the unit conjecture is a simple verification. Note that <code>$P$</code> is a product of types with decidable equality, so has decidable equality &ndash; this is part of lean. Similarly the field <code>$\mathbb{F}_2$</code> has decidable equality. It follows that <code>$\mathbb{F}_2[P]$</code> has decidable equality.</p>
+<p>As mentioned earlier, Gardam has given an explicit formula for a non-trivial unit <code>$\alpha$</code> and its inverse. We simply use the <code>native_decide</code> tactic to show, using lean&rsquo;s evaluation, that <code>$\alpha$</code> is a unit in <code>$P$</code>. To show that <code>$\alpha$</code> is non-trivial we show that there are two distinct coordinates that are non-zero &ndash; with <code>native_decide</code> used to show that the coordinates are distinct and non-zero.</p>
+<h2 id="concluding-remarks">Concluding Remarks</h2>
+<p>We hope that such a blend of computation and proving will be useful for many results, both formal proofs and proved algorithms. This formalization took only about two weeks (after preliminary mathematical work), suggesting that the gap between formalization and human exposition is not too large, at least for certain results (including, like Gardam&rsquo;s theorem, some important mathematical results).</p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

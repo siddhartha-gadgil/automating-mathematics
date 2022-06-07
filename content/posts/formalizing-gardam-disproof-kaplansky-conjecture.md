@@ -1,7 +1,7 @@
 +++
 title = "Formalizing Gardam's disproof of Kaplansky's Unit Conjecture"
 date = 2022-06-07T06:50:53+05:30
-draft = true
+draft = false
 tags = []
 categories = []
 +++
