@@ -36,7 +36,7 @@ Observe that the group ring `$R[\Z]$` is precisely the ring of Laurent polynomia
 
 A vector space `$V$` over a field `$k$` with a group of linear symmetries `$G$` becomes a module over the group ring `$k[G]$`. Similarly modules over a ring `$R$` with the group of symmetries `$G$` become modules over the group ring `$R[G]$`. A typical example is the chain complex of a covering space, with `$G$` the group of deck transformations. Many important topological invariants, such as the Alexander polynomials and Reidemeister torsion, are constructed from such `$R[G]$`-modules.
 
-Indeed, the above is abstracted to give the notion of the cohomomology of a group. A specific case, _Galois cohomology_, is very important in algebraic number theory.
+Indeed, the above is abstracted to give the notion of the cohomology of a group. A specific case, _Galois cohomology_, is very important in algebraic number theory.
 
 ### Kaplansky's conjectures
 
@@ -165,7 +165,7 @@ Further, we show that there is a ring structure on the group ring. This is not a
 
 As the group `$Q$` is finite, deciding whether the cocycle condition holds for a function `$c: Q \to Q \to K$`, for example, can be done by enumeration, since this is a decidable property for each triple of elements of `$Q$`. We automate such enumerations using a typeclass `DecideForall`. This captures the property of `$Q$` that if `$p:Q \to Prop$` is a property of elements of `$Q$` such that each `$p(q)$` is decidable, so is the proposition `$\forall x: Q, p(x)$`.
 
-By recursion we prove that for `Fin n`, which consists of the natural numbers below `n`, we have an _instance_ of `DecideForAll`. This means we can decide the proposition `∀ x : Fin n, p(x)` if we can decide `p(x)` for each `x`. Further, we construct instances of `DEcideForAll` of products and sums given those for components. This lets us infer an instance for `$Q$`.
+By recursion we prove that for `Fin n`, which consists of the natural numbers below `n`, we have an _instance_ of `DecideForAll`. This means we can decide the proposition `∀ x : Fin n, p(x)` if we can decide `p(x)` for each `x`. Further, we construct instances of `DecideForAll` of products and sums given those for components. This lets us infer an instance for `$Q$`.
 
 Further, in the case of _finitely generated free abelian groups_, we can define homomorphisms by specifying their values on the basis, and we can decide equality of homomorphisms by enumeration of basis elements. Once more we define a typeclass, `FreeAbelianGroup` -- corresponding to an abelian group `$A$` being free with basis `$X$`. We construct instances for `$\Z$` with basis a singleton (represented by `Unit` in lean), and for direct products of free abelian groups, with basis the direct sum of the bases of the factors. Note that we do not require `$X$` to be contained in `$A$`, instead a field of the typeclass is an inclusion.
 
