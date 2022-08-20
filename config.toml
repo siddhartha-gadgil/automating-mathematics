@@ -26,6 +26,7 @@ publishDir = "docs"
 [params]
     tagline = "towards Automating Mathematics"
     description="My experiments in automating mathematics."
+    googleAnalyticsID = "G-ZRWGMDYZ53"
 [Menus]
   main = [
       {Name = "Siddhartha Gadgil's homepage", URL = "http://math.iisc.ac.in/~gadgil"},
