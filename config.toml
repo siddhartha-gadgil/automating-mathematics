@@ -3,6 +3,7 @@ title = "Artificial Intelligence and Mathematics"
 copyright = "Copyright &copy; 2018 - Siddhartha Gadgil"
 canonifyurls = true
 theme = "hyde"
+google-analytics = 'G-ZRWGMDYZ53'
 
 paginate = 3
 
