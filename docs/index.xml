@@ -16,7 +16,7 @@
       <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
       <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</guid>
       <description>&lt;p&gt;A little over an year ago, Giles Gardam &lt;a href=&#34;https://arxiv.org/abs/2102.11818&#34;&gt;disproved&lt;/a&gt; a long-standing conjecture, often called the &lt;em&gt;Kaplansky Unit Conjecture&lt;/em&gt;. This was a striking result &amp;ndash; the statement was a simple and basic one, it had a long history, and it was one of a cluster of related conjectures with important relations to many areas (including the Whitehead conjecture in topology). Gardam&amp;rsquo;s work is published in the &lt;em&gt;Annals of Mathematics&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Anand Rao Tadipatri and I have &lt;a href=&#34;https://github.com/siddhartha-gadgil/Polylean&#34;&gt;formalized&lt;/a&gt; Gardam&amp;rsquo;s disproof in &lt;strong&gt;lean 4&lt;/strong&gt;. We used &lt;strong&gt;lean 4&lt;/strong&gt; as a proof assistant, but also took advantage of its being a (full fledged and really nice) programming language. This post is an account of the Unit conjecture and our formalization of it.&lt;/p&gt;</description>
+&lt;p&gt;Anand Rao Tadipatri and I have &lt;a href=&#34;https://github.com/siddhartha-gadgil/Polylean&#34;&gt;formalized&lt;/a&gt; Gardam&amp;rsquo;s disproof in &lt;strong&gt;lean 4&lt;/strong&gt;. We used &lt;strong&gt;lean 4&lt;/strong&gt; as a proof assistant, but also took advantage of its being a (full fledged and really nice) programming language.  This post is an account of the Unit conjecture and our formalization of it.&lt;/p&gt;</description>
     </item>
     
     <item>
