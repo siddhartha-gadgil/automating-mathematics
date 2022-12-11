@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name="generator" content="Hugo 0.92.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,7 +119,7 @@
 </ul>
 <p>then <code>$\forall m, n\in M$, $m * n = n * m$</code>.</p>
 <p>To begin with, here is a proof of this theorem in Lean 4 (a mathematical sketch follows).</p>
-<pre><code class="language-lean" data-lang="lean">theorem CzSlOly : (∀ a b : M, (a * b) * b = a) → 
+<pre tabindex="0"><code class="language-lean" data-lang="lean">theorem CzSlOly : (∀ a b : M, (a * b) * b = a) → 
     (∀ a b : M, a * (a * b) = b) → (m n: M) → m * n = n * m := by
         intros ax1 ax2 m n
         have lem1 : (m * n) * n = m := ax1 m n
@@ -212,13 +212,13 @@
 <h3 id="a-second-example-e_l--e_r">A second example: <code>$e_l = e_r$</code></h3>
 <p>We consider a second example to illustrate purely forward reasoning. This is much easier, so we include the code to prove this (instantly, in the interpreter).</p>
 <p>The problem we consider is often one of the first abstract problems a student encounters in mathematics: given a product (on some set) with a left identity <code>$e_l$</code> and a right identity <code>$e_r$</code>, we have <code>$e_l = e_r$</code>. Interactive proofs using evolution can be based on <em>elaboration</em> or based on <em>tactics</em>. We give a proof based on tactics as the notation is cleaner and tactics will be more familiar to most. Here is such a proof.</p>
-<pre><code class="language-lean" data-lang="lean">def left_right_identities1(α : Type)[Mul α](eₗ eᵣ: α)
+<pre tabindex="0"><code class="language-lean" data-lang="lean">def left_right_identities1(α : Type)[Mul α](eₗ eᵣ: α)
     (idₗ : ∀ x : α, eₗ * x = x)(idᵣ : ∀ x: α, x * eᵣ = x) : 
         eₗ = eᵣ := by
             evolve ev![simple-app, eq-closure]  2
 </code></pre><p>In this case, though the goal was given it was not used at all (in fact was a distraction). While the initial state is often specified, it can be omitted as above. In that case all free variables in the local context (except the head, which is the function being defined) are taken with degree <code>$0$</code>, as is the goal. All we needed to specify was the evolvers used (whose sum is taken with <code>init</code> always included) and the degree bound. Here the evolvers used were simple application (i.e., without unification) and the equality closure. This is fairly robust &ndash; we could have used function application with unification (instead of, or in addition, to the simple application), or a higher degree bound, for example.</p>
 <p>Even though the above was simple, we give a second proof to illustrate two things. This again runs instantly in the interpreter.</p>
-<pre><code class="language-lean" data-lang="lean">def left_right_identities2(α : Type)[Mul α](eₗ eᵣ: α)
+<pre tabindex="0"><code class="language-lean" data-lang="lean">def left_right_identities2(α : Type)[Mul α](eₗ eᵣ: α)
     (idₗ : ∀ x : α, eₗ * x = x)(idᵣ : ∀ x: α, x * eᵣ = x) 
         : eₗ = eᵣ:= by
             evolve ev![app] 1  =: dist1
@@ -240,10 +240,10 @@
 <li>using symmetry and transitivity of equality (with look-ahead reduced degree for generated equalities where appropriate).</li>
 </ul>
 <p>A second example of such mixed reasoning is Modus Ponens. This is instantly proved in the interpreter as follows.</p>
-<pre><code class="language-lean" data-lang="lean">def modus_ponens(A B: Prop) : A → (A → B)→ B := by
+<pre tabindex="0"><code class="language-lean" data-lang="lean">def modus_ponens(A B: Prop) : A → (A → B)→ B := by
   evolve ev![intro, simple-app] 1 
 </code></pre><p>Alternatively, we can use lean&rsquo;s apply tactic for the backward reasoning with an evolver to complete a proof.</p>
-<pre><code class="language-lean" data-lang="lean">def modus_ponens2(A B: Prop) : A → (A → B)→ B := by
+<pre tabindex="0"><code class="language-lean" data-lang="lean">def modus_ponens2(A B: Prop) : A → (A → B)→ B := by
   intros
   evolve ev![simple-app] 1
 </code></pre><h2 id="concluding-remarks">Concluding remarks</h2>

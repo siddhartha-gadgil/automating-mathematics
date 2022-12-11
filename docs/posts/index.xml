@@ -8,7 +8,16 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Tue, 07 Jun 2022 06:50:53 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Dec 2022 12:51:30 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sieving chatGPT</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</link>
+      <pubDate>Sun, 11 Dec 2022 12:51:30 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</guid>
+      <description>I had my first chat with chatGPT, the latest large language model sensation. It is amusing, very chatty, and in many ways impressive. But it is often a little (or very) wrong and misses the subtleties.</description>
+    </item>
+    
     <item>
       <title>Formalizing Gardam&#39;s disproof of Kaplansky&#39;s Unit Conjecture</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</link>

@@ -3,7 +3,7 @@
 <head>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name="generator" content="Hugo 0.92.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,7 +122,7 @@
 Each statement is a so called <strong>S-expression</strong> (symbolic expression), which is a list enclosed in parenthesis. Operators and functions come in the beginning, so we write, for example, <code>(+ 2 3)</code> for $2 + 3$ and <code>(= (+ 2 3) (+ 3 2))</code> for <code>$2 + 3 = 3 + 2$</code>. In general, an S-expression is a list, enclosed in parenthesis with entries either other S-expression or <strong>atoms</strong>, with atoms being integers, reals, strings, functions, operators etc.</p>
 <p>Specifically, most of our statements are of one of two forms — declaring a variable using <code>declare-fun</code> (which can more generally be used to declare functions), or asserting conditions using a statement <code>(assert &lt;expression&gt;)</code> for a Boolean expression.</p>
 <p>Here is the code for contradicting the Pappus theorem.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scheme" data-lang="scheme">(<span style="color:#a6e22e">declare-fun</span> u() Real)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-scheme" data-lang="scheme">(<span style="color:#a6e22e">declare-fun</span> u() Real)
 (<span style="color:#a6e22e">declare-fun</span> v() Real)
 (<span style="color:#a6e22e">declare-fun</span> Ax() Real)
 (<span style="color:#a6e22e">declare-fun</span> Ay() Real)
@@ -148,7 +148,7 @@ Each statement is a so called <strong>S-expression</strong> (symbolic expression
 (<span style="color:#a6e22e">assert</span> (not (= (* (- Qy Py) (- Rx Px)) (* (- Ry Py) (- Qx Px)))))
 (<span style="color:#a6e22e">check-sat</span>)
 </code></pre></div><p>Incidentally, I have run Z3 in a few ways — using Python, using Scala via the Java API and using Scala to generate code in the SMT2 language (like the above code) and using the Z3 command line either programmatically or in a terminal. The interfaces in high-level languages are also pleasant and human readable. For instance, an extract from the Python code is below.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">are_collinear</span>(p, q, r):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">are_collinear</span>(p, q, r):
     <span style="color:#66d9ef">return</span> ((q[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>p[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>(r[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span>p[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">==</span>(r[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>p[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>(q[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span>p[<span style="color:#ae81ff">0</span>]))
 
 menelaus_theorem <span style="color:#f92672">=</span> Implies( And( Not(are_collinear(A, B, C)), 
