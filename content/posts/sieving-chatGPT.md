@@ -6,17 +6,17 @@ tags = []
 categories = []
 +++
 
-I had my first chat with [chatGPT](https://chat.openai.com/chat), the latest _large language model_ sensation. It is amusing, very chatty, and in many ways impressive. But it is often a little (or very) wrong and misses the subtleties. This happened in many topics, with more gross errors in more specialized topics. I have gathered here one thread of conversation, on what should be one of its strengths.
+I had my first chat with [chatGPT](https://chat.openai.com/chat), the latest _large language model_ sensation. It is amusing, very chatty, and in many ways impressive. But it is often a little (or very) wrong and misses the subtleties. This happened in many topics, with more gross errors in more specialized topics. I have gathered here one thread of conversation on something these models generally do well.
 
-Much of my conversation was about getting it to program the Sieve of Eratosthenes in Python. It is very convincing and gives clear explanations, but with mistakes in the code. It took some back and forth for it to get a "correct" implementation, in the sense that it ran and gave the correct answer. 
+Much of my conversation was about getting chatGPT to program the Sieve of Eratosthenes in Python. It is very convincing and gives clear explanations, but with mistakes in the code. It took some back and forth for it to get a "correct" implementation, in the sense that it ran and gave the correct answer. 
 
-But even this missed the main point of the sieve algorithm, which makes it efficient. It effectively checked divisibility by computing remainders for all pairs -- essentially the brute force way. As a result it took over 12 seconds to compute primes to a million, while my modification to get a genuine sieve found such primes in under `0.05` seconds and the primes up to 10 million in less than half a second.
+But even this missed the main point of the sieve algorithm, which makes it efficient. The code of chatGPT effectively checked divisibility by computing remainders for all pairs -- essentially the brute force way. As a result it took over 12 seconds to compute primes to a million, while my modification to get a genuine sieve found such primes in under 0.05 seconds and the primes up to 10 million in less than half a second.
 
-The bulk of this post is our conversation. In the afterword I discuss the problems with its final algorithm and give the improved one. But before that, I give an example of language models in action in some of my work with collaborators.
+The bulk of this post is our conversation about the sieve. In the afterword I discuss the problems with its final algorithm and give the improved one. But before that, I give an example of language models in action in some of my work with collaborators.
 
 ## Autoformalization
 
-We have been working on a tool for AI based translation from natural language to Lean 4 with a convenient interface. 
+We have been working on a tool, using a large language model (Codex), for AI based translation from natural language to Lean 4 with a convenient interface. 
 
 * A quick demo of this in action: ![LeanAide Translation](/leanaide-translation.gif)
 * A brief video: https://youtu.be/_NMquXd0Qos
@@ -26,13 +26,11 @@ The code is at https://github.com/siddhartha-gadgil/LeanAide with details and in
 
 ## The Conversation
 
-We come now to the collaborations. My questions begin with `[Siddhartha]` and are quoted.
+We come now to the conversation with chatGPT. My questions begin with `[Siddhartha]` and are quoted.
 
 > [Siddhartha] How does one implement Eratosthenes sieve in python?
 
 The Sieve of Eratosthenes is an algorithm for finding all prime numbers up to a given integer n. The algorithm works by iterating over all integers from 2 to n, and marking each integer that is not prime as composite. This is done by starting with the smallest prime number (2), and then marking all its multiples as composite. The process is repeated for the next smallest prime number, and so on, until all numbers up to n have been either marked as prime or composite. The numbers that remain unmarked at the end of the process are the prime numbers between 2 and n.
-
-To implement the Sieve of Eratosthenes in Python, we can follow these steps:
 
 To implement the Sieve of Eratosthenes in Python, we can follow these steps:
 
@@ -41,7 +39,7 @@ To implement the Sieve of Eratosthenes in Python, we can follow these steps:
 3. Iterate over the list of integers from 2 to n, and for each integer i:
     1. Set the value of `is_prime` to True.
     2. Iterate over the list of integers from 2 to n, and for each integer j such that j is not equal to i and j is a multiple of i:
-        1. Set the value of `is_prime` to False.
+        1. Set the value of `is_prime` to `False`.
     3. If the value of `is_prime` is True, append i to the list of prime numbers.
 4. Return the list of prime numbers.
 
@@ -169,7 +167,7 @@ In this updated implementation of the Sieve of Eratosthenes in Python, we added 
 
 > [Siddhartha] When I run the python code, I get ''IndexError: list assignment index out of range" on line 21
 
-Yes, you are correct. The previous implementation of the Sieve of Eratosthenes in Python is incorrect, as it attempts to assign a value to an element of the `is_prime` list at an index that is out of range, resulting in the IndexError that you have encountered. The `is_prime` list is initialized with True values for all indices from 2 to n, but the inner for loop attempts to update the value of `is_prime[j]` for all indices `j` that are multiples of `i`, where `i` is an index in the range from 2 to n. This means that the index `j` may be greater than n, which is out of range for the `is_prime` list, resulting in the IndexError.
+Yes, you are correct. The previous implementation of the Sieve of Eratosthenes in Python is incorrect, as it attempts to assign a value to an element of the `is_prime` list at an index that is out of range, resulting in the IndexError that you have encountered. The `is_prime` list is initialized with `True` values for all indices from 2 to n, but the inner for loop attempts to update the value of `is_prime[j]` for all indices `j` that are multiples of `i`, where `i` is an index in the range from 2 to n. This means that the index `j` may be greater than n, which is out of range for the `is_prime` list, resulting in the IndexError.
 
 To fix this error, we need to modify the inner for loop to only update the value of `is_prime[j]` for indices j that are in the range from 2 to n, by using the range function to generate a list of indices from 2 to n and the enumerate function to iterate over the list of indices and their corresponding values. Here is a corrected implementation of the Sieve of Eratosthenes in Python that uses the range and enumerate functions to iterate over the list of indices and update the `is_prime` list only for indices in the range from 2 to n:
 
@@ -243,9 +241,9 @@ You're welcome! I'm glad that the revised implementation of the Sieve of Eratost
 
 ## Afterword
 
-I accepted the algorithm once it ran. But looking at the code, it is clear that it misses the main point of the sieve of Eratosthenes. Once a number $i$ is found to be a prime, in the sieve we run through multiples of this that are less than $n$, which are just numbers of the form $i * j$ for $2\leq j\leq n/i$. These are marked to be composite. No further check is needed for divisibility by $i$ -- these are exactly the numbers between $2$ and $n$ that are divisible by $i$ other than $i$. The algorithm of chatGPT does not do this. It checks divisibility by $i$ for all numbers between $2$ and $n$, making it essentially a brute force primality check for each number instead of a sieve. In fact chatGPT makes comments about improving using low-level optimizations while missing the main conceptual optimization of the sieve of Eratosthenes.
+I accepted the code once it ran. But looking at the code, it is clear that it misses the main point of the sieve of Eratosthenes. Once a number $i$ is found to be a prime, in the sieve we run through multiples of this that are less than $n$, which are just numbers of the form $i * j$ for $2\leq j\leq n/i$. These are marked to be composite. No further check is needed for divisibility by $i$ -- these are exactly the numbers between $2$ and $n$ that are divisible by $i$ other than $i$. The code of chatGPT does not do this. It checks divisibility by $i$ for all numbers between $2$ and $n$, making it essentially a brute force primality check for each number instead of a sieve. In fact chatGPT makes comments about improving using low-level optimizations while missing the main conceptual optimization of the sieve of Eratosthenes.
 
-Below is the improved code along the lines of the above (I have also simplified looping due to my own lack of experience with `enumerate`). The code of chatGPT took over 12 seconds to find primes up to a million while the below code found these in under `0.05` seconds and found primes up to 10 million in less than half a second.
+Below is the improved code along the lines of the above (I have also simplified looping due to my own lack of experience with `enumerate`, and avoided the `continue` by nesting within an `if`). The code of chatGPT took over 12 seconds to find primes up to a million while the below code found these in under 0.05 seconds and found primes up to 10 million in less than half a second.
 
 ```python
 def sieve_of_eratosthenes(n):
