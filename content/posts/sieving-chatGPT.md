@@ -7,6 +7,7 @@ categories = []
 +++
 
 I had my first chat with [chatGPT](https://chat.openai.com/chat), the latest _large language model_ sensation. It is amusing, very chatty, and in many ways impressive. But it is often a little (or very) wrong and misses the subtleties. This happened in many topics, with more gross errors in more specialized topics. I have gathered here one thread of conversation on something these models generally do well.
+<!--more-->
 
 Much of my conversation was about getting chatGPT to program the Sieve of Eratosthenes in Python. It is very convincing and gives clear explanations, but with mistakes in the code. It took some back and forth for it to get a "correct" implementation, in the sense that it ran and gave the correct answer. 
 
