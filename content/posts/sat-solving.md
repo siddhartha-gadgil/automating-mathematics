@@ -1,5 +1,5 @@
 +++
-title = "Sat Solving"
+title = "SAT Solving"
 date = 2021-05-18T08:53:42+05:30
 draft = false
 tags = []
