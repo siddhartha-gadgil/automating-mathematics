@@ -8,7 +8,16 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Sun, 11 Dec 2022 12:51:30 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Mar 2024 07:56:06 +0530</lastBuildDate><atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Wishlist/ToDo List</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/wishlist-or-todo-list/</link>
+      <pubDate>Fri, 01 Mar 2024 07:56:06 +0530</pubDate>
+      <author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/wishlist-or-todo-list/</guid>
+      <description>There is a bunch of topics related to the Lean Theorem Prover and Artificial Intelligence for Mathematics that I hope I will work on someday (i.e., ToDo list) and I would also be happy if somebody does them (i.</description>
+    </item>
+    
     <item>
       <title>Sieving chatGPT</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</link>
