@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Sat Solving &middot; Artificial Intelligence and Mathematics</title>
+  <title>SAT Solving &middot; Artificial Intelligence and Mathematics</title>
   <meta name="description" content="" />
 
   
@@ -98,13 +98,13 @@
       </ul>
     </nav>
 
-    <p>&copy; 2023. All rights reserved. </p>
+    <p>&copy; 2024. All rights reserved. </p>
   </div>
 </aside>
 
     <main class="content container">
     <div class="post">
-  <h1>Sat Solving</h1>
+  <h1>SAT Solving</h1>
   <time datetime=2021-05-18T08:53:42&#43;0530 class="post-date">Tue, May 18, 2021</time>
   <p>To better understand the <code>SAT</code> (i.e., <em>boolean satisfiability</em>) problem and <code>SAT</code> solvers, I decided to implement a basic one. I was pleasantly surprised that wikipedia has enough details to implement the so called <strong>DPLL</strong> algorithm quite easily, with even some improvements described in wikipedia. Even better, in the case when there was no solution, the same algorithm gives a proof that there is no solution. The proof that there is no solution was based on <em>resolution</em> due to Davis-Putnam — so the algorithm gives as a bonus a proof that resolution is refutation complete for propositional calculus.</p>
 <p>The code corresponding to this blog is in the <code>fol</code> project (and directory) of my <a href="https://github.com/siddhartha-gadgil/ProvingGround">ProvingGround</a> repository.</p>
