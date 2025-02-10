@@ -1,4 +1,4 @@
-baseurl = "https://siddhartha-gadgil.github.io/automating-mathematics/"
+baseURL = "https://siddhartha-gadgil.github.io/automating-mathematics/"
 title = "Artificial Intelligence and Mathematics"
 copyright = "Copyright &copy; 2018 - Siddhartha Gadgil"
 canonifyurls = true
