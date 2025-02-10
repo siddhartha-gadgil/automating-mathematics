@@ -13,7 +13,12 @@ pygmentsCodeFences = true
 publishDir = "docs"
 
 
-[author]
+
+[params]
+    tagline = "towards Automating Mathematics"
+    description="My experiments in automating mathematics."
+    googleAnalyticsID = "G-ZRWGMDYZ53"
+[params.author]
     name = "Siddhartha Gadgil"
     email="siddhartha.gadgil@gmail.com"
     github = "siddhartha-gadgil"
@@ -23,10 +28,6 @@ publishDir = "docs"
     twitter = "SidGadgil"
     instagram = ""
 
-[params]
-    tagline = "towards Automating Mathematics"
-    description="My experiments in automating mathematics."
-    googleAnalyticsID = "G-ZRWGMDYZ53"
 [Menus]
   main = [
       {Name = "Siddhartha Gadgil's homepage", URL = "http://math.iisc.ac.in/~gadgil", weight=1},
