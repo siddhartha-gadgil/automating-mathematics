@@ -36,3 +36,8 @@ publishDir = "docs"
       {Name = "Automating Mathematics group", URL="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/", weight=2},
       {Name = "LeanAide", URL="https://github.com/siddhartha-gadgil/leanaide/", weight=2},
   ]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
