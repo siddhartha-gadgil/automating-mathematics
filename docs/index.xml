@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Artificial Intelligence and Mathematics</title>
-    <link>http://localhost:1313/automating-mathematics/</link>
+    <link>https://siddhartha-gadgil.github.io/automating-mathematics/</link>
     <description>Recent content on Artificial Intelligence and Mathematics</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
@@ -10,89 +10,89 @@
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
     <lastBuildDate>Sat, 08 Feb 2025 13:41:12 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LeanAide: AI for Lean &amp; Mathematics</title>
-      <link>http://localhost:1313/automating-mathematics/posts/leanaide-autoformalization/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/leanaide-autoformalization/</link>
       <pubDate>Sat, 08 Feb 2025 13:41:12 +0000</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/leanaide-autoformalization/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/leanaide-autoformalization/</guid>
       <description>LeanAide or LeanAIde (accidental pun) is work (in progress) to build AI based tools to work with the Lean Theorem Prover. Our goal is to build tools for:&#xA;Users of the Lean Prover by using AI tools.</description>
     </item>
     <item>
       <title>Wishlist/ToDo List</title>
-      <link>http://localhost:1313/automating-mathematics/posts/wishlist-or-todo-list/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/wishlist-or-todo-list/</link>
       <pubDate>Fri, 01 Mar 2024 07:56:06 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/wishlist-or-todo-list/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/wishlist-or-todo-list/</guid>
       <description>There is a bunch of topics related to the Lean Theorem Prover and Artificial Intelligence for Mathematics that I hope I will work on someday (i.e., ToDo list) and I would also be happy if somebody does them (i.</description>
     </item>
     <item>
       <title>Sieving chatGPT</title>
-      <link>http://localhost:1313/automating-mathematics/posts/sieving-chatgpt/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</link>
       <pubDate>Sun, 11 Dec 2022 12:51:30 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/sieving-chatgpt/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</guid>
       <description>&lt;p&gt;I had my first chat with &lt;a href=&#34;https://chat.openai.com/chat&#34;&gt;chatGPT&lt;/a&gt;, the latest &lt;em&gt;large language model&lt;/em&gt; sensation. It is amusing, very chatty, and in many ways impressive. But it is often a little (or very) wrong and misses the subtleties. This happened in many topics, with more gross errors in more specialized topics. I have gathered here one thread of conversation on something these models generally do well.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Formalizing Gardam&#39;s disproof of Kaplansky&#39;s Unit Conjecture</title>
-      <link>http://localhost:1313/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</link>
       <pubDate>Tue, 07 Jun 2022 06:50:53 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</guid>
       <description>&lt;p&gt;A little over an year ago, Giles Gardam &lt;a href=&#34;https://arxiv.org/abs/2102.11818&#34;&gt;disproved&lt;/a&gt; a long-standing conjecture, often called the &lt;em&gt;Kaplansky Unit Conjecture&lt;/em&gt;. This was a striking result &amp;ndash; the statement was a simple and basic one, it had a long history, and it was one of a cluster of related conjectures with important relations to many areas (including the Whitehead conjecture in topology). Gardam&amp;rsquo;s work is published in the &lt;em&gt;Annals of Mathematics&lt;/em&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Anand Rao Tadipatri and I have &lt;a href=&#34;https://github.com/siddhartha-gadgil/Polylean&#34;&gt;formalized&lt;/a&gt; Gardam&amp;rsquo;s disproof in &lt;strong&gt;lean 4&lt;/strong&gt;. We used &lt;strong&gt;lean 4&lt;/strong&gt; as a proof assistant, but also took advantage of its being a (full fledged and really nice) programming language.  This post is an account of the Unit conjecture and our formalization of it.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Some things I learnt from Dennis Sullivan</title>
-      <link>http://localhost:1313/automating-mathematics/posts/some-lessons-from-sullivan/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/some-lessons-from-sullivan/</link>
       <pubDate>Thu, 24 Mar 2022 11:10:36 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/some-lessons-from-sullivan/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/some-lessons-from-sullivan/</guid>
       <description>&lt;p&gt;This post is to celebrate the &lt;a href=&#34;https://abelprize.no/abel-prize-laureates/2022&#34;&gt;Abel prize&lt;/a&gt; awarded to Dennis Sullivan. Sullivan is not only one of the deepest and broadest mathematicians, but also one of the most inspiring &amp;ndash; in particular to me. I learnt much from him during my three years at Stony Brook and during his two visits to India. This is a somewhat whimsical account of some of this, with quotes from memory (hence error prone).  Some stuff is general and some more technical.&lt;/p&gt;&#xA;&lt;p&gt;Since much of this is about the process of mathematics it should also be useful for automated theorem proving &amp;ndash; my excuse for posting this here &amp;#x1f603;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Forward Reasoning in Lean 4</title>
-      <link>http://localhost:1313/automating-mathematics/posts/forward-reasoning-in-lean4/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/forward-reasoning-in-lean4/</link>
       <pubDate>Thu, 10 Mar 2022 19:20:21 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/forward-reasoning-in-lean4/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/forward-reasoning-in-lean4/</guid>
       <description>&lt;p&gt;I describe here my experiments with &lt;em&gt;forward reasoning&lt;/em&gt; (reasoning from the premises), as well as &lt;em&gt;mixed reasoning&lt;/em&gt; (reasoning both from the premises and from the conclusion) in Lean 4. The code for this is in the &lt;a href=&#34;https://github.com/siddhartha-gadgil/lean-loris&#34;&gt;Lean-Loris&lt;/a&gt; repository. This code (and especially the ideas in it) is a successor to my scala code in &lt;a href=&#34;https://github.com/siddhartha-gadgil/ProvingGround&#34;&gt;ProvingGround&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>SAT Solver-Prover in Lean 4</title>
-      <link>http://localhost:1313/automating-mathematics/posts/sat-prover-lean/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-prover-lean/</link>
       <pubDate>Mon, 28 Jun 2021 07:00:52 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/sat-prover-lean/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-prover-lean/</guid>
       <description>The Boolean satisfiability problem (SAT) asks whether a finite set of formulas in Boolean (i.e., true or false valued) variables $P$, $Q$,&amp;hellip; has a solution. The formulas are built from the variables using logical operations such as $\vee$ (and), $\wedge$ (or) and $\neg$ (not).</description>
     </item>
     <item>
       <title>SAT Solving</title>
-      <link>http://localhost:1313/automating-mathematics/posts/sat-solving/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/</link>
       <pubDate>Tue, 18 May 2021 08:53:42 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/sat-solving/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/</guid>
       <description>&lt;p&gt;To better understand the &lt;code&gt;SAT&lt;/code&gt; (i.e., &lt;em&gt;boolean satisfiability&lt;/em&gt;) problem and &lt;code&gt;SAT&lt;/code&gt; solvers, I decided to implement a basic one. I was pleasantly surprised that wikipedia has enough details to implement the so called &lt;strong&gt;DPLL&lt;/strong&gt; algorithm quite easily, with even some improvements described in wikipedia. Even better, in the case when there was no solution, the same algorithm gives a proof that there is no solution. The proof that there is no solution was based on &lt;em&gt;resolution&lt;/em&gt; due to Davis-Putnam — so the algorithm gives as a bonus a proof that resolution is refutation complete for propositional calculus.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Automating Mathematics India</title>
-      <link>http://localhost:1313/automating-mathematics/automating-mathematics-india/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/</link>
       <pubDate>Mon, 19 Apr 2021 10:32:15 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/automating-mathematics-india/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/</guid>
       <description>&lt;p&gt;I have created a &lt;a href=&#34;https://groups.google.com/g/automated-mathematics-india&#34;&gt;google group&lt;/a&gt; meant for informal discussions among those interested in Automated Theorem Proving. This is aimed mainly at those in/from India, but everyone interested in the topic is of course welcome.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Solving (but not proving?) Pappus</title>
-      <link>http://localhost:1313/automating-mathematics/posts/solving-pappus/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/solving-pappus/</link>
       <pubDate>Mon, 19 Apr 2021 06:53:09 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/solving-pappus/</guid>
-      <description>&lt;p&gt;Thanks to some very nice work done by Anand Tadipatri after he read the &lt;a href=&#34;http://localhost:1313/automating-mathematics/posts/proving-by-solving/&#34;&gt;previous post&lt;/a&gt; on proving theorems using SMT solvers, we find that in a sense the theorem of Pappus can be &lt;strong&gt;solved&lt;/strong&gt; (but, so far at least, in some sense not &lt;strong&gt;proved&lt;/strong&gt;) by &lt;strong&gt;Z3&lt;/strong&gt;  — a happier conclusion than last time. I make this precise below, assuming the reader is familiar with the &lt;a href=&#34;http://localhost:1313/automating-mathematics/posts/proving-by-solving/&#34;&gt;previous post&lt;/a&gt;.&lt;/p&gt;</description>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/solving-pappus/</guid>
+      <description>&lt;p&gt;Thanks to some very nice work done by Anand Tadipatri after he read the &lt;a href=&#34;https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/&#34;&gt;previous post&lt;/a&gt; on proving theorems using SMT solvers, we find that in a sense the theorem of Pappus can be &lt;strong&gt;solved&lt;/strong&gt; (but, so far at least, in some sense not &lt;strong&gt;proved&lt;/strong&gt;) by &lt;strong&gt;Z3&lt;/strong&gt;  — a happier conclusion than last time. I make this precise below, assuming the reader is familiar with the &lt;a href=&#34;https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/&#34;&gt;previous post&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Knot so easy: Mathematical Proofs from High-performance Solvers?</title>
-      <link>http://localhost:1313/automating-mathematics/posts/proving-by-solving/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</link>
       <pubDate>Wed, 14 Apr 2021 12:24:23 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/proving-by-solving/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</guid>
       <description>Computers are able to solve an increasing range of problems, many of which were believed not long ago to require human intelligence. Yet there are fundamental limitations to what problems can be solved algorithmically, some known and other conjectured.</description>
     </item>
     <item>
       <title>Computer Assisted Proofs</title>
-      <link>http://localhost:1313/automating-mathematics/posts/computer-assisted-proofs/</link>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</link>
       <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
-      <guid>http://localhost:1313/automating-mathematics/posts/computer-assisted-proofs/</guid>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</guid>
       <description>Formal verification, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
     </item>
   </channel>
