@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
+<head><script src="/automating-mathematics/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=automating-mathematics/livereload" data-no-instant defer></script>
   <link href="https://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="generator" content="Hugo 0.123.7">
@@ -12,16 +12,16 @@
   <meta name="description" content="" />
 
   
-  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/hyde.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
 
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/automating-mathematics/favicon.png">
 
   
   
@@ -35,7 +35,7 @@
 </script>
   
 
-<link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+<link rel="icon" href="http://localhost:1313/automating-mathematics/IIScLogo.jpg">
 
 <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
@@ -65,10 +65,10 @@
 
     </script>
 
-<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/vs.min.css">
-<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
-<script type="text/javascript" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/highlight.min.js"></script>
-<script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="http://localhost:1313/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="http://localhost:1313/automating-mathematics/js/lean.min.js"></script>
 <script type="text/javascript">
   hljs.highlightAll();
 </script>
@@ -83,7 +83,7 @@
   <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <a href="http://localhost:1313/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
       <p class="lead">
        My experiments in automating mathematics. 
       </p>
@@ -91,7 +91,7 @@
 
     <nav>
       <ul class="sidebar-nav">
-        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="http://localhost:1313/automating-mathematics/">Home</a> </li>
         <li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/leanaide/"> LeanAide </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
       </ul>
     </nav>
@@ -106,7 +106,7 @@
   <time datetime=2021-06-28T07:00:52&#43;0530 class="post-date">Mon, Jun 28, 2021</time>
   <p>The Boolean satisfiability problem (<strong>SAT</strong>) asks whether a finite set of formulas in <em>Boolean</em> (i.e., <em>true</em> or <em>false</em> valued) variables <code>$P$</code>, <code>$Q$</code>,&hellip; has a solution. The formulas are built from the variables using logical operations such as <code>$\vee$</code> (and), <code>$\wedge$</code> (or) and <code>$\neg$</code> (not). A <em>SAT solver</em> is a program that solves such a problem, returning <em>sat</em> with a solution if solutions exists, and <em>unsat</em>  if no solutions exist, often with some kind of proof that there is no solution in the latter case.</p>
 <p>In the case there is no solution, a SAT solver <strong>does not</strong> simply check all possible assignments of boolean values to variables and see that they fail. Instead the solver searches for a <em>contradiction</em>, i.e., a deduction of <em>False</em>, assuming the existence of a solution.
-The deductions may be returned as human readable tree-like structures, as we described in a <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/">previous post</a> about implementation of a SAT solver.</p>
+The deductions may be returned as human readable tree-like structures, as we described in a <a href="http://localhost:1313/automating-mathematics/posts/sat-solving/">previous post</a> about implementation of a SAT solver.</p>
 <p>I describe here <a href="https://github.com/siddhartha-gadgil/Saturn/">SATurn</a> — a SAT solver-prover I implemented in <strong>Lean 4</strong>. This is a program that outputs one of</p>
 <ul>
 <li>a solution together with a proof that this is a solution, or</li>
@@ -131,7 +131,7 @@ In contrast, while attempting computer assisted proofs of any complexity (even i
 <p>The presence of a mathematical library means that one does not have to start from scratch. More importantly, all algorithms involving (for example) <em>free groups</em> uses the same internal representation (that of the library), they will be able to work together. Finally, if solver-provers work well they can contribute to the library.</p>
 <p>As far as I know, <strong>Idris</strong> is the first language to meet the first two criteria, and <strong>Lean 4</strong> is (or will soon be) the first to meet all three.</p>
 <h2 id="using-saturn">Using SATurn</h2>
-<p>I will not discuss here the details of implementation, which closely follows the <em>scala</em> implementation described in a <a href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/">previous post</a>. I only describe (some aspects of) how SAT problems and proofs are represented and how SATurn works in some simple examples. This section assumes familiarity with Lean or some similar language such as Agda or Idris.</p>
+<p>I will not discuss here the details of implementation, which closely follows the <em>scala</em> implementation described in a <a href="http://localhost:1313/automating-mathematics/posts/sat-solving/">previous post</a>. I only describe (some aspects of) how SAT problems and proofs are represented and how SATurn works in some simple examples. This section assumes familiarity with Lean or some similar language such as Agda or Idris.</p>
 <h3 id="representing-sat">Representing SAT</h3>
 <p>Any SAT problem can be represented in <strong>CNF</strong>. This means that we are given a finite collection of formulas which must be satisfied, each of which is a so called <em>clause</em>. A clause is a formula of the form <code>$l_1\vee\dots\vee l_n$</code>, with each <code>$l_j$</code> (called a <em>literal</em>) of the form either <code>$l_j = P$</code> or <code>$l_j = \neg P$</code> for a variable <code>$P$</code>.</p>
 <p>Note that if both <code>$P$</code> and <code>$\neg P$</code> are present in a clause then it is always true. We omit such clauses. Thus, to specify a clause is equivalent to specifying for each variable <code>$P$</code> which of three possible cases listed below holds. It is natural to associate to the three cases an element in <code>Option Bool</code>.</p>
@@ -205,8 +205,6 @@ readily usable. A function <code>proveOrDisprove</code> combines <code>solve</co
 
     </main>
 
-    
-      
     
   </body>
 </html>
