@@ -9,8 +9,15 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Sat, 08 Feb 2025 13:41:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Jul 2025 04:15:41 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai Math Snapsot July 2025</title>
+      <link>http://localhost:1313/automating-mathematics/posts/ai-math-snapsot-july-2025/</link>
+      <pubDate>Sat, 19 Jul 2025 04:15:41 +0000</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>http://localhost:1313/automating-mathematics/posts/ai-math-snapsot-july-2025/</guid>
+      <description></description>
+    </item>
     <item>
       <title>LeanAide: AI for Lean &amp; Mathematics</title>
       <link>http://localhost:1313/automating-mathematics/posts/leanaide-autoformalization/</link>
@@ -24,6 +31,13 @@
       <pubDate>Fri, 01 Mar 2024 07:56:06 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
       <guid>http://localhost:1313/automating-mathematics/posts/wishlist-or-todo-list/</guid>
       <description>There is a bunch of topics related to the Lean Theorem Prover and Artificial Intelligence for Mathematics that I hope I will work on someday (i.e., ToDo list) and I would also be happy if somebody does them (i.</description>
+    </item>
+    <item>
+      <title>Is Machine Learning Statistics?</title>
+      <link>http://localhost:1313/automating-mathematics/posts/is-machine-learning-statistics/</link>
+      <pubDate>Fri, 12 May 2023 15:28:59 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>http://localhost:1313/automating-mathematics/posts/is-machine-learning-statistics/</guid>
+      <description></description>
     </item>
     <item>
       <title>Sieving chatGPT</title>
@@ -87,6 +101,13 @@
       <pubDate>Thu, 03 Oct 2019 21:14:02 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
       <guid>http://localhost:1313/automating-mathematics/posts/computer-assisted-proofs/</guid>
       <description>Formal verification, a rapidly growing young field, is the computer assisted proving of results - ordinary mathematical theorems, as well as claims that pieces of hardware or software, network protocols, and mechanical and hybrid systems meet their specifications.</description>
+    </item>
+    <item>
+      <title>Levels of Thought</title>
+      <link>http://localhost:1313/automating-mathematics/posts/levels-of-thought/</link>
+      <pubDate>Mon, 06 Aug 2018 15:55:56 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>http://localhost:1313/automating-mathematics/posts/levels-of-thought/</guid>
+      <description>Computers excel at routine tasks and are capable of performing these with great precision and speed. Indeed one can even argue that the more routine a task is, the more the comparative advantage of a computer in performing this task, and so people have a comparative advantage in more sophisticated tasks.</description>
     </item>
   </channel>
 </rss>

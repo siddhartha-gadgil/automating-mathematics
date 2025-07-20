@@ -2,17 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/automating-mathematics/posts/ai-math-snapsot-july-2025/</loc>
+    <lastmod>2025-07-19T04:15:41+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/automating-mathematics/</loc>
-    <lastmod>2025-02-08T13:41:12+00:00</lastmod>
+    <lastmod>2025-07-19T04:15:41+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/automating-mathematics/posts/</loc>
+    <lastmod>2025-07-19T04:15:41+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/automating-mathematics/posts/leanaide-autoformalization/</loc>
     <lastmod>2025-02-08T13:41:12+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/</loc>
-    <lastmod>2025-02-08T13:41:12+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/automating-mathematics/posts/wishlist-or-todo-list/</loc>
     <lastmod>2024-03-01T07:56:06+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/automating-mathematics/posts/is-machine-learning-statistics/</loc>
+    <lastmod>2023-05-12T15:28:59+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/automating-mathematics/posts/sieving-chatgpt/</loc>
     <lastmod>2022-12-11T12:51:30+05:30</lastmod>
@@ -43,6 +49,9 @@
   </url><url>
     <loc>http://localhost:1313/automating-mathematics/posts/computer-assisted-proofs/</loc>
     <lastmod>2019-10-03T21:14:02+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/automating-mathematics/posts/levels-of-thought/</loc>
+    <lastmod>2018-08-06T15:55:56+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/automating-mathematics/categories/</loc>
   </url><url>
