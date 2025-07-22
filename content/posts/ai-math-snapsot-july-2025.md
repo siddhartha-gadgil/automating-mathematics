@@ -1,7 +1,7 @@
 +++
 title = "AI for Mathematics: A Snapshot (July 2025)"
 date = 2025-07-19T04:15:41Z
-draft = true
+draft = false
 tags = []
 categories = []
 +++
@@ -12,7 +12,7 @@ A good starting point to understand the capabilities of Artificial Intelligence 
 
 That may sound like a defeat for LLMs, but the best LLM Gemini-2.5-Pro got a score of 31%. So I would add -- not even a Bronze Medalist, but clearly smarter than me (and perhaps most working mathematicians). Further, the IMO problem setters will ensure that these problems are not already online, so clearly LLMs are doing more than searching on the internet and copying. That LLMs can solve problems they have not seen has been obvious for a while for any of us who have spent even a modest amount of time with LLMs (and are not highly prejudiced). On the other hand, it is  clear while Terry Tao is not that impressed by LLMs -- he got a bronze medal at age 10:smile:.
 
-**Note:** As I wrote this, there was an [announcement](https://x.com/polynoamial/status/1946478249187377206) from OpenAI that an experimental reasoning model had obtained a Gold Medal level score, working with the same conditions and time limits as human participants.
+**Note:** As I wrote this, there was an [announcement](https://x.com/polynoamial/status/1946478249187377206) from OpenAI that an experimental reasoning model had obtained a Gold Medal level score, working with the same conditions and time limits as human participants. There are rumours that a second system also got a gold.
 
 However, the important questions as far as I am concerned are whether, and how, AI can help with (or autonomously produce) *Mathematical research*. LLMs are in some sense *purely intuitive* systems, so most people expect that AI systems for mathematics will have components other than LLMs, such as *Formal Proof Systems* like Lean. Indeed many of the best systems around today are hybrid systems in this sense.
 
@@ -43,6 +43,32 @@ A mathematician who has experimented extensively on using AI, and whose area is 
 
 An experience of another mathematician: [Francesco Orabona](https://francesco.orabona.com/) "proved a complex math result useful for my research using an LLM", and has shared the [preprint](https://t.co/z7kms9mWnR).
 
+I have started using Gemini-2.5-Pro to help with mathematical research. One example where it was helpful, and impressive, was in some work I was doing with a research student. I had naively made a conjecture and hoped to take the approach of trying to prove it and then use it. The reason for this conjecture was that it held in both extreme cases for different reasons, so one could hope that a combination of the reasons held in general. Concretely, (for those who know some Geometric group theory), I had conjectured that any bounded harmonic function had a limit along almost any quasi-geodesic in spaces with non-positive curvature, which was true for very different reasons in the Gromov-hyperbolic and the Euclidean cases.
+
+When asked Gemini said this was false. When asked for a counterexample, it came up with one that had errors. But once the error was pointed out, it came up with a completely correct counterexample, and one which was illuminating.
+
 ## Tests for Research Problems
 
+Research level problems are not present in Olympiad style competitions. There are of course qualifier examinations, course examinations and entrance examinations, but the problems asked in these are often solved somewhere on the internet. This is fine for testing students, but not for LLMs.
 
+The solution adopted by some companies like Epoch AI is to pay mathematicians to come up with problems which are verified to not be present on the internet. Then other mathematicians and mathematics students attempt these to set a benchmark, with LLMs tested for these problems and judged against the benchmarks. In such a [test](https://epoch.ai/gradient-updates/is-ai-already-superhuman-on-frontiermath), the model `o4-mini-medium` did better than the average human team but worse than all teams combined.
+
+A meeting for the setting of such problems revealed the strengths of the LLMs, as described in an article in [Scientific American](https://www.scientificamerican.com/article/inside-the-secret-meeting-where-mathematicians-struggled-to-outsmart-ai/).
+
+## Challenges: Accuracy, Autonomy, Scalability
+
+Early versions of ChatGPT were infamous for *hallucinations* and errors, sometimes making errors for simple problems. With tools like web search and Python interpreters and the development of reasoning models, the errors are much less frequent. However, even the best models make errors in some fraction of the cases (especially when asked somewhat hard questions).
+
+This limits *autonomy* of the models for mathematical reasoning, as errors cascade and a small probability of error in a step accumulates to high likelihood of error in a complex and hierarchical piece of reasoning. This becomes a barrier to *scalability*, as human verification is needed.
+
+A solution to accuracy, hence to autonomy and scalability is to have *independent verification* and *independent evaluation*. To ensure correctness we can use a formal proof system like the *Lean Prover*, either by having the output of the LLM in Lean or by translation from natural language. Both these approaches are used in systems under developed. For specific problems verification and evaluation may be much easier -- for instance if the expected answer is a special function then a symbolic algebra system suffices.
+
+## Originality
+
+With their ability to use *analogy* and *composition* together, LLMs can show a certain level of originality, combining "ideas" from different places adapted to fit together. However, this is not sufficient for truly "out of distribution" originality. 
+
+Artificial Intelligence systems like *AlphaGo* and *AlphaZero* did show true originality by training with *Reinforcement Learning*. These were systems that played games like Go and Chess, trained by playing against (versions of) themselves. This meant that they *saw*, and *learnt from* far more games than humans have played. Indeed, *AlphaZero* started with just the rules of the games and learnt entirely by playing against itself.
+
+With independent verification and evaluation, similar methods can be, and have been, applied to mathematics. We can *train* using feedback from evaluation, *search* among the candidates generated using LLMs, or generate *synthetic data* by selecting good candidates and possibly masking some of the information. A variant of this is generation of synthetic data for inverse problems -- for instance *differentiating* random functions can be used to obtain data for *integration*.
+
+Artificial Intelligence for Mathematical Reasoning has already reached a high level, is rapidly improving, and there are many ideas to go further.
