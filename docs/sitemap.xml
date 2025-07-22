@@ -2,59 +2,53 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/automating-mathematics/posts/ai-math-snapsot-july-2025/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/ai-math-snapsot-july-2025/</loc>
     <lastmod>2025-07-19T04:15:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/</loc>
     <lastmod>2025-07-19T04:15:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/</loc>
     <lastmod>2025-07-19T04:15:41+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/leanaide-autoformalization/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/leanaide-autoformalization/</loc>
     <lastmod>2025-02-08T13:41:12+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/wishlist-or-todo-list/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/wishlist-or-todo-list/</loc>
     <lastmod>2024-03-01T07:56:06+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/is-machine-learning-statistics/</loc>
-    <lastmod>2023-05-12T15:28:59+05:30</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/sieving-chatgpt/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sieving-chatgpt/</loc>
     <lastmod>2022-12-11T12:51:30+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/formalizing-gardam-disproof-kaplansky-conjecture/</loc>
     <lastmod>2022-06-07T06:50:53+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/some-lessons-from-sullivan/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/some-lessons-from-sullivan/</loc>
     <lastmod>2022-03-24T11:10:36+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/forward-reasoning-in-lean4/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/forward-reasoning-in-lean4/</loc>
     <lastmod>2022-03-10T19:20:21+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/sat-prover-lean/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-prover-lean/</loc>
     <lastmod>2021-06-28T07:00:52+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/sat-solving/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/sat-solving/</loc>
     <lastmod>2021-05-18T08:53:42+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/automating-mathematics-india/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/</loc>
     <lastmod>2021-04-19T10:32:15+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/solving-pappus/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/solving-pappus/</loc>
     <lastmod>2021-04-19T06:53:09+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/proving-by-solving/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/proving-by-solving/</loc>
     <lastmod>2021-04-14T12:24:23+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/computer-assisted-proofs/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/posts/computer-assisted-proofs/</loc>
     <lastmod>2019-10-03T21:14:02+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/posts/levels-of-thought/</loc>
-    <lastmod>2018-08-06T15:55:56+05:30</lastmod>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/automating-mathematics/categories/</loc>
-  </url><url>
-    <loc>http://localhost:1313/automating-mathematics/tags/</loc>
+    <loc>https://siddhartha-gadgil.github.io/automating-mathematics/tags/</loc>
   </url>
 </urlset>
