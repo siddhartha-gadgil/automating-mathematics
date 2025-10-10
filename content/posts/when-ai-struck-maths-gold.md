@@ -16,7 +16,7 @@ Google-DeepMind attempted the IMO officially, with an advanced version of Gemini
 
 Over the next few days, some more AI systems announced their successes. While not as powerful, these systems were significant in other ways as we see below.
 
-Our goal here is to assess the significance of this achievement for Mathematical (research level) discovery. To do this, we take a broader look at advances in AI over time. My central claim is that there is essentially one last barrier before AI reaches research level - reasoning at scale. Further, it is quite plausible that overcoming this barrier is only a matter of enough engineering.
+My goal here is to assess the significance of this achievement for Mathematical (research level) discovery. To do this, I take a broader look at advances in AI over time. My central claim is that there is essentially one last barrier before AI reaches research level - reasoning at scale. Further, it is quite plausible that overcoming this barrier is only a matter of enough engineering.
 
 ## Barriers of AI
 
