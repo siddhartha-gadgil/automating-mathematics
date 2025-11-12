@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.123.7">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Integrating AI with the Lean Prover: How and Why &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRWGMDYZ53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZRWGMDYZ53');
+</script>
+  
+
+<link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/leanaide/"> LeanAide </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2025. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Integrating AI with the Lean Prover: How and Why</h1>
+  <time datetime=2025-11-12T09:22:22Z class="post-date">Wed, Nov 12, 2025</time>
+  <p>Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a <em>Formal Proof System</em> such as the <em>Lean Prover</em> to verify the correctness of outputs of AI. To use such an approach in a real world situation (say designing circuits) will involve building various <em>bridges</em> between these systems, and also human systems.</p>
+<p>In this post, I discuss what is needed to integrate Generative AI with the Lean Prover for real world domains. Interestingly, much of the role of generative AI can also be played by humans, so all this is relevant for people using Lean or hybrid human-AI systems.</p>
+<p>We will take as a running example <em>Chess Puzzles</em> (or <em>Chess Analysis</em>). This is purely for illustrative purposes, and with the disclaimer that my knowledge of Chess is superficial.</p>
+<h2 id="components-of-solving-chess-puzzles">Components of Solving Chess puzzles</h2>
+<p>Consider a chess puzzle of a common form: &ldquo;White to play and mate in two moves&rdquo;. The solution may be attempted by a person or some form of generative AI. In practice a modern computer can solve these by brute force, but we will assume not too much brute force is used as our goal is to illustrate what to do beyond the range of brute force.</p>
+<ul>
+<li>The creative element in the solution is the moves that White makes, in particular often the first move.</li>
+<li>The moves have to be legal - while not really an issue for chess players this has to be verified for AI moves.</li>
+<li>We have to consider all responses of Black, and suggest moves in each of these cases.</li>
+<li>We must again verify that these are legal.</li>
+<li>As the problem is mate in two moves we must verify that we really have checkmates - this is a case where even a human may make an error.</li>
+<li>We also have to ensure that all cases are covered, i.e., all responses by Black.</li>
+<li>However, in practice considering many responses, which are obviously bad moves can be avoided:
+<ul>
+<li>Many moves will be of the nature where Black is not responding to the threat, say moving a piece away from the scene of action. The same move by white will work in all these cases.</li>
+<li>Automation, without any intuition/creativity, may be able to show White winning in many cases (without an excess of bute force).</li>
+</ul>
+</li>
+</ul>
+<p>In this flow, Lean Prover can help in various ways.</p>
+<ul>
+<li>Firstly, verify that all moves made by White are legal.</li>
+<li>Verify all cases are considered, or split into cases so each case becomes a separate goal.</li>
+<li>If the puzzle is easy at some stage, perhaps in some case, solve it.</li>
+<li>The latter can be guided by specifying a tactic and even some hints.</li>
+<li>Once a solution is given in the non-trivial cases, complete the easy cases with automation.
+<ul>
+<li>This can be guided with a tactic and some hints.</li>
+<li>In particular if the same move works for all remaining cases, then a tactic given that move as a hint can solve these.</li>
+</ul>
+</li>
+</ul>
+<p>In addition, there is another way in which the Lean Prover can help, which is very important in real-world situations though not as crucial with Chess puzzles. The solution given by an AI system or a person to a Chess puzzle may depend on something that is &ldquo;well known&rdquo;, such as a Bishop and a King alone can never checkmate the opponent. While &ldquo;well known&rdquo;, such results may not be proved in Lean, so Lean will not regard that the solution (say to the problem of achieving a draw) has been proved to be correct. However, we can prove to Lean that the solution is correct <em>assuming</em> some facts, and Lean will be able to tell us what facts were assumed in a solution. In a real-world situation, these may be, for example, empirically known or be human conventions or rules. It is of great value to know not just that some empirical facts were used to obtain results, but exactly which facts were used for what results.</p>
+<h2 id="building-bridges">Building bridges</h2>
+<p>Lean does not know even the rules of Chess, and most likely does not know details of the domain for which we wish to use it. Some work is needed before Lean can be used, which we sketch below.</p>
+<h3 id="representing-the-domain-in-lean">Representing the Domain in Lean</h3>
+<p>Firstly, we must represent a Chess Board, pieces, legal moves, checkmates and the rules of chess in Lean. These can be represented by <em>structures</em>, <em>functions</em>, <em>terms</em>, <em>inductive types</em> etc.</p>
+<p>A more complex domain may have more ingredients, requiring more sophisticated Lean code (such as typeclasses and monads).</p>
+<p>It is crucial that this representation is correct. Making it open source and documenting it well is one way to try to ensure this. We will discuss other checks on this a bit later.</p>
+<h3 id="domain-specific-language-dsl">Domain Specific Language (DSL)</h3>
+<p>Domains have their own specific notation. For instance, moves in chess can be denoted <code>e4</code>, <code>N×e5</code>, <code>Ba7+</code> etc, with conventions about how games are represented. It greatly helps users to be able to use such notation. Fortunately, Lean has easily extensible syntax, using which we can build a so called <strong>Domain Specific Language</strong> (DSL) within Lean, so valid Chess notation (enclosed in appropriate begin and end marks) becomes valid Lean notation.</p>
+<p>In addition to being helpful to human users, as LLMs learn from examples, a DSL will be useful to LLMs as well.</p>
+<h3 id="theorems-helpers-and-tests">Theorems: Helpers and Tests</h3>
+<p>Once a domain is modelled, basic properties should be proved as theorems. General theorems are useful in proving specific results of interest. In addition, they prove to be a test of the definitions.</p>
+<p>For instance, in analysing games it is useful to have a theorem that a Queen and King can always checkmate a King alone. On the other hand, a theorem saying that a Bishop stays on the same colour, but can reach all squares of that colour, is a check that the model of Bishop moves is correct.</p>
+<p>As the main failure point given verification in Lean is an error in definitions - being different from intended or not correctly modelling the world, it is important to check definitions by building on them.</p>
+<h3 id="tactics">Tactics</h3>
+<p>Lean provides automation for proving results in the form of <em>tactics</em>. Many of these are general and powerful enough to apply to any specific domain. Others can be enhanced by providing appropriate hints specific to the domain. For instance, the <code>simp</code> tactic simplifies using theorems and definitions that are annotated as simplification rules. When we prove theorems about a domain we should annotate some of them as appropriate.</p>
+<p>In addition, we may wish to write tactics that are appropriate to the domain. For instance, in Chess if the goal is to show how White wins, we are helped by a tactic that splits the goal after a move by White based on the moves by Black, and tactics that try to prove that from a certain position White can win in at most <code>k</code> moves. We can have a tactic combining these that asks us only to explain in the non-trivial cases.</p>
+<h3 id="autoformalization">Autoformalization</h3>
+<p>While one can work directly using the model in Lean, or more conveniently with a DSL for the domain, users are most comfortable using Natural Language, possibly with embedded notation. Data for training or prompting LLMs is also usually in Natural Language.</p>
+<p>Autoformalization is the automatic translation of natural language to Lean code. Adding autoformalization to the system for using Lean in a domain will add significant value.</p>
+<p>There are many systems/projects under development for Autoformalization to Lean. For a specific domain, we need the models to output in the specific Lean code or DSLs. To do this with a system for Autoformalization based on (leading) Foundation models, it should suffice to simply provide enough examples and some documentation in the prompt.</p>
+<h2 id="what-we-get-from-lean">What we get from Lean</h2>
+<p>Besides verification, there are many other ways in which Lean helps in working with complex domains, by humans and especially with AI assistance.</p>
+<ul>
+<li><strong>Organization</strong>: A Lean formalization is cleanly structured. We can decompose a problem and ensure that we have not missed any cases.</li>
+<li><strong>Interactive Development</strong>: As we build and check stuff, Lean let&rsquo;s us know what remains to be done.</li>
+<li><strong>External Results</strong>: We may need to use results derived from experiment or incorporate human rules or conventions. Lean lets us keep track of exactly what we used, and specifically what results proves depended on what external ones.</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

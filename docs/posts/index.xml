@@ -9,8 +9,15 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Thu, 09 Oct 2025 08:50:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Nov 2025 09:22:22 +0000</lastBuildDate>
     <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrating AI with the Lean Prover: How and Why</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/integrating-ai-lean/</link>
+      <pubDate>Wed, 12 Nov 2025 09:22:22 +0000</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/integrating-ai-lean/</guid>
+      <description>Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a Formal Proof System such as the Lean Prover to verify the correctness of outputs of AI.</description>
+    </item>
     <item>
       <title>When AI struck Gold at the Maths Olympiad</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/when-ai-struck-maths-gold/</link>
