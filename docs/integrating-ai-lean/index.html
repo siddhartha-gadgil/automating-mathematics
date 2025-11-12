@@ -104,7 +104,7 @@
     <div class="post">
   <h1>Integrating AI with the Lean Prover: How and Why</h1>
   <time datetime=2025-11-12T09:22:22Z class="post-date">Wed, Nov 12, 2025</time>
-  <p>Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a <em>Formal Proof System</em> such as the <em>Lean Prover</em> to verify the correctness of outputs of AI. To use such an approach in a real world situation (say designing circuits) will involve building various <em>bridges</em> between these systems, and also human systems.</p>
+  <p>Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a <em>Formal Proof System</em> such as the <em>Lean Prover</em> to verify the correctness of outputs of AI. To use such an approach in a real world situation (say designing circuits) will involve building various <em>bridges</em> between these systems.</p>
 <p>In this post, I discuss what is needed to integrate Generative AI with the Lean Prover for real world domains. Interestingly, much of the role of generative AI can also be played by humans, so all this is relevant for people using Lean or hybrid human-AI systems.</p>
 <p>We will take as a running example <em>Chess Puzzles</em> (or <em>Chess Analysis</em>). This is purely for illustrative purposes, and with the disclaimer that my knowledge of Chess is superficial.</p>
 <h2 id="components-of-solving-chess-puzzles">Components of Solving Chess puzzles</h2>
@@ -112,13 +112,13 @@
 <ul>
 <li>The creative element in the solution is the moves that White makes, in particular often the first move.</li>
 <li>The moves have to be legal - while not really an issue for chess players this has to be verified for AI moves.</li>
-<li>We have to consider all responses of Black, and suggest moves in each of these cases.</li>
+<li>We have to consider all responses of Black, and suggest moves in response for each of these cases.</li>
 <li>We must again verify that these are legal.</li>
 <li>As the problem is mate in two moves we must verify that we really have checkmates - this is a case where even a human may make an error.</li>
-<li>We also have to ensure that all cases are covered, i.e., all responses by Black.</li>
+<li>We also have to ensure that all cases are covered, i.e., we consider all legal moves by Black.</li>
 <li>However, in practice considering many responses, which are obviously bad moves can be avoided:
 <ul>
-<li>Many moves will be of the nature where Black is not responding to the threat, say moving a piece away from the scene of action. The same move by white will work in all these cases.</li>
+<li>Many moves will be of the nature where Black is not responding to the threat, say moving a piece away from the scene of action. The same second move by white will work in all these cases.</li>
 <li>Automation, without any intuition/creativity, may be able to show White winning in many cases (without an excess of bute force).</li>
 </ul>
 </li>
@@ -127,8 +127,8 @@
 <ul>
 <li>Firstly, verify that all moves made by White are legal.</li>
 <li>Verify all cases are considered, or split into cases so each case becomes a separate goal.</li>
-<li>If the puzzle is easy at some stage, perhaps in some case, solve it.</li>
-<li>The latter can be guided by specifying a tactic and even some hints.</li>
+<li>If the puzzle is easy at some stage solve it. This often applies to what remains to be solved/shown in some case.</li>
+<li>Automated solutions can be guided by specifying a tactic and even some hints.</li>
 <li>Once a solution is given in the non-trivial cases, complete the easy cases with automation.
 <ul>
 <li>This can be guided with a tactic and some hints.</li>
