@@ -1,7 +1,7 @@
 +++
 title = "Integrating AI with the Lean Prover: How and Why"
 date = 2025-11-12T09:22:22Z
-draft = true
+draft = false
 tags = []
 categories = []
 +++
