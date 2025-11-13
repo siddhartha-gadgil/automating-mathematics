@@ -6,7 +6,7 @@ tags = []
 categories = []
 +++
 
-Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a *Formal Proof System* such as the *Lean Prover* to verify the correctness of outputs of AI. To use such an approach in a real world situation (say designing circuits) will involve building various *bridges* between these systems, and also human systems.
+Generative AI is famous for being both powerful and unreliable, though more recently it has become more reliable even as it has grown in power. A natural way to attempt to overcome issues with its reliability are by using a *Formal Proof System* such as the *Lean Prover* to verify the correctness of outputs of AI. To use such an approach in a real world situation (say designing circuits) will involve building various *bridges* between these systems.
 
 In this post, I discuss what is needed to integrate Generative AI with the Lean Prover for real world domains. Interestingly, much of the role of generative AI can also be played by humans, so all this is relevant for people using Lean or hybrid human-AI systems.
 
@@ -18,25 +18,25 @@ Consider a chess puzzle of a common form: "White to play and mate in two moves".
 
 * The creative element in the solution is the moves that White makes, in particular often the first move.
 * The moves have to be legal - while not really an issue for chess players this has to be verified for AI moves.
-* We have to consider all responses of Black, and suggest moves in each of these cases.
+* We have to consider all responses of Black, and suggest moves in response for each of these cases.
 * We must again verify that these are legal.
 * As the problem is mate in two moves we must verify that we really have checkmates - this is a case where even a human may make an error.
-* We also have to ensure that all cases are covered, i.e., all responses by Black.
+* We also have to ensure that all cases are covered, i.e., we consider all legal moves by Black.
 * However, in practice considering many responses, which are obviously bad moves can be avoided:
-  * Many moves will be of the nature where Black is not responding to the threat, say moving a piece away from the scene of action. The same move by white will work in all these cases.
+  * Many moves will be of the nature where Black is not responding to the threat, say moving a piece away from the scene of action. The same second move by white will work in all these cases.
   * Automation, without any intuition/creativity, may be able to show White winning in many cases (without an excess of bute force).
 
 In this flow, Lean Prover can help in various ways.
 
 * Firstly, verify that all moves made by White are legal.
 * Verify all cases are considered, or split into cases so each case becomes a separate goal.
-* If the puzzle is easy at some stage, perhaps in some case, solve it.
-* The latter can be guided by specifying a tactic and even some hints.
+* If the puzzle is easy at some stage solve it. This often applies to what remains to be solved/shown in some case.
+* Automated solutions can be guided by specifying a tactic and even some hints.
 * Once a solution is given in the non-trivial cases, complete the easy cases with automation.
   * This can be guided with a tactic and some hints.
   * In particular if the same move works for all remaining cases, then a tactic given that move as a hint can solve these.
 
-In addition, there is another way in which the Lean Prover can help, which is very important in real-world situations though not as crucial with Chess puzzles. The solution given by an AI system or a person to a Chess puzzle may depend on something that is "well known", such as a Bishop and a King alone can never checkmate the opponent. While "well known", such results may not be proved in Lean, so Lean will not regard that the solution (say to the problem of achieving a draw) has been proved to be correct. However, we can prove to Lean that the solution is correct *assuming* some facts, and Lean will be able to tell us what facts were assumed in a solution. In a real-world situation, these may be, for example, empirically known or be human conventions or rules. It is of great value to know not just that some empirical facts were used to obtain results, but exactly which facts were used for what results.
+In addition, there is another way in which the Lean Prover can help, which is very important in real-world situations though not as crucial with Chess puzzles. The solution given by an AI system or a person to a Chess puzzle may depend on something that is "well known", such as a Bishop and a King alone can never checkmate the opponent. While "well known", such results may not be proved in Lean, so Lean will not regard that the solution (say to the problem of achieving a draw) has been proved to be correct. However, we can prove to Lean that the solution is correct *assuming* some facts, and Lean will be able to tell us what facts were assumed in a solution. In a real-world situation, these may be, for example, empirically known or be human conventions or rules. It is of significant value to know not just that some empirical facts were used to obtain results, but exactly which facts were used for what results.
 
 ## Building bridges
 
@@ -60,15 +60,15 @@ In addition to being helpful to human users, as LLMs learn from examples, a DSL 
 
 Once a domain is modelled, basic properties should be proved as theorems. General theorems are useful in proving specific results of interest. In addition, they prove to be a test of the definitions.
 
-For instance, in analysing games it is useful to have a theorem that a Queen and King can always checkmate a King alone. On the other hand, a theorem saying that a Bishop stays on the same colour, but can reach all squares of that colour, is a check that the model of Bishop moves is correct.
+For instance, in analysing games it is useful to have a theorem that a Queen and King can always checkmate a King alone. On the other hand, proving a theorem saying that a Bishop stays on the same colour and can reach all squares of that colour is a check that the model of Bishop moves is correct.
 
-As the main failure point given verification in Lean is an error in definitions - being different from intended or not correctly modelling the world, it is important to check definitions by building on them.
+As the main failure point given verification in Lean is an error in definitions - their being different from intended or not correctly modelling the world, it is important to check definitions by building on them.
 
 ### Tactics
 
-Lean provides automation for proving results in the form of *tactics*. Many of these are general and powerful enough to apply to any specific domain. Others can be enhanced by providing appropriate hints specific to the domain. For instance, the `simp` tactic simplifies using theorems and definitions that are annotated as simplification rules. When we prove theorems about a domain we should annotate some of them as appropriate.
+Lean provides automation for proving results in the form of *tactics*. Many of these are general and powerful enough to apply to any specific domain. Others can be enhanced by providing appropriate hints specific to the domain. For instance, the `simp` tactic simplifies using theorems and definitions that are annotated as simplification rules. When we prove theorems about a domain we should annotate appropriate ones this way.
 
-In addition, we may wish to write tactics that are appropriate to the domain. For instance, in Chess if the goal is to show how White wins, we are helped by a tactic that splits the goal after a move by White based on the moves by Black, and tactics that try to prove that from a certain position White can win in at most `k` moves. We can have a tactic combining these that asks us only to explain in the non-trivial cases.
+In addition, we may wish to write tactics that are appropriate to the domain. For instance, in Chess if the goal is to show how White wins, we are helped by a tactic that splits the goal after a move by White based on the moves by Black, and tactics that try to prove that from a certain position White can win in at most `k` moves. We can have a tactic combining these that completes the proof for the easy cases leaving only the interesting cases to us.
 
 ### Autoformalization
 
