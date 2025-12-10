@@ -9,8 +9,15 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Wed, 12 Nov 2025 09:22:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Dec 2025 10:09:51 +0000</lastBuildDate>
     <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leanlang for Programmers</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/leanlang-for-programmers/</link>
+      <pubDate>Wed, 10 Dec 2025 10:09:51 +0000</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/leanlang-for-programmers/</guid>
+      <description>This is an announcement for the following workshop.&#xA;Informal Workshop: LeanLang for Programmers Lean (or Lean Prover) is an open-source programming language and proof assistant that enables correct, maintainable, and formally verified code.</description>
+    </item>
     <item>
       <title>Integrating AI with the Lean Prover: How and Why</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/integrating-ai-lean/</link>
