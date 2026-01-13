@@ -6,7 +6,7 @@ tags = []
 categories = []
 +++
 
-What is mathematics? This is a question those working (or interested) in mathematics return to many times. While this is no doubt an interesting question, its answer has at most a modest on the practice of mathematics. However, as we move to an era of mathematics powered by Artificial Intelligence together with Formal Proof Systems (such as the Lean Prover), how one views mathematics becomes significant.
+What is mathematics? This is a question those working (or interested) in mathematics return to many times. While this is no doubt an interesting question, its answer has at most a modest effect on the practice of mathematics. However, as we move to an era of mathematics powered by Artificial Intelligence together with Formal Proof Systems (such as the Lean Prover), how one views mathematics becomes significant.
 
 To me mathematics has always been part of *natural science*, both during the many years when I was primarily a mathematician, and in the last few years when I have focussed more on automating mathematics. By this I don't mean that the goal of mathematics is only to answer questions in say physics or biology. Rather, *natural science* is defined by theories that are (ultimately) *empirically* validated, and mathematics can be viewed in the same way. Over the years, my understanding of how to view mathematics within natural science has evolved (including, somewhat surprisingly, from my years immersed in software development).
 
