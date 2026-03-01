@@ -1,5 +1,5 @@
 +++
-title = "Ai and the Pointy Haired Boss"
+title = "AI and the Pointy Haired Boss"
 date = 2026-03-01T11:44:35+05:30
 draft = false
 tags = []

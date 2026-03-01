@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Artificial Intelligence and Mathematics</title>
-    <link>https://siddhartha-gadgil.github.io/automating-mathematics/tags/</link>
+    <link>http://localhost:1313/automating-mathematics/tags/</link>
     <description>Recent content in Tags on Artificial Intelligence and Mathematics</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/automating-mathematics/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
