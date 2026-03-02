@@ -36,7 +36,11 @@ The above cases are about possibilities limited by science. But just as importan
 
 ## Knowledge and Agency
 
-It is frequently pointed out that as more and more tasks can be accomplished by AI, the most important human quality will be *agency* - bridging between what is worth doing in the real world and the actions to accomplish this. The point of the above examples is that it is very likely that the person exercising this agency and directing the AI should have a good understanding of what is possible, both in principle and realistically given resources. A person who knows whether they can do something *in principle* and how much time and effort it will take (maybe after optimistically assuming they come up with necessary ideas along the way) will be in a position to know where directing AI will bear the most fruit. Such knowledge is not that different from education in the correct sense today.
+AI is likely to reach and exceed expert human level in all cognitive tasks in a few years at most, and may well reach or exceed even genius human level - what is commonly called AGI/ASI (Artificial General Intelligence/Artificial SuperIntelligence). Yet it is important to realise that even ASI is very far from *omniscience* (knowing everything) leave alone *omnipotence* (able to doe everything). The problems of both science and the real-world are far beyond our current reasoning abilities, and many are not limited by cognition but by nature - biology, energy needed, thermodynamics, etc. So there will still be a lot to be done.
+
+It is frequently pointed out that as more and more tasks can be accomplished by AI, the most important human quality will be *agency* - bridging between what is worth doing in the real world and the actions to accomplish this. What I have argued here is that it will be very helpful for the person exercising this agency and directing the AI to have a good scientific, technical and real-world understanding. A person who knows whether they can do something *in principle* and how much time and effort it will take (maybe after optimistically assuming they come up with necessary ideas along the way) will be in a position to know where directing AI will bear the most fruit. This will allow using the new powers to accomplish a lot while not being frittered away on the impossible.
+
+Such knowledge is not that different from education in the correct sense today.
 
 ## Practical lessons?
 
