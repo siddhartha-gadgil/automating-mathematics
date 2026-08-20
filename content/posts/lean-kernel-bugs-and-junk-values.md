@@ -106,6 +106,8 @@ Somewhat alarmingly, in Lean it is easy to prove that $1/0=0/0=0$. This is becau
 
 Fortunately we cannot deduce $1=0$ from $1/0=0/0=0$ as the theorem $a/b * b = a$ needs the hypothesis $b \neq 0$. Indeed there is no danger that we can prove a false statement, as junk values do not make Lean unsound. What they do, though, is introduce a *semantic mismatch* - that a Lean definition does not coincide with what we think it means. One would like to say that since Mathlib definitions have been used in a lot of theorems, they are correct. But this is manifestly not the case - with junk values they are sometimes wrong. One instead has to make the rather slippery statement that Mathlib definitions are correct except in ways that will not affect anything you do - much less believable and indeed evidence suggests not really true.
 
+However, as junk values do not affect soundness, all you have to check is that the *statement* of your result is correct. So we have to only check definitions involved in the statement.
+
 Ironically, one of the first things I demonstrate about programming in Lean is that there is an elegant way to avoid this in Lean. Indeed this is used even in the core of Lean. For instance, when to define the index `i` element `l[i]` of a list `l`, we need to prove that `i` is less than the length of `l`. Lean's proof automation means that we do not have to supply a proof if it can be deduced from the context, which in practice it often can.
 
 This approach to division may make things cumbersome, and a wholesale migration away from junk values may not be feasible. However, with Lean's metaprogramming capabilities having automatically generated junk-free duplicate code may be feasible (Johann Commelin suggested the duplicate code idea on Zulip). So Lean code could be mapped to such a version before checking.
@@ -118,7 +120,7 @@ For individuals though, I would recommend (as I have done) updating what you sho
 
 * One always needed to check statements.
 * One needs to check any new definitions, ideally by proving extra theorems.
-* In the case of standard definitions used directly or indirectly, be a bit careful if they use junk values. The more widely a definition is used the less likely it is that the error leaks, but a junk value is an error.
+* In the case of standard definitions used directly or indirectly in the *statement*, be a bit careful if they use junk values. The more widely a definition is used the less likely it is that the error leaks, but a junk value is an error.
 * Slightly downgrade confidence due to the possibility of kernel bugs. For human written code, or AI written with active human involvement and understanding, I would personally reduce by a tiny amount. For pure vibe coding: reduce by a little more if there is no strange metaprogramming, but if there is metaprogramming whose purpose is not clear be vary if this is an exploit.
 
 For the Lean community, I hope we can build the understanding and tools to restore trust to the ideal level - a level that one can reasonably expect in the absence of magic.
