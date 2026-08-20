@@ -114,9 +114,9 @@ This approach to division may make things cumbersome, and a wholesale migration 
 
 ## Conclusions
 
-While these episodes have made me slightly more cautious when trusting Lean code, on the whole it has reinforced my positive view of the Lean community. This is partly by contrast - while some from other communities like Talia Ringer have made important constructive suggestions, many others when uncovering or commenting about Lean bugs have shown a level of pettiness and viciousness that fortunately is rare within the Lean community. The reactions to the issues have also been honest from within the Lean community.
+These episodes have made me slightly more cautious when trusting Lean code.
 
-For individuals though, I would recommend (as I have done) updating what you should check with a Lean proof, and how much faith you have at the end of it:
+For individuals, I would recommend (as I have done) updating what you should check with a Lean proof, and how much faith you have at the end of it:
 
 * One always needed to check statements.
 * One needs to check any new definitions, ideally by proving extra theorems.
