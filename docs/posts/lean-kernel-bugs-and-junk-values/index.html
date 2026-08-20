@@ -158,8 +158,8 @@
 <p>Ironically, one of the first things I demonstrate about programming in Lean is that there is an elegant way to avoid this in Lean. Indeed this is used even in the core of Lean. For instance, when to define the index <code>i</code> element <code>l[i]</code> of a list <code>l</code>, we need to prove that <code>i</code> is less than the length of <code>l</code>. Lean&rsquo;s proof automation means that we do not have to supply a proof if it can be deduced from the context, which in practice it often can.</p>
 <p>This approach to division may make things cumbersome, and a wholesale migration away from junk values may not be feasible. However, with Lean&rsquo;s metaprogramming capabilities having automatically generated junk-free duplicate code may be feasible (Johann Commelin suggested the duplicate code idea on Zulip). So Lean code could be mapped to such a version before checking.</p>
 <h2 id="conclusions">Conclusions</h2>
-<p>While these episodes have made me slightly more cautious when trusting Lean code, on the whole it has reinforced my positive view of the Lean community. This is partly by contrast - while some from other communities like Talia Ringer have made important constructive suggestions, many others when uncovering or commenting about Lean bugs have shown a level of pettiness and viciousness that fortunately is rare within the Lean community. The reactions to the issues have also been honest from within the Lean community.</p>
-<p>For individuals though, I would recommend (as I have done) updating what you should check with a Lean proof, and how much faith you have at the end of it:</p>
+<p>These episodes have made me slightly more cautious when trusting Lean code.</p>
+<p>For individuals, I would recommend (as I have done) updating what you should check with a Lean proof, and how much faith you have at the end of it:</p>
 <ul>
 <li>One always needed to check statements.</li>
 <li>One needs to check any new definitions, ideally by proving extra theorems.</li>
