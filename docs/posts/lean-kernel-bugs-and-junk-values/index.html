@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><script src="/automating-mathematics/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=automating-mathematics/livereload" data-no-instant defer></script>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.123.7">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Lean Kernel Bugs and Junk Values &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/automating-mathematics/favicon.png">
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRWGMDYZ53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZRWGMDYZ53');
+</script>
+  
+
+<link rel="icon" href="http://localhost:1313/automating-mathematics/IIScLogo.jpg">
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="http://localhost:1313/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="http://localhost:1313/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/automating-mathematics/">Home</a> </li>
+        <li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/leanaide/"> LeanAide </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2026. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Lean Kernel Bugs and Junk Values</h1>
+  <time datetime=2026-08-20T08:47:27&#43;0530 class="post-date">Thu, Aug 20, 2026</time>
+  <p>As <em>vibe coding</em> and AI generated proofs have proliferated, the Lean Prover has become a common tool to verify correctness. While it is undoubtedly advanced technology, Lean is not magic and cannot perfectly guarantee correctness. What Lean can do is allow a high degree of confidence after a modest amount of verification.</p>
+<p>This post is my reflections on how much confidence we can have in something verified by Lean, and what has to be verified to get this level of confidence. Roughly speaking our confidence depends on <em>trusting the kernel</em> and <em>verifying definitions and statements</em>. These reflections are motivated by recent events (in August 2026) and discussions at a conference in early August 2026, which suggest that both these aspects are more complicated than one would ideally like.</p>
+<p>Thus, individuals will have to be more cautious than one would ideally like, at least at the present juncture, when trusting Lean proofs to what I would consider the ideal level. There is also work to be done to raise the level of trust. Fortunately, it appears that there is willingness to do the work.</p>
+<h2 id="trusted-kernels">Trusted Kernels</h2>
+<p>If we trust a computer system to test a proof, how do we know the system itself is correct? This fundamental question was addressed by de Bruijn while building his pioneering system <strong>AutoMath</strong> in the 1960s.The idea that he came up with was to separate a <strong>kernel</strong>, which checks correctness of proofs, from the rest of the system: the parts that help find proofs, provide interfaces etc. An analogue of the kernel is the part of a chess engine that checks whether moves are legal and whether we have a checkmate - much less code than the part that actually makes smart moves.</p>
+<p>The kernel has to be checked manually. However, if the kernel is relatively small, well-documented, and (these days) open sourced one can hope that it has been checked by many people. Having such a kernel is now called the <em>de Bruijn principle</em>.</p>
+<h3 id="expressiveness-verification-automation">Expressiveness, Verification, Automation</h3>
+<p>Any formal system, for humans or computers, is based on a formal language and logical rules. In the case of the &ldquo;official&rdquo; foundations of mathematics, <em>First-Order Logic</em> (FOL) gives the language and rules for deduction, with the axioms of <em>Set Theory</em> as the starting point for mathematics.</p>
+<p>For proof systems based on FOL a trusted kernel is indeed small - a few hours of work may be all it takes to write one. Simple logical systems also allow for powerful automation. However, writing even moderately complex mathematics in such a system requires an enormous amount of code.</p>
+<p>More complex logical systems are more <em>expressive</em> - allowing us to write more complex mathematics (or programs) reasonably concisely. However, verification is no longer so easy (and automation is also harder). There is a range of possible logical systems, including FOL, Higher Order Logic (HOL), and Calculus of Inductive Constructions (CIC).</p>
+<p>Lean uses the Calculus of Inductive Constructions, which is expressive but complex. To make programming and proving easier (i.e., to increase expressivity), Lean adds features to CIC such as <em>proof irrelevance</em>, <em>mutual inductive types</em> and <em>nested inductive types</em>.</p>
+<p>Fortunately, it has been proved that these differently foundational systems are essentially equivalent (essentially because consistency of Lean assumes some large-cardinal axioms). However, as a consequence, Lean&rsquo;s kernel is not that small and is fairly complex - amounting to a few thousand lines of code (to the best of my knowledge). This is of course much smaller than Lean as a whole, and so there is indeed an enormous gain in terms of what needs to be verified. But verification of Lean&rsquo;s kernel is far from trivial.</p>
+<h3 id="multiple-kernels">Multiple kernels</h3>
+<p>Being aware of the danger of kernel bugs, Lean&rsquo;s creator Leo de Moura has long advocated for a way to strengthen the <em>de Bruijn principle</em> by having multiple independent kernels. There were three independent kernels for Lean 3 - one extracted from Lean, one written in Haskell, and one (trepplein) written in scala. With the advent of Lean 4 (the present version, and likely to be the version for many years to come) these no longer worked. So an independent kernel in Rust, Nanoda, was (commisioned and) implemented, along with documentation to write more kernels. Writing other kernels was facilitated with the <em>Lean kernel arena</em>.</p>
+<p>In addition, an important effort was <code>lean4lean</code> an implementation of Lean in Lean due to Mario Carneiro. This included an independent kernel. An effort is ongoing to verify correctness of the kernel.</p>
+<p>Thus, Lean code can be checked against multiple kernel. The hope is that this will not pass all of them if incorrect, as that will mean independent implementations have bugs in exactly the same place.</p>
+<p>Unfortunately, the chance of coinciding bugs is not as small as one would like. Firstly, part of <code>lean4lean</code> is not really independent as it borrows code from Lean itself. There is no such danger with a Rust implementation. However, bugs are most likely to appear in the most subtle parts of the foundations, so the locations of bugs will still be correlated.</p>
+<h3 id="trepplein-times">Trepplein times</h3>
+<p>Trepplein is an independent type-checker for Lean 3 written by Gabriel Ebner in scala. Since I knew scala well and was also reasonably familiar with Lean-like foundations, I volunteered to try to port this to Lean 4. Unfortunately I did not finish this, but I learnt some things along the way. I should clarify that all this was some years ago, before we had AI chatbots, leave alone coding agents.</p>
+<p>Lean has an export format which is easy to parse. The code in Lean is exported in this format and independent type-checkers parse this and check correctness. The core of porting trepplein to Lean 4 involved supporting those features in the foundations of Lean 4 that were not present in Lean 3.</p>
+<p>After completing some relatively minor tasks, such as supporting <em>literals</em> for natural numbers and strings, I ran into a big challenge. Lean 4 had (as part of its foundations) <em>nested inductive types</em>, which were complex. Fortunately, over a long <a href="https://leanprover.zulipchat.com/#narrow/channel/270676-lean4/topic/Complicated.20induction.3A.20documentation.3F/with/396819352">Zulip Conversation</a>, Mario Carneiro explained these to me and cleared some of my other misunderstandings. Indeed it turned out that there was no documentation for these, and my best source was reading the code of <code>lean4lean</code>.</p>
+<p>After managing to handle nested inductive types, at least to the extent of working with some code that used these, trepplein still failed to pass its tests. At the core of checking correctness of Lean programs is <em>type checking</em>, which in turn depends on checking for <em>definitional equality</em>. My port of trepplein failed to check a claimed type, which in turn was because it failed to accept a definitional equality.</p>
+<p>To my surprise, I learnt that definitional equality and type checking were not <em>algorithmically decidable</em>. Roughly speaking, two terms (Lean objects) <code>x</code> and <code>y</code> are definitionally equal if we can make finitely many allowed substitutions of given forms (corresponding to &ldquo;basic&rdquo; definitional equalities) to transform <code>x</code> to <code>y</code>. We can naively keep making allowed substitutions starting from <code>x</code> and see if we reach <code>y</code>. There are only finitely many allowed substitutions at each stage, so if <code>x</code> and <code>y</code> are definitionally equal we will be able to show this eventually.</p>
+<p>However, <code>x</code> and <code>y</code> may not be definitionally equal, so we have to stop our search at some stage. To get an algorithm we need to know how long we need to go on before giving up, or have a different half-algorithm to show inequality, or have some other conceptual approach. As proved in Mario Carneiro&rsquo;s thesis, there is no such algorithm.</p>
+<p>In practice, this means that some additional criterion has to be introduced for giving up, and the behaviour of the type-checker depends on this. In the case of trepplein (as implemented by Gabriel Ebner) there were actually configurable timeout parameters. Perhaps changing these would have allowed me to proceed. But at that time I got overwhelmed by the complexity and did not understand things as clearly as I do now, and so abandoned my efforts.</p>
+<p>I should emphasise tha this is not a soundness issue - we only need an algorithm for type checking so that if it is accepted that <code>x</code> has type <code>A</code>, then indeed it does. If <code>x</code> has type <code>A</code> but the checker things it does not, then we will fail to prove something, weakening the prover. We will, however, not prove a false statement.</p>
+<h3 id="kernel-bugs">Kernel bugs</h3>
+<h3 id="verified-kernels-and-lean4lean">Verified kernels and <code>lean4lean</code></h3>
+<h2 id="statements-definitions-and-junk-values">Statements, Definitions and Junk Values</h2>
+<h3 id="examples-and-corollaries">Examples and Corollaries</h3>
+<h3 id="junk-values">Junk values</h3>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
