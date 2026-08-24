@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><script src="/automating-mathematics/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=automating-mathematics/livereload" data-no-instant defer></script>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.123.7">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Complex Structures on the 6-sphere (via AI?) &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:1313/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:1313/automating-mathematics/favicon.png">
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRWGMDYZ53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZRWGMDYZ53');
+</script>
+  
+
+<link rel="icon" href="http://localhost:1313/automating-mathematics/IIScLogo.jpg">
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="http://localhost:1313/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="http://localhost:1313/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="http://localhost:1313/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://localhost:1313/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://localhost:1313/automating-mathematics/">Home</a> </li>
+        <li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/leanaide/"> LeanAide </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2026. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Complex Structures on the 6-sphere (via AI?)</h1>
+  <time datetime=2026-08-24T09:49:52&#43;0530 class="post-date">Mon, Aug 24, 2026</time>
+  <p>Early this morning I read an announcement of a result by an AI system (Claude, skilfully steered by Levent Alpoge) had answered a question that I have personally regarded as a central problem in mathematics for decades &mdash; whether $S^6$ has a complex structure. I do not know whether the proof is correct, and the nature of the answer makes this less than a <em>field creating</em> result. Nevertheless, this will be a spectacular result, and is in any case a good excuse to give a high-level view of a large part of mathematics.</p>
+<p>For clarity of exposition, I will assume a reasonable familiarity with mathematics &mdash; for instance, knowing what a manifold is. Hopefully those with less of a background will get some impressionistic ideas from the post.</p>
+<h2 id="spaces-and-structures">Spaces and Structures</h2>
+<p>A lot of mathematics, including Geometry and Topology, involve studying spaces equipped with structures. A structure is <em>weaker</em> than another if, given an instance of the stronger structure, we automatically get a unique instance of the weaker structure. A fundamental class of questions is when we can go in the other direction &mdash; whether any instance of the weaker structure comes from a unique instance of the stronger one. If so the two structures become equivalent.</p>
+<p>The weakest structure I will consider in this post is that of a <em>topological manifold</em> &mdash; which I will always assume to be compact and without boundary. A stronger structure is that of a smooth manifold. The strongest I will consider is a <em>smooth projective variety</em> &mdash; a space defined by a &ldquo;nice&rdquo; collection of polynomial equations over complex numbers.</p>
+<p>A smooth projective variety automatically has both the structure of a complex manifold and of a Riemannian manifold, and these are compatible with each other. Further, we also have a so-called <em>symplectic structure</em>.
+Requiring only the Complex and Riemannian structures with appropriate compatibility gives the structure of a Kahler manifold. Kahler manifolds also have associated symplectic structures.</p>
+<p>Our zoo of structures so far thus has <em>smooth projective varities</em> as the strongest, <em>kahler manifolds</em> as a weakening, <em>complex manifolds</em> and <em>symplectic manifolds</em> as structures weaker than <em>kahler manifolds</em>, <em>smooth manifolds</em> weaker than both these and finally <em>topological manifolds</em> as the weakest of all.</p>
+<p>A common weakening of <em>complex manifolds</em> and <em>symplectic manifolds</em> is that of a smooth manifold with an <em>almost complex structure</em>. This is a complex structure on each tangent space that varies smoothly. This is a <strong>soft</strong> structure in the sense that it can be fully understood in terms of algebraic topology. This means that if another structure is equivalent to it, it too can be fully understood. Complex structures are often called an <em>integrable complex structures</em> to disambiguate from <em>almost complex structures</em>.</p>
+<h2 id="structure-strengthening-results-proofs-disproofs-examples">Structure Strengthening Results: Proofs, Disproofs, Examples</h2>
+<p>To prove that a weaker structure is not equivalent to a stronger one, we need to:</p>
+<ul>
+<li>Prove some property implied by the stronger structure.</li>
+<li>Construct an example that has the weaker property but not the stronger one.</li>
+</ul>
+<p>In different cases, either or both of these steps could be the hard one. Such a result is typically <em>field creating</em> &mdash; the properties discovered fuel the study of the new structure.</p>
+<p>On the other hand, if we wish to prove that a weaker structure always comes from a stronger one, we should construct the stronger structure from the weaker one. The construction may be abstract or concrete. Such a result is often <em>field finishing/collapsing</em>, merging the study of the two structures (and sometimes making a range of questions trivial).</p>
+<h3 id="capturing-ignorance">Capturing Ignorance</h3>
+<p>If we cannot prove or disprove that a weaker structure is equivalent to a stronger one, it becomes useful to capture the limits of our techniques in a specific example that has the weaker structure but may or may not have the stronger structure.</p>
+<p>We can then look for consequences of having a stronger structure to rule out our candidate example. Finding this will settle the question in the negative. This will be a field creating result.</p>
+<p>We can also seek to construct the stronger structure on our example. If our example has resisted such efforts before yielding, it is likely that we have found a fruitful new construction that generalises. New understanding will result and we can refine what we expect to hold for stronger structures based on our new examples.</p>
+<h3 id="history">History</h3>
+<p>Milnor showed in the 1950s that topological manifolds do not have unique smooth structures, and Kervaire showed they need not exist at around the same time. Hopf showed in the 1940s that there are <em>complex manifolds</em> that are not <em>kahler</em> (and asked if $S^6$ has a complex structure). That there are smooth projective varities that are not <em>kahler</em> is more classical, but the gap was fully understood by Kodaira in the 1950s. Thurston showed that there are symplectic manifolds that are not <em>kahler</em>. Gromov created the field of Symplectic Topology showing many properties of symplectic manifolds. It readily followed from Gromov&rsquo;s work that neither existence nor uniqueness of symplectic structures given almost-complex structures is true. In dimension $4$ (complex dimension $2$), the Kodaira-Enriques classification of surfaces gave techniques to show the absence of integrable complex structures on some manifolds with complex structures, thus showing that almost complex structures are strictly weaker than integrable complex structures.</p>
+<p>All these are landmark results in mathematics, and cover most of the <em>structure strengthening</em> questions. Notable questions not answered by these are the uniqueness of smooth structures on $S^4$ and whether every almost complex structure in dimension $6$ and above is equivalent to a (unique) complex structure, plus a handful of other questions.</p>
+<h3 id="what-just-happened-perhaps">What just happened (perhaps)</h3>
+<p>Thus, the broader question addressed in the recent AI generated work is (at least in my view) undoubtedly a central question in mathematics. If the result had showed that $S^6$ does not have a complex structure, this would be a truly landmark result, at the level we see once every few years in mathematics.</p>
+<p>What was actually shown was that $S^6$ does have a complex structure. As this has long been regarded as the <em>ignorance capturing</em> example (and which has remained open for decades), if the result is correct it is truly spectacular and knowledge about integrable complex structures has undoubtedly advanced.</p>
+<p>Once we have such an example, the techniques to construct it are likely to generalise. It is likely that the construction will be abstracted, criteria that allow it to work will be found, and more spaces will have complex structures constructed on them. The central question is how far this will go.</p>
+<p>An example from history shows that sometimes abstraction and generalisation can go very far. At one stage, Thurston believed that knot complements cannot have hyperbolic structures. Then a special algebraic construction was found in one case &ndash; the figure-eight knot complement. Understanding and reverse-engineering this lead to Thurston&rsquo;s geometrisation for fibred knots and eventually the Thurston-Perelman Geometrisation Theorem.</p>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>
