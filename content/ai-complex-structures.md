@@ -1,7 +1,7 @@
 +++
 title = "Complex Structures on the 6-sphere (via AI?)"
 date = 2026-08-24T09:49:52+05:30
-draft = true
+draft = false
 tags = []
 categories = []
 +++
@@ -50,10 +50,10 @@ All these are landmark results in mathematics, and cover most of the *structure 
 
 ### What just happened (perhaps)
 
-Thus, the broader question addressed in the recent AI generated work is (at least in my view) undoubtedly a central question in mathematics. If the result had showed that $S^6$ does not have a complex structure, this would be a truly landmark result, at the level we see once every few years in mathematics.
+Thus, the broader question of whether every almost structure in dimension $6$ and above corresponds to a complex structure is undoubtedly a central question in mathematics. If the result had showed that $S^6$ does not have a complex structure, this would be a truly landmark result, at the level we see once every few years in mathematics.
 
-What was actually shown was that $S^6$ does have a complex structure. As this has long been regarded as the *ignorance capturing* example (and which has remained open for decades), if the result is correct it is truly spectacular and knowledge about integrable complex structures has undoubtedly advanced.
-
-Once we have such an example, the techniques to construct it are likely to generalise. It is likely that the construction will be abstracted, criteria that allow it to work will be found, and more spaces will have complex structures constructed on them. The central question is how far this will go.
+What was actually shown was that $S^6$ does have a complex structure. Once we have such an example, the techniques to construct it are likely to generalise. It is likely that the construction will be abstracted, criteria that allow it to work will be found, and more spaces will have complex structures constructed on them. The central question is how far this will go.
 
 An example from history shows that sometimes abstraction and generalisation can go very far. At one stage, Thurston believed that knot complements cannot have hyperbolic structures. Then a special algebraic construction was found in one case -- the figure-eight knot complement. Understanding and reverse-engineering this lead to Thurston's geometrisation for fibred knots and eventually the Thurston-Perelman Geometrisation Theorem.
+
+For now, the result is a construction on one specific space, and we must value this as well as judge the likelihood of generalization. Note that this has been the example marking the limits of our knowledge all the way back from 1947 when a lot of what we consider basic Algebraic and Differential topology was not yet discovered. That the many decades since then could not solve this question makes me regard this as a truly spectacular advance, and in my view makes it likely that the construction is likely to hold powerful new techniques.
