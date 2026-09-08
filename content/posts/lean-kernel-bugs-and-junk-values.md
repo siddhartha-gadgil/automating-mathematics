@@ -60,7 +60,7 @@ I should emphasise that the undecidability is not a soundness issue - we only ne
 
 ### Kernel bugs
 
-The world now has AI systems that are phenomenally good at finding bugs. Using these, in early August 2026, a spurious Lean "proof" of the *Goldbach Conjecture*, a famous problem in mathematics, was posted, finding and exploiting a bug in the Lean kernel. This Lean proof also passed both Nanoda and lean4lean.
+The world now has AI systems that are phenomenally good at finding bugs. Using these, in early August 2026, a spurious Lean "proof" of the failure of the *Collatz Conjecture*, a famous problem in mathematics, was posted, finding and exploiting a bug in the Lean kernel. This Lean proof also passed both Nanoda and lean4lean.
 
 The bug involved nested inductive types, the same complex definitions that had made me sweat when trying to port trepplein. Talia Ringer has emphasised that this is not merely an issue with implementation - the type theory of nested inductive types is also not well understood.
 
