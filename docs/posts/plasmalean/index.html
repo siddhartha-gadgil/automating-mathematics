@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.123.7">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Plasmalean &middot; Artificial Intelligence and Mathematics</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://siddhartha-gadgil.github.io/automating-mathematics/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/favicon.png">
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRWGMDYZ53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZRWGMDYZ53');
+</script>
+  
+
+<link rel="icon" href="https://siddhartha-gadgil.github.io/automating-mathematics/IIScLogo.jpg">
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      displayMath: [ ['$$', '$$']],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea']
+    },
+    TeX: {
+      Macros: {
+        R: '\\mathbb{R}',
+        Z: '\\mathbb{Z}',
+        C: '\\mathbb{C}'
+      }
+    },
+    messageStyle: "none",
+    "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+
+    </script>
+
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/vs.min.css">
+<link rel="stylesheet" href="https://siddhartha-gadgil.github.io/automating-mathematics/css/custom.css">
+<script type="text/javascript" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/highlight.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://siddhartha-gadgil.github.io/automating-mathematics/js/lean.min.js"></script>
+<script type="text/javascript">
+  hljs.highlightAll();
+</script>
+<style>
+  .sidebar-about h1 {
+    font-size: 2.6rem !important;
+  }
+</style>
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://siddhartha-gadgil.github.io/automating-mathematics/"><h1>Artificial Intelligence and Mathematics</h1></a>
+      <p class="lead">
+       My experiments in automating mathematics. 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/">Home</a> </li>
+        <li><a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil&#39;s homepage </a></li><li><a href="https://siddhartha-gadgil.github.io/automating-mathematics/automating-mathematics-india/"> Automating Mathematics group </a></li><li><a href="https://github.com/siddhartha-gadgil/leanaide/"> LeanAide </a></li><li><a href="https://github.com/siddhartha-gadgil/ProvingGround/"> ProvingGround </a></li><li><a href="https://github.com/siddhartha-gadgil/Superficial/"> Superficial </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2026. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Plasmalean</h1>
+  <time datetime=2026-10-27T10:01:10&#43;0530 class="post-date">Tue, Oct 27, 2026</time>
+  <p>A few months ago (in January 2027) I wrote a blog post <a href="../mathematics-as-natural-science-in-ai-era/index.html">Mathematics as Natural Science in the Era of AI</a> about using advances in AI to advance mathematics and science. Little did I know then that in a few months the capabilities of AI in mathematics would advance from good to extraordinary. It was time to put the ideas to the test, with a design powered by <a href="https://lean-lang.org/">LeanLang</a> to allow a mix of autonomous use of AI with human guidance and ideas.</p>
+<p>My first quest, in a project <a href="https://siddhartha-gadgil.github.io/PlasmaLean/index.html">PlasmaLean</a> is to design a kind of fusion reactor called a <a href="https://en.wikipedia.org/wiki/Stellarator">Stellarator</a>. These are reactors with geometry that allows, one hopes, the plasma (fuel) to remain stable for reasonably long. The eventual goal is to prove results that show that plasma remains confined and hot for a certain (explicit) amount of time.</p>
+<p>For AI to be able to advance mathematics and science rapidly, we must have a design that allows autonomy as well as high reliability. The design I use builds on ideas that are widespread in Lean verification. I call this design <em>Swiss Watch Verification</em>. My second goal with PlasmaLean is to experiment with and refine such designs.</p>
+<h2 id="what-is-mathematics">What is Mathematics?</h2>
+<p>When I wrote my blog post in January, I said that the question &ldquo;What is mathematics?&rdquo; had assumed new importance, and even practical relevance, in the age of AI. Little did I know that this was soon to become contentious, indeed a source of much debate and trolling. What I write in the rest of this post is based on <em>my</em> view of mathematics, and all I claim is that this is a coherent view. This has been my view for the three decades or so I have been in the business, though it differs from Mathematics™ as defined by the luminaries of the field.</p>
+<p>First a disclaimer. In the rest of this section, I have freely copied and modified from my earlier posts on this blog.</p>
+<p>My view of mathematics is as those components of <em>natural science</em> that have been <em>fully abstracted</em>. The real world is messy, and any such definition will have to common with caveats, so all my definitions are ideals as guidance.</p>
+<p>Natural science is the body of knowledge that has been verified empirically, i.e., through experiments or observations. All knowledge beyond cataloguing of facts (so called &ldquo;stamp collection&rdquo;) depends on <em>abstraction</em> - hiding away of details that are not relevant to what we seek to understand and considering only the essential features. This is sometimes at the cost of simplifying, or taking an ideal model of, what we are studying.</p>
+<p>Thus, Newton’s laws of motion can be used to calculate the trajectory of a point-mass. When studying a point-mass we are ignoring a lot of irrelevant features, such as the colour, material and geographical location of the body. We are further ignoring the size and shape, which do affect the trajectory, as their effect is small.</p>
+<p>Abstraction is done most explicitly in working with modular systems in engineering, for instance in software engineering. For example, when processing data we abstract the source as a <em>data stream</em>, hiding away whether this is loaded from a drive, streamed over the internet or input by the user.</p>
+<p>In all these cases, we abstract by specifying the properties of our system that we are concerned with and studying the system (or its idealised version) in terms of those properties. This has many advantages &ndash; what we deduce applies to all systems for which the abstraction is valid, and our attention is focussed on what matters for the questions at hand.</p>
+<p>In mathematics, we turn things on their head and consider <em>fully abstracted</em> systems. Thus, rather than saying that we study systems in terms of the properties of their idealised, abstracted forms, we <em>define</em> our objects of study as those satisfying some properties (or <em>axioms</em>) and think of these as real objects.</p>
+<p>The first level of abstraction, as sketched above, does not truly take us to mathematics &ndash; this is more likely to be considered, for instance, mathematical physics or mathematical biology. We go further by thinking of each new abstraction as giving real objects. We make further abstractions as we study these new objects. These are based on things we discover about them as well as techniques we use to study them. This leads to a tower of abstractions.</p>
+<p>This is a powerful way of advancing knowledge. The obvious advantage of such abstraction is that any knowledge of the abstracted system applies to all the concrete systems of which it is an abstraction, or to all systems at one level of abstraction lower. But there are more interesting benefits. In many cases the intuition from one concrete case guides the constructions and statements we make in the abstract setting, which can then be applied to a different concrete case. Indeed there have been many waves of this kind of <em>transfer</em> from geometry to number theory. As a variant we can combine intuitions from many concrete settings.</p>
+<p>It is the mathematical component, in this broad sense, of science or engineering, that is very well suited to the use of AI guided by Lean verification.</p>
+<h2 id="lean-kernels-and-swiss-watch-verification">Lean, Kernels and Swiss-Watch Verification</h2>
+<p>Unlike mathematics, Science and Engineering are not self-contained. However, we can still have useful formal proofs as we build theories, designs and codebases. Our design for doing this is based on a few core principles.</p>
+<h3 id="proof-challenges-and-stress-tests">Proof Challenges and Stress Tests</h3>
+<p>A formal proof system can only check that proofs are correct for theorems as they are stated. We have to still ensure that the statement of the theorems and all the underlying definitions are correct. An approach is the comparator style used in Lean - to have an expert check the statements, with the statements using essentially only the standard definitions. This works well for major results in mathematics but is not efficient for (scientific) theory building that will involve many new definitions.</p>
+<p>A widely used approach, complementary to the above, is to prove extra theorems that are designed to test the definitions. We can also prove consequences of theorems using a theorem - if the statement of the theorem is accidentally too weak the consequence will not follow.</p>
+<p>In PlasmaLean we get the coding agent to generate a large number of such test theorems. We state and translate into Lean such <em>proof challenges</em>. These are based on specific instructions designed to stress-test the definitions. These include: proving well-known physical consequences of the basic equations; proving that the expected symmetries are present; proving correct behaviour in special cases; proving characterizing properties; showing non-degeneracy: properties are non-vacuous, invariants are non-constant; and various other properties.</p>
+<h3 id="small-kernels">Small Kernels</h3>
+<p>If we trust a computer system to test a proof, how do we know the system itself is correct? This fundamental question was addressed by de Bruijn while building his pioneering system <strong>AutoMath</strong> in the 1960s.The idea that he came up with was to separate a <strong>kernel</strong>, which checks correctness of proofs, from the rest of the system: the parts that help find proofs, provide interfaces etc. An analogue of the kernel is the part of a chess engine that checks whether moves are legal and whether we have a checkmate - much less code than the part that actually makes smart moves.</p>
+<p>The kernel has to be checked manually. However, if the kernel is relatively small, well-documented, and (these days) open sourced, one can hope that it has been checked by many people. Having such a kernel is now called the <em>de Bruijn principle</em>.</p>
+<p>We adapt this principle to our scientific and engineering problem, separating the core governing equations into a kernel. In the case of PlasmaLean these are the equations of MagnetoHydroDynamics as well as the basic geometry of a stellarator. This is a modest amount of code (a few hundred lines) which in principle can be checked manually.</p>
+<p>In practice, even checking a kernel manually needs expertise and work. While this needs to be done at some stage, during exploration and library building we check the definition by generating a large number of proof challenges.</p>
+<h3 id="swiss-watch-verification">Swiss Watch Verification</h3>
+<p>In a mechanical movement of a swiss watch, power flows from the mainspring through a train of gears. If a single tooth on a single wheel is off by a few microns, the gear train jams completely. And if two gears have malformed teeth, they don&rsquo;t cancel out unless by an impossible miracle a burr on one tooth matches a corresponding notch on the mating tooth at the exact phase of rotation. So a watch ticking is a test that all its gears are correct to a high degree of accuracy.</p>
+<p>Analogously, when we formalize in Lean 4, every lemma&rsquo;s output type must mesh tooth-for-tooth with the next theorem&rsquo;s input hypothesis. A single hallucinated sign or missing regularity assumption jams the movement immediately. Two errors can only cancel if they match exactly. Further, a definition or theorem is often used in many places, so it will be accepted only if we have matching errors in all of them.</p>
+<p>Indeed, our level of verification is better than that suggested by the analogy. A swiss watch has only enough gears for its function. But by generating proof challenges we have more &ldquo;gears&rdquo; that are only there to jam the system in case of errors.</p>
+<p>It is not enough that a swiss watch ticks - there are a bunch of additional tests needed to test the <em>escapement</em>. These are analogous to checking our kernel. Again, in Lean we have a situation that is better than the analogue - we can generate proof challenges to test the kernel - extra accessories that are added just to jam the escapement in the case of an error. Again, matching errors in the kernel and in the statement of all the relevant proof challenges are possible but very unlikely.</p>
+<h2 id="plasmalean-geometry-of-stellarators-for-fusion">PlasmaLean: Geometry of Stellarators for Fusion</h2>
+<p><a href="https://siddhartha-gadgil.github.io/PlasmaLean/index.html">PlasmaLean</a> is built by coding agents based on instructions in markdown (i.e., text) files together with some Lean code that I wrote as a sample. One of these is a file explaining the structure as I have done in the blog. Many others are notes and skills that were AI generated after explaining the philosophy and based on the literature. Lean code has been built from this.</p>
+<p>The instructions from which the code is built were generated with some mathematical guidance. For instance, I realised that with PDEs getting rigorous numerical bounds with interval arithmetic cannot be done naively (as with say polynomials) but needs some theorems, for instance comparison theorems. When prompted AI sketched a few techniques from the literature and wrote implementation instructions for this. They got into the act.</p>
+<p>When I first began this project (on October 10, 2026) I was ignorant of some basic facts about Stellarators. I asked for a design that made sure, with proofs, that Plasma remained confined. Fortunately a colleague Animesh Kuley from the Physics Department of IISc, who is an expert in fusion contacted me and shared some papers. From these I learnt that the plasma not only has to be confined but also has to remain hot enough, and <em>microturbulence</em> can cause it to cool down. Meanwhile my friend and colleague Vamsi Pingali, an expert at Geometric Analysis, gave me a whole host of ideas inspired by results and techniques from a range of fields from Navier-Stokes to General Relativity and many others. These were made into notes to be tossed into the witches brew.</p>
+<p>As I post this my agents are brewing for a day or two a week. Fortunately my employer for my sabbatical year, Emergence Research, let me use their tokens for Claude (and Codex), but both me and Claude brew other things (of a broadly similar nature but more applied and less ambitious) on weekdays. Some stellarators have been designed but a practical one is some way off and a lot of the theory has to be digested and incorporated. But then, this project is only 15 days old.</p>
+<p>Needless to say collaborations of all kind are most welcome to this open source, and open, project.</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

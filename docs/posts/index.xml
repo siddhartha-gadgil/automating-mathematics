@@ -9,8 +9,15 @@
     <managingEditor>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</managingEditor>
     <webMaster>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</webMaster>
     <copyright>Copyright &amp;copy; 2018 - Siddhartha Gadgil</copyright>
-    <lastBuildDate>Mon, 24 Aug 2026 09:49:52 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2026 10:01:10 +0530</lastBuildDate>
     <atom:link href="https://siddhartha-gadgil.github.io/automating-mathematics/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Plasmalean</title>
+      <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/plasmalean/</link>
+      <pubDate>Tue, 27 Oct 2026 10:01:10 +0530</pubDate><author>siddhartha.gadgil@gmail.com (Siddhartha Gadgil)</author>
+      <guid>https://siddhartha-gadgil.github.io/automating-mathematics/posts/plasmalean/</guid>
+      <description>A few months ago (in January 2027) I wrote a blog post Mathematics as Natural Science in the Era of AI about using advances in AI to advance mathematics and science.</description>
+    </item>
     <item>
       <title>Complex Structures on the 6-sphere (via AI?)</title>
       <link>https://siddhartha-gadgil.github.io/automating-mathematics/posts/ai-complex-structures/</link>

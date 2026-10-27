@@ -4,6 +4,8 @@
         "neighbours",
         "prover",
         "provers",
+        "Stellarator",
+        "Stellarators",
         "trainability"
     ]
 }
