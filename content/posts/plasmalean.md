@@ -34,7 +34,7 @@ The first level of abstraction, as sketched above, does not truly take us to mat
 
 This is a powerful way of advancing knowledge. The obvious advantage of such abstraction is that any knowledge of the abstracted system applies to all the concrete systems of which it is an abstraction, or to all systems at one level of abstraction lower. But there are more interesting benefits. In many cases the intuition from one concrete case guides the constructions and statements we make in the abstract setting, which can then be applied to a different concrete case. Indeed there have been many waves of this kind of *transfer* from geometry to number theory.
 
-It is the mathematical component, in this broad sense, of science or engineering, that is very well suited to the use of AI guided by Lean verification.
+It is the mathematical component, in this broad sense, of science or engineering, that is very well suited to the use of AI guided by Lean verification. Many problems that are mathematical in this sense have previously been approached by numerics, simulation or experiment because they were too hard. The hope is that with AI and Lean these can be approached with proofs.
 
 ## Lean, Kernels and Swiss-Watch Verification
 
